@@ -1,0 +1,33 @@
+.show_side_bar {
+  position: fixed;
+  right: 0;
+  animation: showUp 1s;
+}
+
+.close_side_bar {
+  position: fixed;
+  right: 0;
+  transform: translate(90%);
+  animation: showOut 1s;
+}
+
+@keyframes showUp {
+  0% {
+    transform: translate(100%, 0);
+  }
+
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes showOut {
+  0% {
+    transform: translate(0, 0);
+  }
+
+  100% {
+    transform: translate(90%, 0);
+    display: none;
+  }
+}
