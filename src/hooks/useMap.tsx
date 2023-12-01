@@ -1,6 +1,5 @@
 import { useCallback } from 'react';
-import type { Coordinates } from '../types/store';
-import type { NaverMap } from '../types/map';
+import type { Coordinates, NaverMap } from '../types/map';
 import { useMutation } from 'react-query';
 
 export const INITIAL_CENTER: Coordinates = [37.5262411, 126.99289439];
