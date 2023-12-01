@@ -24,12 +24,14 @@
     "react-dom": "18.2.0",
     "react-icons": "^4.12.0",
     "react-query": "^3.39.3",
+    "recoil": "^0.7.7",
     "sass": "^1.69.5"
   },
   "devDependencies": {
     "@types/navermaps": "^3.7.3",
     "@types/node": "18.16.3",
     "@types/react": "18.2.0",
+    "@types/uuid": "^9.0.4",
     "autoprefixer": "^10.0.1",
     "eslint": "^8",
     "eslint-config-next": "14.0.3",

@@ -55,7 +55,9 @@ export const Map = ({
 
     //맵이 unmount되었을 때 맵 인스턴스 destory하기 
     useEffect(() => {
-        initializeMap();
+        if (!!window) {
+            initializeMap();
+        }
         return () => {
             mapRef.current?.destroy();
         };

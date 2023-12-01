@@ -2,6 +2,7 @@
 import type { AppProps } from 'next/app';
 import { Noto_Sans_KR } from 'next/font/google';
 import classNames from 'classnames';
+import { RecoilRoot } from 'recoil';
 
 import '@/styles/globals.scss';
 
@@ -14,8 +15,9 @@ const notoSansKr = Noto_Sans_KR({
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <main className={classNames(notoSansKr.className, notoSansKr.variable)}>
-      <Component {...pageProps} />
-    </main>
+    <RecoilRoot>
+      <main className={classNames(notoSansKr.className, notoSansKr.variable)}>
+        <Component {...pageProps} />
+      </main></RecoilRoot>
   );
 }
