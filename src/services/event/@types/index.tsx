@@ -1,4 +1,4 @@
-import { IImage } from '../../../../constants/common';
+import { IImage } from '@/constants/common';
 
 export interface IEvent {
   title: string;
