@@ -6,7 +6,7 @@ export interface IEvent {
   startDate: string;
   endDate: string;
 
-  images: IImage[];
+  images?: IImage[];
 
   minPrice?: number;
   maxPrice?: number;
