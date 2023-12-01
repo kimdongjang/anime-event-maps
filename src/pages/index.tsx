@@ -1,17 +1,26 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-import { Map } from '@/components/Map'
+import { Inter } from 'next/font/google';
+import { Map } from '@/components/Map';
+import RootLayout from '@/layout/RootLayout';
+import Sidebar from '@/components/Sidebar';
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ['latin'] });
 
-export default function Home() {
+export default function Main() {
   return (
-    <main
-      className={`h-screen flex flex-col items-center justify-between p-24 ${inter.className}`}
-    >
-      <div className="w-full h-full">
-        <Map />
-      </div>
-    </main>
-  )
+    <RootLayout>
+      <main
+        className={`w-[100%] h-screen flex flex-col items-center justify-between ${inter.className}`}
+      >
+        <div className="w-full h-full">
+          위드 테스트위드 테스트위드 테스트위드 테스트위드 테스트위드 테스트위드
+          테스트위드 테스트위드 테스트위드 테스트 위드 테스트위드 테스트위드
+          테스트위드 테스트위드 테스트위드 테스트위드 테스트위드 테스트위드
+          테스트위드 테스트 위드 테스트위드 테스트위드 테스트위드 테스트위드
+          테스트위드 테스트위드 테스트위드 테스트위드 테스트위드 테스트
+          <Map />
+        </div>
+      </main>
+      <Sidebar />
+    </RootLayout>
+  );
 }
