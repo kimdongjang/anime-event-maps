@@ -1,3 +1,4 @@
+import { IEvent } from "@/services/event/@types";
 import { markerStore } from "@/stores/MarkerStore";
 import { Coordinates, NaverMap } from "@/types/map";
 import Script from "next/script";
@@ -23,11 +24,26 @@ export const Map = ({
     const mapRef = useRef<NaverMap | null>(null);
     const [map, setMap] = useState<NaverMap>();
 
-    const addMarker = (coordinates: Coordinates) => {
-        new naver.maps.Marker({
-            position: new naver.maps.LatLng(coordinates.lat, coordinates.lng),
+    const addMarker = (event: IEvent) => {
+        const marker = new naver.maps.Marker({
+            position: new naver.maps.LatLng(event.lat as number, event.lng as number),
             map: map
         });
+        const infoWindow = new naver.maps.InfoWindow({
+            content: [
+                `<div>
+                    <h3>${event.title}</h3>
+                    <p>${event.adress}</p>
+                </div>`
+            ].join('')
+        })
+        naver.maps.Event.addListener(marker, "click", () => {
+            if (infoWindow.getMap()) {
+                infoWindow.close();
+            } else {
+                !!map && infoWindow.open(map, marker)
+            }
+        })
     }
 
     const initializeMap = () => {
@@ -52,7 +68,7 @@ export const Map = ({
         if (!!map && !!markers.markerList) {
             markers.markerList.map((data, i) => {
                 if (data.checked) {
-                    addMarker(data.coordinates)
+                    addMarker(data.event)
                 }
             })
         }
