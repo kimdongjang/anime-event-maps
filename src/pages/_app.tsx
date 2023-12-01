@@ -1,7 +1,9 @@
-import '@/styles/globals.css';
+
 import type { AppProps } from 'next/app';
 import { Noto_Sans_KR } from 'next/font/google';
 import classNames from 'classnames';
+
+import '@/styles/globals.scss';
 
 const notoSansKr = Noto_Sans_KR({
   // preload: true, 기본값
