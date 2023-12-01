@@ -7,7 +7,7 @@
 .close_side_bar {
   position: fixed;
   right: 0;
-  transform: translate(90%);
+  transform: translate(100%);
   animation: showOut 1s;
 }
 
@@ -27,7 +27,7 @@
   }
 
   100% {
-    transform: translate(90%, 0);
+    transform: translate(100%, 0);
     display: none;
   }
 }
