@@ -11,7 +11,7 @@ import { IconButton } from '@mui/material';
 const inter = Inter({ subsets: ['latin'] });
 
 export default function Main() {
-  const [isShow, setIsShow] = useState(false);
+  const [isShow, setIsShow] = useState(true);
   const renderBtn = () => {
     if (isShow) {
       return (
@@ -51,7 +51,7 @@ export default function Main() {
           <Map />
         </div>
       </section>
-      <div className="relative ">{renderBtn()}</div>
+      <div className="relative">{renderBtn()}</div>
       <Sidebar handleShow={handleShow} isShow={isShow} />
     </RootLayout>
   );
