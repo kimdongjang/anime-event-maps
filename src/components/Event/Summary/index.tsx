@@ -1,6 +1,5 @@
 import { IEvent } from '@/services/event/@types';
 import { MdLocationOn } from 'react-icons/md';
-import { IconButton } from '@mui/material';
 import { useRouter } from 'next/navigation';
 
 interface IEventSummaryProps {
@@ -56,7 +55,7 @@ export const EventSummary = (props: IEventSummaryProps) => {
     }
     return (
       <div className="flex p-1">
-        <MdLocationOn size={24} className="text-gray-400" />
+        {/* <MdLocationOn size={24} className="text-gray-400" /> */}
         <div>
           {doroDiv}
           {jibunDiv}
