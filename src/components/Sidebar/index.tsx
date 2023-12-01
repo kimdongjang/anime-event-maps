@@ -21,7 +21,7 @@ const Sidebar = (props: ISidebar) => {
     if (isShow) {
       return (
         <IconButton
-          className="rounded  bg-blue-100 hover:bg-blue-200 h-full w-10"
+          className="rounded  bg-blue-300 hover:bg-blue-200 h-full w-10"
           onClick={() => handleShow(false)}
         >
           <ChevronRightIcon />
@@ -30,7 +30,7 @@ const Sidebar = (props: ISidebar) => {
     } else {
       return (
         <IconButton
-          className="rounded  bg-blue-100 hover:bg-blue-200 h-full w-10"
+          className="rounded  bg-blue-300 hover:bg-blue-200 h-full w-10"
           onClick={() => handleShow(true)}
         >
           <ChevronLeftIcon />
@@ -45,9 +45,8 @@ const Sidebar = (props: ISidebar) => {
   return (
     <aside className={`fixed flex h-full `}>
       <div
-        className={`bg-gray-50 h-full w-0 md:w-[45%] lg:w-[40%] xl:w-[35%] flex overflow-y-scroll ${
-          isShow ? styles.show_side_bar : styles.close_side_bar
-        }`}
+        className={`bg-gray-50 h-full w-0 md:w-[45%] lg:w-[40%] xl:w-[35%] flex overflow-y-scroll ${isShow ? styles.show_side_bar : styles.close_side_bar
+          }`}
       >
         <div className="sticky top-0">{renderBtn()}</div>
         <div className="flex flex-col w-full">

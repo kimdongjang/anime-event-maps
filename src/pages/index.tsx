@@ -16,7 +16,7 @@ export default function Main() {
     if (isShow) {
       return (
         <IconButton
-          className="rounded bg-blue-100 hover:bg-blue-200  h-full w-10"
+          className="rounded bg-blue-300 hover:bg-blue-200  h-full w-10"
           onClick={() => setIsShow(false)}
         >
           <ChevronRightIcon />
@@ -25,7 +25,7 @@ export default function Main() {
     } else {
       return (
         <IconButton
-          className="rounded bg-blue-100 hover:bg-blue-200  h-full w-10"
+          className="rounded bg-blue-300 hover:bg-blue-200  h-full w-10"
           onClick={() => setIsShow(true)}
         >
           <ChevronLeftIcon />
@@ -43,11 +43,6 @@ export default function Main() {
         className={`w-[100%] h-screen flex flex-col items-center justify-between ${inter.className}`}
       >
         <div className="w-full h-full">
-          위드 테스트위드 테스트위드 테스트위드 테스트위드 테스트위드 테스트위드
-          테스트위드 테스트위드 테스트위드 테스트 위드 테스트위드 테스트위드
-          테스트위드 테스트위드 테스트위드 테스트위드 테스트위드 테스트위드
-          테스트위드 테스트 위드 테스트위드 테스트위드 테스트위드 테스트위드
-          테스트위드 테스트위드 테스트위드 테스트위드 테스트위드 테스트
           <Map />
         </div>
       </section>
