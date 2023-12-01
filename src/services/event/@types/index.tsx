@@ -13,4 +13,6 @@ export interface IEvent {
   adress?: string;
   jibunAddress?: string;
   doroAddress?: string;
+  lat?: number;
+  lng?: number;
 }

@@ -1,9 +1,11 @@
+import { markerStore } from "@/stores/MarkerStore";
 import { Coordinates, NaverMap } from "@/types/map";
 import Script from "next/script";
 import { useEffect, useRef, useState } from "react";
+import { useRecoilState } from "recoil";
 
 
-export const INITIAL_CENTER: Coordinates = [37.4862618, 127.1222903];
+export const INITIAL_CENTER: Coordinates = { lat: 37.4862618, lng: 127.1222903 };
 export const INITIAL_ZOOM = 11;
 
 type Props = {
@@ -17,19 +19,20 @@ export const Map = ({
     initialCenter = INITIAL_CENTER,
     initialZoom = INITIAL_ZOOM,
 }: Props) => {
+    const [markers, setMarkers] = useRecoilState(markerStore);
     const mapRef = useRef<NaverMap | null>(null);
     const [map, setMap] = useState<NaverMap>();
 
-    const addMarker = () => {
+    const addMarker = (coordinates: Coordinates) => {
         new naver.maps.Marker({
-            position: new naver.maps.LatLng(37.3595704, 127.105399),
+            position: new naver.maps.LatLng(coordinates.lat, coordinates.lng),
             map: map
         });
     }
 
     const initializeMap = () => {
         const mapOptions = {
-            center: new window.naver.maps.LatLng(...initialCenter),
+            center: new window.naver.maps.LatLng(initialCenter.lat, initialCenter.lng),
             zoom: initialZoom,
             minZoom: 8,
             scaleControl: false,
@@ -46,11 +49,21 @@ export const Map = ({
     };
 
     useEffect(() => {
-        if (!!map) {
-            addMarker()
+        if (!!map && !!markers.markerList) {
+            markers.markerList.map((data, i) => {
+                if (data.checked) {
+                    addMarker(data.coordinates)
+                }
+            })
         }
+    }, [markers, map])
 
-    }, [map])
+    // useEffect(() => {
+    //     if (!!map) {
+    //         addMarker()
+    //     }
+
+    // }, [map])
 
     //맵이 unmount되었을 때 맵 인스턴스 destory하기 
     useEffect(() => {

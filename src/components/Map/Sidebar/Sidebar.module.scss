@@ -1,29 +1,29 @@
-.show_side_bar {
-  width: 100%;
-  animation: showUp 1s;
-}
+// .show_side_bar {
+//   width: 100%;
+//   animation: showUp 1s;
+// }
 
-.close_side_bar {
-  width: 0%;
-  animation: showOut 1s;
-}
+// .close_side_bar {
+//   width: 0%;
+//   animation: showOut 1s;
+// }
 
-@keyframes showUp {
-  0% {
-    width: 0%;
-  }
+// @keyframes showUp {
+//   0% {
+//     width: 0%;
+//   }
 
-  100% {
-    width: 100%;
-  }
-}
+//   100% {
+//     width: 100%;
+//   }
+// }
 
-@keyframes showOut {
-  0% {
-    width: 100%;
-  }
+// @keyframes showOut {
+//   0% {
+//     width: 100%;
+//   }
 
-  100% {
-    width: 0%;
-  }
-}
+//   100% {
+//     width: 0%;
+//   }
+// }

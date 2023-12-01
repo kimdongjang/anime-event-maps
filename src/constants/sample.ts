@@ -9,6 +9,9 @@ export const sampleEvents: IEvent[] = [
     adress: '일산 킨텍스',
     doroAddress: '경기 고양시 일산서구 킨텍스로 217-60',
     jibunAddress: '경기 고양시 대화동 2600',
+    lat: 37.672114742842,
+    lng: 126.75344229799,
+
   },
   {
     title: '이터널리티 행사',

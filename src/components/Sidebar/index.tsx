@@ -1,7 +1,7 @@
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { MdFilterAlt } from 'react-icons/md';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IconButton } from '@mui/material';
 
 import styles from './Sidebar.module.scss';
@@ -9,6 +9,9 @@ import { EventSummary } from '../Event/Summary';
 import { SearchBox } from '../SearchBox';
 import { IEvent } from '@/services/event/@types';
 import { sampleEvents } from '@/constants/sample';
+import { useRecoilState } from 'recoil';
+import { IMarkerStore, markerStore } from '@/stores/MarkerStore';
+import { IMarker } from '@/constants/common';
 
 interface ISidebar {
   handleShow: any;
@@ -17,6 +20,7 @@ interface ISidebar {
 }
 const Sidebar = (props: ISidebar) => {
   const { className, handleShow, isShow } = props;
+  const [markers, setMarkers] = useRecoilState(markerStore);
   const renderBtn = () => {
     if (isShow) {
       return (
@@ -38,6 +42,28 @@ const Sidebar = (props: ISidebar) => {
       );
     }
   };
+  useEffect(() => {
+    if (!!sampleEvents) {
+      let markerList: IMarker[] = [...markers.markerList];
+      sampleEvents.map((data, i) => {
+        if (!!data.lat && !!data.lng) {
+          markerList.push(
+            {
+              coordinates: {
+                lat: data.lat,
+                lng: data.lng,
+              },
+              checked: true,
+              event: data,
+            }
+          )
+        }
+      })
+      setMarkers({
+        markerList: [...markerList]
+      })
+    }
+  }, [])
 
   const renderEventList = () => {
     return sampleEvents.map((data, i) => <EventSummary event={data} key={i} />);
