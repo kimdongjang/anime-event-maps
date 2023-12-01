@@ -1,0 +1,119 @@
+// @tailwind base;
+// @tailwind components;
+// @tailwind utilities;
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@import './abstracts/mixin';
+@import './abstracts/variables';
+
+h1 {
+  font-size: x-large;
+  line-height: $line-height-2xl;
+  @include tablet {
+    font-size: xx-large;
+    line-height: $line-height-2xl;
+  }
+  @include desktop {
+    font-size: xx-large;
+    line-height: $line-height-2xl;
+  }
+}
+
+h2 {
+  font-size: $text-size-xl;
+  line-height: $line-height-xl;
+  font-weight: 700;
+  @include tablet {
+    font-size: $text-size-xl;
+    line-height: $line-height-xl;
+    font-weight: 700;
+  }
+  @include desktop {
+    font-size: $text-size-2xl;
+    line-height: $line-height-2xl;
+    font-weight: 700;
+  }
+}
+h3 {
+  font-size: $text-size-base;
+  line-height: $line-height-base;
+  font-weight: 600;
+  @include tablet {
+    font-size: $text-size-base;
+    line-height: $line-height-base;
+    font-weight: 600;
+  }
+  @include desktop {
+    font-size: $text-size-xl;
+    line-height: $line-height-xl;
+    font-weight: 600;
+  }
+}
+
+h4 {
+  font-size: $text-size-sm;
+  line-height: $line-height-sm;
+  font-weight: 500;
+  @include tablet {
+    font-size: $text-size-sm;
+    line-height: $line-height-sm;
+    font-weight: 500;
+  }
+  @include desktop {
+    font-size: $text-size-base;
+    line-height: $line-height-base;
+    font-weight: 500;
+  }
+}
+h5 {
+  font-size: $text-size-xs;
+  line-height: $line-height-xs;
+  @include tablet {
+    font-size: $text-size-xs;
+    line-height: $line-height-xs;
+  }
+  @include desktop {
+    font-size: $text-size-sm;
+    line-height: $line-height-sm;
+  }
+}
+
+p {
+  font-size: $text-size-sm;
+  line-height: $line-height-sm;
+  @include tablet {
+    font-size: $text-size-sm;
+    line-height: $line-height-sm;
+  }
+  @include desktop {
+    font-size: $text-size-base;
+    line-height: $line-height-base;
+  }
+}
+
+/* 
+:root {
+	--foreground-rgb: 0, 0, 0;
+	--background-start-rgb: 214, 219, 220;
+	--background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--foreground-rgb: 255, 255, 255;
+		--background-start-rgb: 0, 0, 0;
+		--background-end-rgb: 0, 0, 0;
+	}
+}
+
+body {
+	color: rgb(var(--foreground-rgb));
+	background: linear-gradient(
+			to bottom,
+			transparent,
+			rgb(var(--background-end-rgb))
+		)
+		rgb(var(--background-start-rgb));
+} */
