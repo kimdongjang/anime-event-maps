@@ -54,7 +54,7 @@ export const Map = ({
 
     //맵이 unmount되었을 때 맵 인스턴스 destory하기 
     useEffect(() => {
-        if (!!window.naver.maps) {
+        if (!!window.naver) {
             initializeMap();
         }
         return () => {

@@ -6,8 +6,8 @@ export default function Document() {
     <Html lang="en">
       <Head >
         <Script
-          // strategy="afterInteractive"
-          strategy='beforeInteractive'
+          strategy="afterInteractive"
+          // strategy='beforeInteractive'
           type="text/javascript"
           src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_NCP_CLIENT_ID}`}
         />
