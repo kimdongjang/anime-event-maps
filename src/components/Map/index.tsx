@@ -1,5 +1,4 @@
-import { NaverMap } from "@/types/map";
-import { Coordinates } from "@/types/store";
+import { Coordinates, NaverMap } from "@/types/map";
 import Script from "next/script";
 import { useEffect, useRef, useState } from "react";
 
