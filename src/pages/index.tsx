@@ -8,7 +8,7 @@ const inter = Inter({ subsets: ['latin'] });
 export default function Main() {
   return (
     <RootLayout>
-      <main
+      <section
         className={`w-[100%] h-screen flex flex-col items-center justify-between ${inter.className}`}
       >
         <div className="w-full h-full">
@@ -19,7 +19,7 @@ export default function Main() {
           테스트위드 테스트위드 테스트위드 테스트위드 테스트위드 테스트
           <Map />
         </div>
-      </main>
+      </section>
       <Sidebar />
     </RootLayout>
   );
