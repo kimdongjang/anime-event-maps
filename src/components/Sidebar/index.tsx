@@ -10,29 +10,30 @@ import { SearchBox } from '../SearchBox';
 import { IEvent } from '@/services/event/@types';
 
 interface ISidebar {
+  handleShow: any;
+  isShow: boolean;
   className?: string;
 }
 const Sidebar = (props: ISidebar) => {
-  const { className } = props;
-  const [isShow, setIsShow] = useState(false);
+  const { className, handleShow, isShow } = props;
   const renderBtn = () => {
     if (isShow) {
       return (
-        <button
-          className="bg-blue-200 h-full w-10"
-          onClick={() => setIsShow(false)}
+        <IconButton
+          className="rounded  bg-blue-100 hover:bg-blue-200 h-full w-10"
+          onClick={() => handleShow(false)}
         >
           <ChevronRightIcon />
-        </button>
+        </IconButton>
       );
     } else {
       return (
-        <button
-          className="bg-blue-200 h-full w-10"
-          onClick={() => setIsShow(true)}
+        <IconButton
+          className="rounded  bg-blue-100 hover:bg-blue-200 h-full w-10"
+          onClick={() => handleShow(true)}
         >
           <ChevronLeftIcon />
-        </button>
+        </IconButton>
       );
     }
   };
