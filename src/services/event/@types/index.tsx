@@ -10,6 +10,7 @@ export interface IEvent {
 
   minPrice?: number;
   maxPrice?: number;
+  adress?: string;
   jibunAddress?: string;
   doroAddress?: string;
 }
