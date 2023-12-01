@@ -6,8 +6,8 @@ import { IconButton } from '@mui/material';
 
 import styles from './Sidebar.module.scss';
 import { EventSummary } from '../Event/Summary';
-import { IEvent } from '../services/event/@types';
 import { SearchBox } from '../SearchBox';
+import { IEvent } from '@/services/event/@types';
 
 interface ISidebar {
   className?: string;
