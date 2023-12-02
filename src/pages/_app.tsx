@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import { RecoilRoot } from 'recoil';
 
 import '@/styles/globals.scss';
+import { Hydrate, QueryClient, QueryClientProvider } from 'react-query';
 
 const notoSansKr = Noto_Sans_KR({
   // preload: true, 기본값
@@ -14,10 +15,16 @@ const notoSansKr = Noto_Sans_KR({
 });
 
 export default function App({ Component, pageProps }: AppProps) {
+  const queryClient = new QueryClient();
   return (
     <RecoilRoot>
-      <main className={classNames(notoSansKr.className, notoSansKr.variable)}>
-        <Component {...pageProps} />
-      </main></RecoilRoot>
+      <QueryClientProvider client={queryClient}>
+        <Hydrate state={pageProps.dehydratedProps}>
+          <main className={classNames(notoSansKr.className, notoSansKr.variable)}>
+            <Component {...pageProps} />
+          </main>
+        </Hydrate>
+      </QueryClientProvider>
+    </RecoilRoot>
   );
 }
