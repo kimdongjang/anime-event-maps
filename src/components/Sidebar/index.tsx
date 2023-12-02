@@ -10,8 +10,8 @@ import { SearchBox } from '../SearchBox';
 import { IEvent } from '@/services/event/@types';
 import { sampleEvents } from '@/constants/sample';
 import { useRecoilState } from 'recoil';
-import { IMarkerStore, markerStore } from '@/stores/MarkerStore';
 import { IMarker } from '@/constants/common';
+import { markerStore } from '@/stores/MarkerStore';
 
 interface ISidebar {
   handleShow: any;
@@ -19,8 +19,8 @@ interface ISidebar {
   className?: string;
 }
 const Sidebar = (props: ISidebar) => {
+  const [markerList, setMarkerList] = useRecoilState(markerStore);
   const { className, handleShow, isShow } = props;
-  const [markers, setMarkers] = useRecoilState(markerStore);
   const renderBtn = () => {
     if (isShow) {
       return (
@@ -42,32 +42,15 @@ const Sidebar = (props: ISidebar) => {
       );
     }
   };
-  useEffect(() => {
-    if (!!sampleEvents) {
-      let markerList: IMarker[] = [...markers.markerList];
-      sampleEvents.map((data, i) => {
-        if (!!data.lat && !!data.lng) {
-          markerList.push(
-            {
-              coordinates: {
-                lat: data.lat,
-                lng: data.lng,
-              },
-              checked: true,
-              event: data,
-            }
-          )
-        }
-      })
-      setMarkers({
-        markerList: [...markerList]
-      })
-    }
-  }, [])
 
   const renderEventList = () => {
-    return sampleEvents.map((data, i) => <EventSummary event={data} key={i} />);
+    return sampleEvents.map((data, i) => <EventSummary event={data} key={i} onClick={handleEventClick} />);
   };
+  const handleEventClick = (event: IEvent) => {
+    const find = markerList.find(search => search.event.id == event.id)
+    console.log(find)
+  }
+
   return (
     <aside className={`fixed flex h-full `}>
       <div

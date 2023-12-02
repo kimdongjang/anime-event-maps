@@ -5,12 +5,17 @@ import Sidebar from '@/components/Sidebar';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IconButton } from '@mui/material';
+import { sampleEvents } from '@/constants/sample';
+import { useRecoilState } from 'recoil';
+import { markerStore } from '@/stores/MarkerStore';
+import { IMarker } from '@/constants/common';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export default function Main() {
+  const [markerList, setMarkerList] = useRecoilState(markerStore);
   const [isShow, setIsShow] = useState(true);
   const renderBtn = () => {
     if (isShow) {
@@ -33,6 +38,29 @@ export default function Main() {
       );
     }
   };
+
+  useEffect(() => {
+    if (!!sampleEvents) {
+      let tempList: IMarker[] = [...markerList];
+      sampleEvents.map((data, i) => {
+        if (!!data.lat && !!data.lng) {
+          tempList.push(
+            {
+              coordinates: {
+                lat: data.lat,
+                lng: data.lng,
+              },
+              checked: true,
+              event: data,
+            }
+          )
+        }
+      })
+      setMarkerList([...tempList])
+    }
+  }, [])
+
+
   const handleShow = (isShow: boolean) => {
     setIsShow(isShow);
   };

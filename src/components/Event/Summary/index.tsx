@@ -1,14 +1,18 @@
 import { IEvent } from '@/services/event/@types';
 import { MdLocationOn } from 'react-icons/md';
 import { useRouter } from 'next/navigation';
+import classNames from 'classnames';
+import { MouseEventHandler } from 'react';
 
 interface IEventSummaryProps {
   event: IEvent;
+  className?: string;
+  onClick: (event: IEvent) => void
 }
 
 export const EventSummary = (props: IEventSummaryProps) => {
   const router = useRouter();
-  const { event } = props;
+  const { event, className, onClick } = props;
 
   const handleCopyClipBoard = async (text: string) => {
     try {
@@ -85,8 +89,10 @@ export const EventSummary = (props: IEventSummaryProps) => {
       </div>
     );
   };
+
   return (
-    <div className="bg-white p-3 m-1 w-full">
+    <div className={classNames(className, "bg-white hover:bg-blue-100 p-3 m-1 w-full cursor-pointer")}
+      onClick={() => { onClick(event) }}>
       {/* 타이틀 */}
       <h2 className="font-bold text-xl">{event.title}</h2>
       {/* 이미지 */}

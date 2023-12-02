@@ -20,15 +20,15 @@ export const Map = ({
     initialCenter = INITIAL_CENTER,
     initialZoom = INITIAL_ZOOM,
 }: Props) => {
-    const [markers, setMarkers] = useRecoilState(markerStore);
+    const [markerList, setMarkerList] = useRecoilState(markerStore);
     const mapRef = useRef<NaverMap | null>(null);
-    const [map, setMap] = useState<NaverMap>();
     const mapInitRef = useRef<NodeJS.Timeout>()
+    const [naverMap, setNaverMap] = useState<NaverMap>();
 
     const addMarker = (event: IEvent) => {
         const marker = new naver.maps.Marker({
-            position: new naver.maps.LatLng(event.lat as number, event.lng as number),
-            map: map
+            position: new naver.maps.LatLng(event.lat, event.lng),
+            map: naverMap
         });
         const infoWindow = new naver.maps.InfoWindow({
             content: [
@@ -42,9 +42,14 @@ export const Map = ({
             if (infoWindow.getMap()) {
                 infoWindow.close();
             } else {
-                !!map && infoWindow.open(map, marker)
+                !!naverMap && infoWindow.open(naverMap, marker)
             }
         })
+    }
+    const panToMarker = (event: IEvent) => {
+        if (!!naverMap) {
+            naverMap.panTo(new naver.maps.LatLng(event.lat, event.lng))
+        }
     }
 
     const initializeMap = () => {
@@ -60,20 +65,21 @@ export const Map = ({
         };
         //새로운 네이버 맵 인스턴스 생성 
         const map = new window.naver.maps.Map(mapId, mapOptions);
-        setMap(map);
+        setNaverMap(map);
 
         mapRef.current = map;
     };
 
     useEffect(() => {
-        if (!!map && !!markers.markerList) {
-            markers.markerList.map((data, i) => {
+        if (!!naverMap && !!markerList) {
+            markerList.map((data, i) => {
+                // 선택된 리스트를 지도에 마커로 표시
                 if (data.checked) {
                     addMarker(data.event)
                 }
             })
         }
-    }, [markers, map])
+    }, [markerList, naverMap])
 
     /**
      * 네이버 맵 api가 온전히 로드가 되지 않아서 타이머로 초기화를 진행
@@ -93,10 +99,10 @@ export const Map = ({
     }, []);
 
     useEffect(() => {
-        if (!!map) {
+        if (!!naverMap) {
             clearInterval(mapInitRef.current);
         }
-    }, [map])
+    }, [naverMap])
 
     return (
         <>

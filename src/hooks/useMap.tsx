@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import type { Coordinates, NaverMap } from '../types/map';
 import { useMutation } from 'react-query';
 
-const useMap = () => {
+const useMapHook = () => {
     // const { data: map } = useMutation(MAP_KEY);
 
     // const initializeMap = useCallback((map: NaverMap) => {
@@ -27,4 +27,4 @@ const useMap = () => {
     //     getMapOptions,
     // };
 };
-export default useMap;
+export default useMapHook;

@@ -4,13 +4,7 @@ import { atom } from "recoil";
 
 
 
-export interface IMarkerStore {
-    markerList: IMarker[];
-}
-
-export const markerStore = atom<IMarkerStore>({
+export const markerStore = atom<IMarker[]>({
     key: `markerStore`,
-    default: {
-        markerList: []
-    }
+    default: [],
 })
