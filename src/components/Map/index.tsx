@@ -23,6 +23,7 @@ export const Map = ({
     const [markers, setMarkers] = useRecoilState(markerStore);
     const mapRef = useRef<NaverMap | null>(null);
     const [map, setMap] = useState<NaverMap>();
+    const mapInitRef = useRef<NodeJS.Timeout>()
 
     const addMarker = (event: IEvent) => {
         const marker = new naver.maps.Marker({
@@ -74,22 +75,28 @@ export const Map = ({
         }
     }, [markers, map])
 
-    // useEffect(() => {
-    //     if (!!map) {
-    //         addMarker()
-    //     }
-
-    // }, [map])
-
-    //맵이 unmount되었을 때 맵 인스턴스 destory하기 
+    /**
+     * 네이버 맵 api가 온전히 로드가 되지 않아서 타이머로 초기화를 진행
+     */
     useEffect(() => {
-        if (!!window.naver) {
-            initializeMap();
+        if (!mapInitRef.current) {
+            mapInitRef.current = setInterval(() => {
+                if (!!window.naver) {
+                    initializeMap();
+                }
+            }, 1000);
         }
+
         return () => {
             mapRef.current?.destroy();
         };
     }, []);
+
+    useEffect(() => {
+        if (!!map) {
+            clearInterval(mapInitRef.current);
+        }
+    }, [map])
 
     return (
         <>
