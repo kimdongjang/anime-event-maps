@@ -1,9 +1,12 @@
 import { IEvent } from "@/services/event/@types";
 import { markerStore } from "@/stores/MarkerStore";
 import { Coordinates, NaverMap } from "@/types/map";
+import Image from "next/image";
 import Script from "next/script";
 import { useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
+
+import styles from './Map.module.scss'
 
 
 export const INITIAL_CENTER: Coordinates = { lat: 37.4862618, lng: 127.1222903 };
@@ -32,9 +35,11 @@ export const Map = ({
         });
         const infoWindow = new naver.maps.InfoWindow({
             content: [
-                `<div>
+                `<div class="p-3">
                     <h3>${event.title}</h3>
                     <p>${event.adress}</p>
+                    <p>${event.startDate}</p>
+                    <p>${event.endDate}</p>
                 </div>`
             ].join('')
         })

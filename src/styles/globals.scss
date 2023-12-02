@@ -8,6 +8,8 @@
 @import './abstracts/mixin';
 @import './abstracts/variables';
 
+@import './components/image';
+
 h1 {
   font-size: x-large;
   line-height: $line-height-2xl;

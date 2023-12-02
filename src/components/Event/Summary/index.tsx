@@ -3,6 +3,8 @@ import { MdLocationOn } from 'react-icons/md';
 import { useRouter } from 'next/navigation';
 import classNames from 'classnames';
 import { MouseEventHandler } from 'react';
+import Image from 'next/image';
+import { currentSummaryDate } from '@/utils/date';
 
 interface IEventSummaryProps {
   event: IEvent;
@@ -59,7 +61,7 @@ export const EventSummary = (props: IEventSummaryProps) => {
     }
     return (
       <div className="flex p-1">
-        {/* <MdLocationOn size={24} className="text-gray-400" /> */}
+        <MdLocationOn size={24} className="text-gray-400" />
         <div>
           {doroDiv}
           {jibunDiv}
@@ -82,7 +84,7 @@ export const EventSummary = (props: IEventSummaryProps) => {
     }
     return (
       <div className="flex items-center space-x-1 p-1">
-        <label className="bg-blue-50 border-gray-100 rounded text-sm font-medium px-1">
+        <label className="bg-red-100 border-gray-100 rounded text-sm font-medium px-1">
           입장권
         </label>
         {price}
@@ -91,30 +93,41 @@ export const EventSummary = (props: IEventSummaryProps) => {
   };
 
   return (
-    <div className={classNames(className, "bg-white hover:bg-blue-100 p-3 m-1 w-full cursor-pointer")}
-      onClick={() => { onClick(event) }}>
-      {/* 타이틀 */}
-      <h2 className="font-bold text-xl">{event.title}</h2>
-      {/* 이미지 */}
-      <div></div>
-      <div className="flex items-end space-x-1 p-1">
-        <label className="font-medium">{event.adress}</label>
-        <label className="text-gray-400 text-sm">{event.category}</label>
+    <div className={classNames(className, "bg-whitew-full m-1")}
+    >
+      <div className='hover:bg-blue-100 cursor-pointer  p-3  ' onClick={() => { onClick(event) }}>
+        {/* 타이틀 */}
+        <div className='flex'>
+          {/* <h2>{currentSummaryDate(new Date(event.startDate))}</h2> */}
+          <h2 className="font-bold text-xl">{event.title}</h2>
+        </div>
+        {/* 이미지 */}
+        <div>
+          {
+            !!event.images && event.images.map((data, i) => {
+              return <Image className="event_summary__bg_image max-h-[180px]" src={data.path} alt={data.alt} fill objectFit='cover' />
+            })
+          }
+        </div>
+        <div className="flex items-end space-x-1 p-1">
+          <label className="font-medium">{event.adress}</label>
+          <label className="text-gray-400 text-sm">{event.category}</label>
+        </div>
+        <div className="flex items-center space-x-1 p-1">
+          <label className="bg-yellow-100 border-gray-100 rounded text-sm font-medium px-1">
+            기간
+          </label>
+          <p>{event.startDate}</p>
+          <p>~</p>
+          <p>{event.endDate}</p>
+        </div>
+        {renderPrice()}
+        {/* 위치 */}
+        {renderLocation()}
       </div>
-      <div className="flex items-center space-x-1 p-1">
-        <label className="bg-yellow-100 border-gray-100 rounded text-sm font-medium px-1">
-          기간
-        </label>
-        <p>{event.startDate}</p>
-        <p>~</p>
-        <p>{event.endDate}</p>
-      </div>
-      {renderPrice()}
-      {/* 위치 */}
-      {renderLocation()}
-      <div className="flex justify-end">
+      <div className="flex justify-end p-1">
         <button
-          className="bg-blue-400 text-white text-sm px-2 rounded py-1 "
+          className="bg-blue-400 hover:bg-blue-500 text-white text-sm px-2 rounded py-1 "
           type="button"
           onClick={() => {
             router.push('https://map.naver.com/directions');
