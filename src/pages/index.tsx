@@ -20,21 +20,21 @@ export default function Main() {
   const renderBtn = () => {
     if (isShow) {
       return (
-        <IconButton
+        <button
           className="rounded bg-blue-300 hover:bg-blue-200  h-full w-10"
           onClick={() => setIsShow(false)}
         >
           <ChevronRightIcon />
-        </IconButton>
+        </button>
       );
     } else {
       return (
-        <IconButton
+        <button
           className="rounded bg-blue-300 hover:bg-blue-200  h-full w-10"
           onClick={() => setIsShow(true)}
         >
           <ChevronLeftIcon />
-        </IconButton>
+        </button>
       );
     }
   };
