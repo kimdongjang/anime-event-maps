@@ -93,11 +93,11 @@ export const EventSummary = (props: IEventSummaryProps) => {
   };
 
   return (
-    <div className={classNames(className, "bg-whitew-full m-1")}
+    <div className={classNames(className, "bg-white w-full my-3")}
     >
       <div className='hover:bg-blue-100 cursor-pointer  p-3  ' onClick={() => { onClick(event) }}>
         {/* 타이틀 */}
-        <div className='flex'>
+        <div className='flex py-1'>
           {/* <h2>{currentSummaryDate(new Date(event.startDate))}</h2> */}
           <h2 className="font-bold text-xl">{event.title}</h2>
         </div>
@@ -105,7 +105,7 @@ export const EventSummary = (props: IEventSummaryProps) => {
         <div>
           {
             !!event.images && event.images.map((data, i) => {
-              return <Image className="event_summary__bg_image max-h-[180px]" src={data.path} alt={data.alt} fill objectFit='cover' />
+              return <Image className="event_summary__bg_image max-h-[180px]" src={data.path} alt={data.alt} fill objectFit='cover' key={i} />
             })
           }
         </div>
@@ -125,7 +125,7 @@ export const EventSummary = (props: IEventSummaryProps) => {
         {/* 위치 */}
         {renderLocation()}
       </div>
-      <div className="flex justify-end p-1">
+      <div className="flex justify-end p-3">
         <button
           className="bg-blue-400 hover:bg-blue-500 text-white text-sm px-2 rounded py-1 "
           type="button"
