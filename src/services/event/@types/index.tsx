@@ -16,4 +16,6 @@ export interface IEvent {
   doroAddress?: string;
   lat: number;
   lng: number;
+
+  site?: string;
 }
