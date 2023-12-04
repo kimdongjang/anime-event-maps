@@ -12,6 +12,7 @@ import { sampleEvents } from '@/constants/sample';
 import { useRecoilState } from 'recoil';
 import { IMarker } from '@/constants/common';
 import { markerStore } from '@/stores/MarkerStore';
+import { EventList } from '../Event/List';
 
 interface ISidebar {
   handleShow: any;
@@ -19,7 +20,6 @@ interface ISidebar {
   className?: string;
 }
 const Sidebar = (props: ISidebar) => {
-  const [markerList, setMarkerList] = useRecoilState(markerStore);
   const { className, handleShow, isShow } = props;
   const renderBtn = () => {
     if (isShow) {
@@ -43,18 +43,8 @@ const Sidebar = (props: ISidebar) => {
     }
   };
 
-  const renderEventList = () => {
-    return sampleEvents.map((data, i) => (
-      <EventSummary event={data} key={i} onClick={handleEventClick} />
-    ));
-  };
-  const handleEventClick = (event: IEvent) => {
-    const find = markerList.find((search) => search.event.id == event.id);
-    console.log(find);
-  };
-
   return (
-    <aside className={`fixed flex h-full `}>
+    <aside className={`fixed flex h-full ${className}`}>
       <div
         className={`bg-gray-50 h-full w-0 md:w-[45%] lg:w-[40%] xl:w-[35%] flex overflow-y-scroll ${
           isShow ? styles.show_side_bar : styles.close_side_bar
@@ -66,7 +56,7 @@ const Sidebar = (props: ISidebar) => {
             <SearchBox className="w-full text-lg " />
             <MdFilterAlt size={32} className="text-gray-400 ml-1" />
           </div>
-          {renderEventList()}
+          <EventList />
         </div>
       </div>
     </aside>
