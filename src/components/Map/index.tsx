@@ -1,4 +1,4 @@
-import { INITIAL_CENTER, INITIAL_ZOOM } from '@/hooks/useMap';
+import { INITIAL_CENTER, INITIAL_ZOOM } from '@/hooks/useMapHook';
 import { IEvent } from '@/services/event/@types';
 import { markerStore } from '@/stores/MarkerStore';
 import { Coordinates, NaverMap } from '@/types/map';
@@ -56,46 +56,6 @@ export const Map = ({
       onLoad(map);
     }
   };
-
-  const addMarker = (event: IEvent) => {
-    const marker = new naver.maps.Marker({
-      position: new naver.maps.LatLng(event.lat, event.lng),
-      map: naverMap,
-    });
-    const infoWindow = new naver.maps.InfoWindow({
-      content: [
-        `<div class="p-3">
-                    <h3>${event.title}</h3>
-                    <p>${event.adress}</p>
-                    <p>${event.startDate}</p>
-                    <p>${event.endDate}</p>
-                </div>`,
-      ].join(''),
-    });
-    naver.maps.Event.addListener(marker, 'click', () => {
-      if (infoWindow.getMap()) {
-        infoWindow.close();
-      } else {
-        !!naverMap && infoWindow.open(naverMap, marker);
-      }
-    });
-  };
-  const morphMarker = (event: IEvent) => {
-    if (!!naverMap) {
-      naverMap.morph(new naver.maps.LatLng(event.lat, event.lng));
-    }
-  };
-
-  useEffect(() => {
-    if (!!naverMap && !!markerList) {
-      markerList.map((data, i) => {
-        // 선택된 리스트를 지도에 마커로 표시
-        if (data.checked) {
-          addMarker(data.event);
-        }
-      });
-    }
-  }, [markerList, naverMap]);
 
   //맵이 unmount되었을 때 맵 인스턴스 destory하기
   useEffect(() => {
