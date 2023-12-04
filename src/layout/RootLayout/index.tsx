@@ -14,7 +14,9 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         <meta property="og:site_name" content="Croissants" />
         <meta property="og:title" content={siteTitle} />
       </Head>
-      <div className="w-full h-full flex">{children}</div>
+      <div className="w-full h-screen flex flex-col md:flex-row">
+        {children}
+      </div>
     </>
   );
 };
