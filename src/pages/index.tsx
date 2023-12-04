@@ -20,21 +20,21 @@ export default function Main() {
   const renderBtn = () => {
     if (isShow) {
       return (
-        <button
+        <IconButton
           className="rounded bg-blue-300 hover:bg-blue-200  h-full w-10"
           onClick={() => setIsShow(false)}
         >
           <ChevronRightIcon />
-        </button>
+        </IconButton>
       );
     } else {
       return (
-        <button
+        <IconButton
           className="rounded bg-blue-300 hover:bg-blue-200  h-full w-10"
           onClick={() => setIsShow(true)}
         >
           <ChevronLeftIcon />
-        </button>
+        </IconButton>
       );
     }
   };
@@ -44,22 +44,19 @@ export default function Main() {
       let tempList: IMarker[] = [...markerList];
       sampleEvents.map((data, i) => {
         if (!!data.lat && !!data.lng) {
-          tempList.push(
-            {
-              coordinates: {
-                lat: data.lat,
-                lng: data.lng,
-              },
-              checked: true,
-              event: data,
-            }
-          )
+          tempList.push({
+            coordinates: {
+              lat: data.lat,
+              lng: data.lng,
+            },
+            checked: true,
+            event: data,
+          });
         }
-      })
-      setMarkerList([...tempList])
+      });
+      setMarkerList([...tempList]);
     }
-  }, [])
-
+  }, []);
 
   const handleShow = (isShow: boolean) => {
     setIsShow(isShow);
