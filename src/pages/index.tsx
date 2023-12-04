@@ -12,8 +12,11 @@ import { markerStore } from '@/stores/MarkerStore';
 import { IMarker } from '@/constants/common';
 import { BottomNavigation } from '@/components/BottomNavigation';
 import { Badge, FloatButton } from 'antd';
-import { MdHome } from 'react-icons/md';
+import { MdHome, MdMyLocation, MdRefresh } from 'react-icons/md';
 import { BottomSheet } from '@/components/BottomSheet';
+import { useRouter } from 'next/navigation';
+import useMapHook from '@/hooks/useMap';
+import { NaverMap } from '@/types/map';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -21,6 +24,12 @@ export default function Main() {
   const [markerList, setMarkerList] = useRecoilState(markerStore);
   const [isMobileShow, setIsMobileShow] = useState(false);
   const [isDesktopShow, setIsDesktopShow] = useState(true);
+  const router = useRouter();
+
+  const { initializeMap } = useMapHook();
+  const onLoadMap = (map: NaverMap) => {
+    initializeMap(map);
+  };
 
   const renderBtn = () => {
     if (isDesktopShow) {
@@ -73,8 +82,9 @@ export default function Main() {
         className={`w-[100%] h-screen flex flex-col items-center justify-between ${inter.className}`}
       >
         <div className="w-full h-full">
-          <Map />
-          {/* <div className="bg-gray-100 w-full h-full"></div> */}
+          {/* 맵 섹션 */}
+          <Map onLoad={onLoadMap} />
+          <div className="bg-gray-100 w-full h-full"></div>
         </div>
       </section>
 
@@ -84,16 +94,36 @@ export default function Main() {
         handleShow={handleShow}
         isShow={isDesktopShow}
       />
+      <div className="fixed bottom-[3%] left-[3%] flex flex-col ">
+        <button
+          className="border border-gray-400 bg-white rounded-full p-2 my-2"
+          type="button"
+        >
+          <MdMyLocation size={28} />
+        </button>
+      </div>
       {/* <BottomNavigation className={'md:hidden'} /> */}
-      {/* 플롯 버튼 */}
-      <button
-        onClick={() => setIsMobileShow(true)}
-        className="md:hidden fixed bottom-[3%] right-[3%] border border-gray-400 bg-white rounded-full p-2"
-      >
-        <Badge dot={true}>
-          <MdHome size={36} />
-        </Badge>
-      </button>
+      {/* 모바일용 플롯 버튼 */}
+      <div className="md:hidden fixed bottom-[3%] right-[3%] flex flex-col ">
+        <button
+          onClick={() => router.refresh()}
+          className="border border-gray-400 bg-white rounded-full p-2 my-2"
+          type="button"
+        >
+          <MdRefresh size={36} />
+        </button>
+
+        <button
+          onClick={() => setIsMobileShow(true)}
+          className="border border-gray-400 bg-white rounded-full p-2"
+          type="button"
+        >
+          <Badge dot={true}>
+            <MdHome size={36} />
+          </Badge>
+        </button>
+      </div>
+
       <BottomSheet isOpen={isMobileShow} setOpen={setIsMobileShow} />
     </RootLayout>
   );
