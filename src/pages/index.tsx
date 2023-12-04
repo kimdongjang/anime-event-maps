@@ -15,16 +15,17 @@ import { Badge, FloatButton } from 'antd';
 import { MdHome, MdMyLocation, MdRefresh } from 'react-icons/md';
 import { BottomSheet } from '@/components/BottomSheet';
 import { useRouter } from 'next/navigation';
-import useMapHook from '@/hooks/useMap';
+import useMapHook from '@/hooks/useMapHook';
 import { NaverMap } from '@/types/map';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export default function Main() {
-  const [markerList, setMarkerList] = useRecoilState(markerStore);
   const [isMobileShow, setIsMobileShow] = useState(false);
   const [isDesktopShow, setIsDesktopShow] = useState(true);
+  const [markerList, setMarkerList] = useRecoilState(markerStore);
   const router = useRouter();
+  const { morphMarker } = useMapHook();
 
   const { initializeMap } = useMapHook();
   const onLoadMap = (map: NaverMap) => {
@@ -72,6 +73,8 @@ export default function Main() {
     }
   }, []);
 
+
+
   const handleShow = (isShow: boolean) => {
     setIsDesktopShow(isShow);
   };
@@ -93,6 +96,7 @@ export default function Main() {
         className="hidden md:block"
         handleShow={handleShow}
         isShow={isDesktopShow}
+
       />
       <div className="fixed bottom-[3%] left-[3%] flex flex-col ">
         <button
