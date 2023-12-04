@@ -23,11 +23,11 @@ export default function Main() {
   const [isDesktopShow, setIsDesktopShow] = useState(true);
 
   const renderBtn = () => {
-    if (isShow) {
+    if (isDesktopShow) {
       return (
         <button
           className="rounded bg-blue-300 hover:bg-blue-200  h-full w-10"
-          onClick={() => setIsShow(false)}
+          onClick={() => setIsDesktopShow(false)}
         >
           <ChevronRightIcon />
         </button>
@@ -36,7 +36,7 @@ export default function Main() {
       return (
         <button
           className="rounded bg-blue-300 hover:bg-blue-200  h-full w-10"
-          onClick={() => setIsShow(true)}
+          onClick={() => setIsDesktopShow(true)}
         >
           <ChevronLeftIcon />
         </button>
