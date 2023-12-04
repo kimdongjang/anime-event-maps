@@ -1,10 +1,9 @@
-
 import type { AppProps } from 'next/app';
 import { Noto_Sans_KR } from 'next/font/google';
 import classNames from 'classnames';
 import { RecoilRoot } from 'recoil';
 
-import '@/styles/globals.scss';
+import '@/styles/_globals.scss';
 import { Hydrate, QueryClient, QueryClientProvider } from 'react-query';
 
 const notoSansKr = Noto_Sans_KR({
@@ -20,7 +19,9 @@ export default function App({ Component, pageProps }: AppProps) {
     <RecoilRoot>
       <QueryClientProvider client={queryClient}>
         <Hydrate state={pageProps.dehydratedProps}>
-          <main className={classNames(notoSansKr.className, notoSansKr.variable)}>
+          <main
+            className={classNames(notoSansKr.className, notoSansKr.variable)}
+          >
             <Component {...pageProps} />
           </main>
         </Hydrate>
