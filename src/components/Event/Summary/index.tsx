@@ -9,7 +9,7 @@ import { currentSummaryDate } from '@/utils/date';
 interface IEventSummaryProps {
   event: IEvent;
   className?: string;
-  onClick: (event: IEvent) => void
+  onClick: (event: IEvent) => void;
 }
 
 export const EventSummary = (props: IEventSummaryProps) => {
@@ -93,21 +93,36 @@ export const EventSummary = (props: IEventSummaryProps) => {
   };
 
   return (
-    <div className={classNames(className, "bg-white w-full my-3")}
-    >
-      <div className='hover:bg-blue-100 cursor-pointer  p-3  ' onClick={() => { onClick(event) }}>
+    <div className={classNames(className, 'bg-white w-full my-3')}>
+      <div
+        className="p-3"
+        onClick={() => {
+          onClick(event);
+        }}
+      >
         {/* 타이틀 */}
-        <div className='flex py-1'>
+        <div className="flex py-1">
           {/* <h2>{currentSummaryDate(new Date(event.startDate))}</h2> */}
-          <h2 className="font-bold text-xl">{event.title}</h2>
+          <h2 className="font-bold text-xl cursor-pointer">{event.title}</h2>
         </div>
         {/* 이미지 */}
         <div>
-          {
-            !!event.images && event.images.map((data, i) => {
-              return <Image className="event_summary__bg_image max-h-[180px]" src={data.path} alt={data.alt} fill objectFit='cover' key={i} />
-            })
-          }
+          {!!event.images &&
+            event.images.map((data, i) => {
+              return (
+                <Image
+                  className="event_summary__bg_image max-h-[180px]"
+                  src={data.path}
+                  alt={data.alt}
+                  fill
+                  objectFit="cover"
+                  key={i}
+                />
+              );
+            })}
+        </div>
+        <div>
+          <a className="p-1">{event.site}</a>
         </div>
         <div className="flex items-end space-x-1 p-1">
           <label className="font-medium">{event.adress}</label>
