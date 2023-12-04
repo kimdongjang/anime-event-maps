@@ -5,18 +5,22 @@ import Sidebar from '@/components/Sidebar';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
-import { useEffect, useState } from 'react';
-import { IconButton } from '@mui/material';
+import { useEffect, useRef, useState } from 'react';
 import { sampleEvents } from '@/constants/sample';
 import { useRecoilState } from 'recoil';
 import { markerStore } from '@/stores/MarkerStore';
 import { IMarker } from '@/constants/common';
+import { BottomNavigation } from '@/components/BottomNavigation';
+import { Badge, FloatButton } from 'antd';
+import { MdHome } from 'react-icons/md';
+import { BottomSheet } from '@/components/BottomSheet';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export default function Main() {
   const [markerList, setMarkerList] = useRecoilState(markerStore);
   const [isShow, setIsShow] = useState(true);
+
   const renderBtn = () => {
     if (isShow) {
       return (
@@ -69,10 +73,27 @@ export default function Main() {
       >
         <div className="w-full h-full">
           <Map />
+          {/* <div className="bg-gray-100 w-full h-full"></div> */}
         </div>
       </section>
-      <div className="relative">{renderBtn()}</div>
-      <Sidebar handleShow={handleShow} isShow={isShow} />
+
+      <div className="relative hidden md:block">{renderBtn()}</div>
+      <Sidebar
+        className="hidden md:block"
+        handleShow={handleShow}
+        isShow={isShow}
+      />
+      {/* <BottomNavigation className={'md:hidden'} /> */}
+      {/* 플롯 버튼 */}
+      <button
+        onClick={() => setIsShow(true)}
+        className="md:hidden fixed bottom-[3%] right-[3%] border border-gray-400 bg-white rounded-full p-2"
+      >
+        <Badge dot={true}>
+          <MdHome size={36} />
+        </Badge>
+      </button>
+      <BottomSheet isOpen={isShow} setOpen={setIsShow} />
     </RootLayout>
   );
 }
