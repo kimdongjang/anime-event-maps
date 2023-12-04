@@ -19,12 +19,7 @@ export const BottomSheet = (props: IBottomSheetProps) => {
   return (
     <>
       {/* 모바일용 바텀 시트 */}
-      <Sheet
-        isOpen={isOpen}
-        onClose={() => setOpen(false)}
-        snapPoints={[600, 400, 100, 0]}
-        detent="content-height"
-      >
+      <Sheet isOpen={isOpen} onClose={() => setOpen(false)}>
         <Sheet.Container>
           <Sheet.Header />
           <Sheet.Content>
