@@ -19,7 +19,8 @@ const inter = Inter({ subsets: ['latin'] });
 
 export default function Main() {
   const [markerList, setMarkerList] = useRecoilState(markerStore);
-  const [isShow, setIsShow] = useState(true);
+  const [isMobileShow, setIsMobileShow] = useState(false);
+  const [isDesktopShow, setIsDesktopShow] = useState(true);
 
   const renderBtn = () => {
     if (isShow) {
@@ -63,7 +64,7 @@ export default function Main() {
   }, []);
 
   const handleShow = (isShow: boolean) => {
-    setIsShow(isShow);
+    setIsDesktopShow(isShow);
   };
 
   return (
@@ -81,19 +82,19 @@ export default function Main() {
       <Sidebar
         className="hidden md:block"
         handleShow={handleShow}
-        isShow={isShow}
+        isShow={isDesktopShow}
       />
       {/* <BottomNavigation className={'md:hidden'} /> */}
       {/* 플롯 버튼 */}
       <button
-        onClick={() => setIsShow(true)}
+        onClick={() => setIsMobileShow(true)}
         className="md:hidden fixed bottom-[3%] right-[3%] border border-gray-400 bg-white rounded-full p-2"
       >
         <Badge dot={true}>
           <MdHome size={36} />
         </Badge>
       </button>
-      <BottomSheet isOpen={isShow} setOpen={setIsShow} />
+      <BottomSheet isOpen={isMobileShow} setOpen={setIsMobileShow} />
     </RootLayout>
   );
 }
