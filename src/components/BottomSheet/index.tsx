@@ -1,3 +1,4 @@
+import { useSearchData } from '@/hooks/useSearchData';
 import { Dispatch, SetStateAction, useRef, useState } from 'react';
 import Sheet, { SheetRef } from 'react-modal-sheet';
 import { EventList } from '../Event/List';

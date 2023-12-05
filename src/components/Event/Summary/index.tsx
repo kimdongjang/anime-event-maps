@@ -1,10 +1,16 @@
 import { IEvent } from '@/services/event/@types';
-import { MdLocationOn } from 'react-icons/md';
+import {
+  MdLocationOn,
+  MdOutlineStar,
+  MdOutlineStarBorder,
+} from 'react-icons/md';
 import { useRouter } from 'next/navigation';
 import classNames from 'classnames';
 import { MouseEventHandler } from 'react';
 import Image from 'next/image';
 import { currentSummaryDate } from '@/utils/date';
+import { setLocalstorageEvent } from '@/utils/localStorages';
+import { useSearchData } from '@/hooks/useSearchData';
 
 interface IEventSummaryProps {
   event: IEvent;
@@ -15,6 +21,7 @@ interface IEventSummaryProps {
 export const EventSummary = (props: IEventSummaryProps) => {
   const router = useRouter();
   const { event, className, onClick } = props;
+  const { setFavoriteEvent } = useSearchData();
 
   const handleCopyClipBoard = async (text: string) => {
     try {
@@ -22,6 +29,35 @@ export const EventSummary = (props: IEventSummaryProps) => {
       alert('클립보드에 링크가 복사되었습니다.');
     } catch (e) {
       alert('복사에 실패하였습니다');
+    }
+  };
+  const renderFavoriteBtn = () => {
+    if (!!event.isFavorite) {
+      return (
+        <button
+          className="rounded-full text-yellow-400 
+     border border-yellow-400 p-1"
+          type="button"
+          onClick={() => {
+            setFavoriteEvent(event, false);
+          }}
+        >
+          <MdOutlineStar size={18} />
+        </button>
+      );
+    } else {
+      return (
+        <button
+          className="rounded-full text-gray-400 
+         border border-gray-400  p-1"
+          type="button"
+          onClick={() => {
+            setFavoriteEvent(event, true);
+          }}
+        >
+          <MdOutlineStarBorder size={18} />
+        </button>
+      );
     }
   };
   const renderLocation = () => {
@@ -93,7 +129,7 @@ export const EventSummary = (props: IEventSummaryProps) => {
   };
 
   return (
-    <div className={classNames(className, 'bg-white w-full my-3')}>
+    <div className={classNames(className, 'bg-white w-full ')}>
       <div
         className="p-3"
         onClick={() => {
@@ -124,9 +160,12 @@ export const EventSummary = (props: IEventSummaryProps) => {
         <div>
           <a className="p-1">{event.site}</a>
         </div>
-        <div className="flex items-end space-x-1 p-1">
-          <label className="font-medium">{event.adress}</label>
-          <label className="text-gray-400 text-sm">{event.category}</label>
+        <div className="flex justify-between items-center  p-1">
+          <div className="space-x-1">
+            <label className="font-medium">{event.adress}</label>
+            <label className="text-gray-400 text-sm">{event.category}</label>
+          </div>
+          {renderFavoriteBtn()}
         </div>
         <div className="flex items-center space-x-1 p-1">
           <label className="bg-yellow-100 border-gray-100 rounded text-sm font-medium px-1">

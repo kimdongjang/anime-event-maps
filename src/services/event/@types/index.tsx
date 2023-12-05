@@ -18,4 +18,5 @@ export interface IEvent {
   lng: number;
 
   site?: string;
+  isFavorite: boolean;
 }

@@ -8,7 +8,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { useEffect, useRef, useState } from 'react';
 import { sampleEvents } from '@/constants/sample';
 import { useRecoilState } from 'recoil';
-import { markerStore } from '@/stores/MarkerStore';
+import { markerStore } from '@/stores/MapDataStore';
 import { IMarker } from '@/constants/common';
 import { BottomNavigation } from '@/components/BottomNavigation';
 import { Badge, FloatButton } from 'antd';
@@ -17,22 +17,19 @@ import { BottomSheet } from '@/components/BottomSheet';
 import { useRouter } from 'next/router';
 import useMapHook from '@/hooks/useMapHook';
 import { NaverMap } from '@/types/map';
+import { MainCategory } from '@/constants/enums';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export default function Main() {
   const [isMobileShow, setIsMobileShow] = useState(false);
   const [isDesktopShow, setIsDesktopShow] = useState(true);
-  const [markerList, setMarkerList] = useRecoilState(markerStore);
   const router = useRouter();
-  const { morphMarker } = useMapHook();
 
   useEffect(() => {
     window.onpopstate = () => {
       // 뒤로가기가 실행될 경우 추가 action 등록
       if (!!isMobileShow) {
-        // change end
-        console.log('prevent go back!');
         setIsMobileShow(false);
       }
     };
@@ -64,25 +61,6 @@ export default function Main() {
       );
     }
   };
-
-  useEffect(() => {
-    if (!!sampleEvents) {
-      let tempList: IMarker[] = [...markerList];
-      sampleEvents.map((data, i) => {
-        if (!!data.lat && !!data.lng) {
-          tempList.push({
-            coordinates: {
-              lat: data.lat,
-              lng: data.lng,
-            },
-            checked: true,
-            event: data,
-          });
-        }
-      });
-      setMarkerList([...tempList]);
-    }
-  }, []);
 
   const handleShow = (isShow: boolean) => {
     setIsDesktopShow(isShow);
@@ -127,8 +105,7 @@ export default function Main() {
 
         <button
           onClick={() => {
-            // change start
-            history.pushState(null, '', '');
+            router.push('?search');
             setIsMobileShow(true);
           }}
           className="border border-gray-400 bg-white rounded-full p-2"

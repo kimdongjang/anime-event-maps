@@ -1,6 +1,6 @@
 import { INITIAL_CENTER, INITIAL_ZOOM } from '@/hooks/useMapHook';
 import { IEvent } from '@/services/event/@types';
-import { markerStore } from '@/stores/MarkerStore';
+import { markerStore } from '@/stores/MapDataStore';
 import { Coordinates, NaverMap } from '@/types/map';
 import Image from 'next/image';
 import Script from 'next/script';

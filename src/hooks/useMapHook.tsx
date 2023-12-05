@@ -3,7 +3,7 @@ import type { Coordinates, NaverMap } from '../types/map';
 import useSWR, { mutate } from 'swr';
 import { IEvent } from '@/services/event/@types';
 import { useRecoilState } from 'recoil';
-import { markerStore } from '@/stores/MarkerStore';
+import { markerStore } from '@/stores/MapDataStore';
 
 export const INITIAL_CENTER: Coordinates = {
   lat: 37.4862618,
@@ -31,7 +31,6 @@ const useMapHook = () => {
       );
     }
   }, [naverMap]);
-
 
   const renderMarker = (event: IEvent) => {
     if (!!naverMap) {
@@ -69,7 +68,6 @@ const useMapHook = () => {
       });
     }
   }, [naverMap]);
-
 
   const morphMarker = (event: IEvent) => {
     if (!!naverMap) {

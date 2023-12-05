@@ -15,9 +15,10 @@ export const sampleEvents: IEvent[] = [
     images: [
       {
         path: '/images/agf2023.jpg',
-        alt: '/anime-event-maps/agf2023'
-      }
-    ]
+        alt: '/anime-event-maps/agf2023',
+      },
+    ],
+    isFavorite: false,
   },
   {
     id: 2,
@@ -33,9 +34,10 @@ export const sampleEvents: IEvent[] = [
     images: [
       {
         path: '/images/2023seoulcomic.png',
-        alt: '/anime-event-maps/2023seoulcomic'
-      }
-    ]
+        alt: '/anime-event-maps/2023seoulcomic',
+      },
+    ],
+    isFavorite: false,
   },
   {
     id: 3,
@@ -48,6 +50,7 @@ export const sampleEvents: IEvent[] = [
     jibunAddress: '경기 고양시 대화동 2600',
     lat: 37.511817,
     lng: 127.059122,
+    isFavorite: false,
   },
   // {
   //   id: 4,
