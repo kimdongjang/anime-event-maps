@@ -143,26 +143,22 @@ export const EventSummary = (props: IEventSummaryProps) => {
         </div>
         {/* 이미지 */}
         <div>
-          {!!event.images &&
-            event.images.map((data, i) => {
-              return (
-                <Image
-                  className="event_summary__bg_image max-h-[180px]"
-                  src={data.path}
-                  alt={data.alt}
-                  fill
-                  objectFit="cover"
-                  key={i}
-                />
-              );
-            })}
+          {
+            <Image
+              className="event_summary__bg_image max-h-[180px]"
+              src={event.images.path}
+              alt={event.images.alt}
+              fill
+              objectFit="cover"
+            />
+          }
         </div>
         <div>
           <a className="p-1">{event.site}</a>
         </div>
         <div className="flex justify-between items-center  p-1">
           <div className="space-x-1">
-            <label className="font-medium">{event.adress}</label>
+            <label className="font-medium">{event.address}</label>
             <label className="text-gray-400 text-sm">{event.category}</label>
           </div>
           {renderFavoriteBtn()}

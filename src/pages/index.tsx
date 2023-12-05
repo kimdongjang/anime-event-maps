@@ -73,7 +73,7 @@ export default function Main() {
       >
         <div className="w-full h-full">
           {/* 맵 섹션 */}
-          <Map onLoad={onLoadMap} />
+          {/* <Map onLoad={onLoadMap} /> */}
           <div className="bg-gray-100 w-full h-full"></div>
         </div>
       </section>

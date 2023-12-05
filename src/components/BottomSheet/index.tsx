@@ -1,6 +1,10 @@
+import { MainCategory } from '@/constants/enums';
 import { useSearchData } from '@/hooks/useSearchData';
+import { selectCategoryStore } from '@/stores/MapDataStore';
 import { Dispatch, SetStateAction, useRef, useState } from 'react';
+import { MdHome, MdOutlineStar } from 'react-icons/md';
 import Sheet, { SheetRef } from 'react-modal-sheet';
+import { useRecoilState } from 'recoil';
 import { EventList } from '../Event/List';
 
 interface IBottomSheetProps {
@@ -15,6 +19,8 @@ interface IBottomSheetProps {
  */
 export const BottomSheet = (props: IBottomSheetProps) => {
   const { isOpen, setOpen } = props;
+  const [selectCategory, setSelectCategory] =
+    useRecoilState(selectCategoryStore);
   const ref = useRef<SheetRef>();
 
   return (
@@ -26,6 +32,26 @@ export const BottomSheet = (props: IBottomSheetProps) => {
           <Sheet.Content>
             <Sheet.Scroller>
               <div className="h-[600px]">
+                <div className={'w-full flex items-center'}>
+                  <button
+                    className="w-full h-full flex  justify-center items-center 
+        bg-gray-50 border text-blue-400 p-2"
+                    type="button"
+                    onClick={() => setSelectCategory(MainCategory.MAIN)}
+                  >
+                    <MdHome size={22} />
+                    <p>메인</p>
+                  </button>
+                  <button
+                    className="w-full h-full flex justify-center items-center 
+        bg-gray-100 border text-yellow-400 p-2"
+                    type="button"
+                    onClick={() => setSelectCategory(MainCategory.FAVORITE)}
+                  >
+                    <MdOutlineStar size={22} />
+                    <p>북마크</p>
+                  </button>
+                </div>
                 <EventList />
               </div>
             </Sheet.Scroller>

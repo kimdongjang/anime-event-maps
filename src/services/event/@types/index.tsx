@@ -4,14 +4,15 @@ export interface IEvent {
   id: number;
   title: string;
   category: string;
+  event: string;
   startDate: string;
   endDate: string;
 
-  images?: IImage[];
+  images: IImage;
 
   minPrice?: number;
   maxPrice?: number;
-  adress?: string;
+  address?: string;
   jibunAddress?: string;
   doroAddress?: string;
   lat: number;
