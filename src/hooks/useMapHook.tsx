@@ -3,7 +3,8 @@ import type { Coordinates, NaverMap } from '../types/map';
 import useSWR, { mutate } from 'swr';
 import { IEvent } from '@/services/event/@types';
 import { useRecoilState } from 'recoil';
-import { markerStore } from '@/stores/MapDataStore';
+import { markerStore, searchListStore } from '@/stores/MapDataStore';
+import { IMarker } from '@/constants/common';
 
 export const INITIAL_CENTER: Coordinates = {
   lat: 37.4862618,
@@ -16,7 +17,9 @@ export const MAP_KEY = '/map';
 const useMapHook = () => {
   /** useSWR의 MAP_KEY로 API를 지정 */
   const { data: naverMap }: { data: NaverMap | undefined } = useSWR(MAP_KEY);
-  const [markerList, setMarkerList] = useRecoilState(markerStore);
+  const [searchList, setSearchList] = useRecoilState(searchListStore);
+  const [markerList, setMarkerList] = useState<IMarker[]>();
+
   // const [myLocation, setMyLocation] = useState<{
   //   latitude: number;
   //   longitude: number;
@@ -60,43 +63,63 @@ const useMapHook = () => {
   }, [naverMap]);
 
   const renderMarker = (event: IEvent) => {
-    if (!!naverMap) {
-      const marker = new naver.maps.Marker({
-        position: new naver.maps.LatLng(event.lat, event.lng),
-        map: naverMap,
-      });
-      const infoWindow = new naver.maps.InfoWindow({
-        content: [
-          `<div class="p-3">
-                    <img src="${event.images.path}" width="250" height="150" 
-                      alt="${event.images.alt}"/>',
-                    <h3>${event.title}</h3>
-                    <p>${event.address}</p>
-                    <p>${event.startDate}</p>
-                    <p>${event.endDate}</p>
-                </div>`,
-        ].join(''),
-      });
-      naver.maps.Event.addListener(marker, 'click', () => {
-        if (infoWindow.getMap()) {
-          infoWindow.close();
-        } else {
-          !!naverMap && infoWindow.open(naverMap, marker);
-        }
-      });
+    const marker = new naver.maps.Marker({
+      position: new naver.maps.LatLng(event.lat, event.lng),
+      map: naverMap,
+    });
+    const infoWindow = new naver.maps.InfoWindow({
+      content: [
+        `<div class="p-3 ">
+              <img src="${event.images.path}" width="250" height="150" 
+                alt="${event.images.alt}"/>
+              <h3>${event.title}</h3>
+              <p>${event.address}</p>
+              <div class="flex">
+                <label class="bg-yellow-100 border-gray-100 rounded text-sm font-medium px-1">기간</label>
+                <p>${event.startDate}</p>
+                <p>~</p>
+                <p>${event.endDate}</p>
+              </div>
+            </div>`,
+      ].join(''),
+    });
+    naver.maps.Event.addListener(marker, 'click', () => {
+      if (infoWindow.getMap()) {
+        infoWindow.close();
+      } else {
+        !!naverMap && infoWindow.open(naverMap, marker);
+      }
+    });
+    return {
+      marker,
+      infoWindow
     }
   };
 
   useEffect(() => {
-    if (!!markerList) {
-      markerList.map((data, i) => {
+    if (!!naverMap && !!searchList) {
+      const markerList: IMarker[] = [];
+      searchList.map((data, i) => {
         // 선택된 리스트를 지도에 마커로 표시
-        if (data.checked) {
-          renderMarker(data.event);
-        }
+        // renderMarker(data);
+        const { marker, infoWindow } = renderMarker(data);
+        markerList.push({
+          checked: true,
+          event: data,
+          marker: marker,
+          infoWindow: infoWindow
+        })
       });
+      setMarkerList(markerList)
     }
   }, [naverMap]);
+
+  const openInfoWindow = (event: IEvent) => {
+    if (!!naverMap) {
+      const find = markerList?.find(data => data.event.id === event.id)
+      find?.infoWindow.open(naverMap, find.marker)
+    }
+  }
 
   const morphMarker = (event: IEvent) => {
     if (!!naverMap) {
@@ -109,6 +132,7 @@ const useMapHook = () => {
     resetMapOptions,
     renderMarker,
     morphMarker,
+    openInfoWindow,
   };
 };
 export default useMapHook;

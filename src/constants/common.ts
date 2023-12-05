@@ -12,7 +12,9 @@ export interface IImage {
 }
 
 export interface IMarker {
-  coordinates: Coordinates;
   checked: boolean;
   event: IEvent;
+  marker: naver.maps.Marker;
+  infoWindow: naver.maps.InfoWindow
+
 }
