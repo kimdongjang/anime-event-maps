@@ -5,6 +5,9 @@ import { RecoilRoot } from 'recoil';
 
 import '@/styles/_globals.scss';
 import { Hydrate, QueryClient, QueryClientProvider } from 'react-query';
+import { useEffect } from 'react';
+import * as gtag from '../utils/gtag';
+import { useRouter } from 'next/router';
 
 const notoSansKr = Noto_Sans_KR({
   // preload: true, 기본값
@@ -15,6 +18,20 @@ const notoSansKr = Noto_Sans_KR({
 
 export default function App({ Component, pageProps }: AppProps) {
   const queryClient = new QueryClient();
+  const router = useRouter();
+
+  useEffect(() => {
+    const handleRouteChange = (url: URL) => {
+      gtag.pageview(url);
+    };
+    router.events.on('routeChangeComplete', handleRouteChange);
+    router.events.on('hashChangeComplete', handleRouteChange);
+    return () => {
+      router.events.off('routeChangeComplete', handleRouteChange);
+      router.events.off('hashChangeComplete', handleRouteChange);
+    };
+  }, [router.events]);
+
   return (
     <RecoilRoot>
       <QueryClientProvider client={queryClient}>
