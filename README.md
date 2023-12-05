@@ -1,5 +1,5 @@
 # 애니메이션&게임 행사 맵스 웹페이지 (current v1.0.0)
-developer: gieun3644@gmail.com
+developer: gieun3644@gmail.com  
 https://anime-event-maps.vercel.app/
 
 ## Stack
