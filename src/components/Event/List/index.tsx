@@ -7,10 +7,12 @@ import {
   searchListStore,
   selectCategoryStore,
 } from '@/stores/MapDataStore';
+import { mobileIsOpenStore } from '@/stores/MobileStore';
 import { useRecoilState } from 'recoil';
 import { EventSummary } from '../Summary';
 
 export const EventList = () => {
+  const [isMobileShow, setIsMobileShow] = useRecoilState(mobileIsOpenStore);
   const [searchList, setSearchList] = useRecoilState(searchListStore);
   const [selectCategory, setSelectCategory] =
     useRecoilState(selectCategoryStore);
@@ -18,8 +20,8 @@ export const EventList = () => {
 
   const handleEventClick = (event: IEvent) => {
     morphMarker(event);
-    // const find = markerList.find((search) => search.event.id == event.id);
-    // console.log(find);
+    // 모바일인 경우 편의성을 위해 창을 내려줌
+    setIsMobileShow(false);
   };
 
   const renderEventList = () => {

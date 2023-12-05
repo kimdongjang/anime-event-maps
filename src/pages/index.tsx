@@ -7,7 +7,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 import { useEffect, useRef, useState } from 'react';
 import { sampleEvents } from '@/constants/sample';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { markerStore } from '@/stores/MapDataStore';
 import { IMarker } from '@/constants/common';
 import { BottomNavigation } from '@/components/BottomNavigation';
@@ -18,11 +18,12 @@ import { useRouter } from 'next/router';
 import useMapHook from '@/hooks/useMapHook';
 import { NaverMap } from '@/types/map';
 import { MainCategory } from '@/constants/enums';
+import { mobileIsOpenStore } from '@/stores/MobileStore';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export default function Main() {
-  const [isMobileShow, setIsMobileShow] = useState(false);
+  const [isMobileShow, setIsMobileShow] = useRecoilState(mobileIsOpenStore);
   const [isDesktopShow, setIsDesktopShow] = useState(true);
   const router = useRouter();
 
