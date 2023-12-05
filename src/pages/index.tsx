@@ -14,7 +14,7 @@ import { BottomNavigation } from '@/components/BottomNavigation';
 import { Badge, FloatButton } from 'antd';
 import { MdHome, MdMyLocation, MdRefresh } from 'react-icons/md';
 import { BottomSheet } from '@/components/BottomSheet';
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/router';
 import useMapHook from '@/hooks/useMapHook';
 import { NaverMap } from '@/types/map';
 
@@ -26,6 +26,17 @@ export default function Main() {
   const [markerList, setMarkerList] = useRecoilState(markerStore);
   const router = useRouter();
   const { morphMarker } = useMapHook();
+
+  useEffect(() => {
+    window.onpopstate = () => {
+      // 뒤로가기가 실행될 경우 추가 action 등록
+      if (!!isMobileShow) {
+        // change end
+        console.log('prevent go back!');
+        setIsMobileShow(false);
+      }
+    };
+  }, [isMobileShow]);
 
   const { initializeMap } = useMapHook();
   const onLoadMap = (map: NaverMap) => {
@@ -73,8 +84,6 @@ export default function Main() {
     }
   }, []);
 
-
-
   const handleShow = (isShow: boolean) => {
     setIsDesktopShow(isShow);
   };
@@ -96,7 +105,6 @@ export default function Main() {
         className="hidden md:block"
         handleShow={handleShow}
         isShow={isDesktopShow}
-
       />
       <div className="fixed bottom-[3%] left-[3%] flex flex-col ">
         <button
@@ -110,7 +118,7 @@ export default function Main() {
       {/* 모바일용 플롯 버튼 */}
       <div className="md:hidden fixed bottom-[3%] right-[3%] flex flex-col ">
         <button
-          onClick={() => router.refresh()}
+          onClick={() => router.reload()}
           className="border border-gray-400 bg-white rounded-full p-2 my-2"
           type="button"
         >
@@ -118,7 +126,11 @@ export default function Main() {
         </button>
 
         <button
-          onClick={() => setIsMobileShow(true)}
+          onClick={() => {
+            // change start
+            history.pushState(null, '', '');
+            setIsMobileShow(true);
+          }}
           className="border border-gray-400 bg-white rounded-full p-2"
           type="button"
         >
