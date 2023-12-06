@@ -16,36 +16,20 @@ import { useRecoilState } from 'recoil';
 
 export const useSearchData = () => {
   const [searchList, setSearchList] = useRecoilState(searchListStore);
-  const [markerList, setMarkerList] = useRecoilState(markerStore);
-  const [selectCategory, setSelectCategory] =
-    useRecoilState(selectCategoryStore);
+  // const [selectCategory, setSelectCategory] =
+  //   useRecoilState(selectCategoryStore);
 
-  useEffect(() => {
-    switch (selectCategory) {
-      case MainCategory.MAIN:
-        initSearchList();
-        // 마커 리스트 초기화
-        let tempList: IMarker[] = [];
-        sampleEvents.map((data, i) => {
-          if (!!data.lat && !!data.lng) {
-            tempList.push({
-              coordinates: {
-                lat: data.lat,
-                lng: data.lng,
-              },
-              checked: true,
-              event: data,
-            });
-          }
-        });
-        setMarkerList([...tempList]);
-        return;
-      case MainCategory.FAVORITE:
-        return;
-      default:
-        break;
-    }
-  }, [selectCategory]);
+  // useEffect(() => {
+  //   switch (selectCategory) {
+  //     case MainCategory.MAIN:
+  //       initSearchList();
+  //       return;
+  //     case MainCategory.FAVORITE:
+  //       return;
+  //     default:
+  //       break;
+  //   }
+  // }, [selectCategory]);
 
   // 초기 로딩시 searchList 기반으로 초기화진행
   useEffect(() => {

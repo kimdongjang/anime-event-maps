@@ -10,7 +10,8 @@ import { MouseEventHandler } from 'react';
 import Image from 'next/image';
 import { currentSummaryDate } from '@/utils/date';
 import { setLocalstorageEvent } from '@/utils/localStorages';
-import { useSearchData } from '@/hooks/useSearchData';
+import { useSearchData } from '@/hooks/useSearchData'
+import { FaCaretRight } from "react-icons/fa6";
 
 interface IEventSummaryProps {
   event: IEvent;
@@ -129,15 +130,10 @@ export const EventSummary = (props: IEventSummaryProps) => {
   };
 
   return (
-    <div className={classNames(className, 'bg-white w-full ')}>
-      <div
-        className="p-3"
-        onClick={() => {
-          onClick(event);
-        }}
-      >
+    <div className={classNames(className, 'bg-white w-full')}>
+      <div className="p-3">
         {/* 타이틀 */}
-        <div className="flex py-1">
+        <div className="flex justify-between py-2">
           {/* <h2>{currentSummaryDate(new Date(event.startDate))}</h2> */}
           <h2 className="font-bold text-xl cursor-pointer">{event.title}</h2>
         </div>
@@ -175,15 +171,24 @@ export const EventSummary = (props: IEventSummaryProps) => {
         {/* 위치 */}
         {renderLocation()}
       </div>
-      <div className="flex justify-end p-3">
+      <div className="flex justify-end space-x-1 p-3">
         <button
-          className="bg-blue-400 hover:bg-blue-500 text-white text-sm px-2 rounded py-1 "
+          className="bg-blue-400 hover:bg-blue-500 text-white text-sm rounded px-2 py-1 "
           type="button"
           onClick={() => {
-            router.push('https://map.naver.com/directions');
+            router.push('https://map.naver.com/p/directions/');
           }}
         >
           네이버 길찾기
+        </button>
+        <button className='flex items-center text-sm px-2 py-1
+           bg-sky-400 text-white rounded'
+          type='button'
+          onClick={() => {
+            onClick(event);
+          }}>
+          지도에서보기
+          <FaCaretRight size={16} />
         </button>
       </div>
     </div>

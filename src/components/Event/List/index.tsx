@@ -16,10 +16,13 @@ export const EventList = () => {
   const [searchList, setSearchList] = useRecoilState(searchListStore);
   const [selectCategory, setSelectCategory] =
     useRecoilState(selectCategoryStore);
-  const { morphMarker } = useMapHook();
+  const { morphMarker, openInfoWindow } = useMapHook();
 
   const handleEventClick = (event: IEvent) => {
     morphMarker(event);
+    // 화면이 깨지는 이슈가 있어서 1.5초후에 적용
+    setTimeout(() => openInfoWindow(event), 1500);
+
     // 모바일인 경우 편의성을 위해 창을 내려줌
     setIsMobileShow(false);
   };
