@@ -81,7 +81,7 @@ export default function Main() {
 
       <div className="relative hidden md:block">{renderBtn()}</div>
       <Sidebar
-        className="hidden md:block"
+        className="hidden md:block z-[5]"
         handleShow={handleShow}
         isShow={isDesktopShow}
       />
