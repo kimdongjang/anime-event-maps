@@ -1,0 +1,76 @@
+[
+  {
+    "id": 1,
+    "title": "2023 AGF",
+    "category": "게임&애니메이션 행사",
+    "event": "AGF",
+    "startDate": "2023-12-02",
+    "endDate": "2023-12-03",
+    "address": "일산 킨텍스",
+    "doroAddress": "경기 고양시 일산서구 킨텍스로 217-60",
+    "jibunAddress": "경기 고양시 대화동 2600",
+    "lat": 37.672114742842,
+    "lng": 126.75344229799,
+    "images": {
+      "path": "/images/agf2023.jpg",
+      "alt": "/anime-event-maps/agf2023"
+    },
+    "isFavorite": "false"
+  },
+  {
+    "id": 2,
+    "title": "175회 Winter 서울 코믹월드",
+    "category": "애니메이션 행사",
+    "event": "서울코믹월드",
+    "startDate": "2023-12-16",
+    "endDate": "2023-12-17",
+    "address": "일산 킨텍스 1전시장 2-5홀",
+    "doroAddress": "경기 고양시 일산서구 킨텍스로 217-60",
+    "jibunAddress": "경기 고양시 대화동 2600",
+    "lat": 37.672114742842,
+    "lng": 126.75344229799,
+    "images": {
+      "path": "/images/2023seoulcomic.png",
+      "alt": "/anime-event-maps/2023seoulcomic"
+    },
+    "site": "https://comicw.co.kr/bbs/board.php?bo_table=notice&wr_id=3986",
+    "isFavorite": "false"
+  },
+  {
+    "id": 3,
+    "title": "제3회 일러스타 페스",
+    "category": "애니메이션 행사",
+    "event": "일러스타 페스",
+    "startDate": "2024-02-17",
+    "endDate": "2024-02-18",
+    "address": "일산 킨텍스 2전시장 7-8홀",
+    "doroAddress": "경기 고양시 일산서구 킨텍스로 217-60",
+    "jibunAddress": "경기 고양시 대화동 2600",
+    "lat": 37.672114742842,
+    "lng": 126.75344229799,
+    "images": {
+      "path": "/images/2023seoulcomic.png",
+      "alt": "/anime-event-maps/2023seoulcomic"
+    },
+    "site": "https://illustar.net/",
+    "isFavorite": "false"
+  },
+  {
+    "id": 4,
+    "title": "팝콘 행사",
+    "category": "게임 행사",
+    "event": "팝콘",
+    "startDate": "2024-08-16",
+    "endDate": "2024-08-17",
+    "address": "삼성 코엑스",
+    "doroAddress": "서울특별시 강남구 영동대로 513",
+    "jibunAddress": "경기 고양시 대화동 2600",
+    "lat": 37.672114742842,
+    "lng": 126.75344229799,
+    "images": {
+      "path": "/images/2023seoulcomic.png",
+      "alt": "/anime-event-maps/2023seoulcomic"
+    },
+    "isFavorite": "false"
+  }
+]

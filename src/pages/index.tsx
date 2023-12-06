@@ -8,7 +8,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { useEffect, useRef, useState } from 'react';
 import { sampleEvents } from '@/constants/sample';
 import { useRecoilState, useSetRecoilState } from 'recoil';
-import { markerStore } from '@/stores/MapDataStore';
+import { markerStore, searchListStore } from '@/stores/MapDataStore';
 import { IMarker } from '@/constants/common';
 import { BottomNavigation } from '@/components/BottomNavigation';
 import { Badge, FloatButton } from 'antd';
@@ -22,10 +22,16 @@ import { mobileIsOpenStore } from '@/stores/MobileStore';
 
 const inter = Inter({ subsets: ['latin'] });
 
-export default function Main() {
+export default function Main(props: any) {
+  const { datas } = props;
+  const [searchList, setSearchList] = useRecoilState(searchListStore);
   const [isMobileShow, setIsMobileShow] = useRecoilState(mobileIsOpenStore);
   const [isDesktopShow, setIsDesktopShow] = useState(true);
   const router = useRouter();
+
+  useEffect(() => {
+    setSearchList(datas);
+  }, []);
 
   useEffect(() => {
     window.onpopstate = () => {
@@ -74,7 +80,7 @@ export default function Main() {
       >
         <div className="w-full h-full">
           {/* 맵 섹션 */}
-          <Map onLoad={onLoadMap} />
+          {/* <Map onLoad={onLoadMap} /> */}
           <div className="bg-gray-100 w-full h-full"></div>
         </div>
       </section>
@@ -121,4 +127,12 @@ export default function Main() {
       <BottomSheet isOpen={isMobileShow} setOpen={setIsMobileShow} />
     </RootLayout>
   );
+}
+
+export async function getStaticProps() {
+  const datas = (await import('../../public/data/sample.json')).default;
+  return {
+    props: { datas },
+    revalidate: 60 * 60,
+  };
 }

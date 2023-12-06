@@ -12,7 +12,7 @@ export const markerStore = atom<IMarker[]>({
 
 export const searchListStore = atom<IEvent[]>({
   key: `searchListStore`,
-  default: [...sampleEvents],
+  default: [],
 });
 
 export const selectCategoryStore = atom<MainCategory>({
