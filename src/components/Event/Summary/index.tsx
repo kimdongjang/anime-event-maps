@@ -8,10 +8,10 @@ import { useRouter } from 'next/navigation';
 import classNames from 'classnames';
 import { MouseEventHandler } from 'react';
 import Image from 'next/image';
-import { currentSummaryDate } from '@/utils/date';
+import { diffDateCalculate, DiffDateType } from '@/utils/date';
 import { setLocalstorageEvent } from '@/utils/localStorages';
-import { useSearchData } from '@/hooks/useSearchData'
-import { FaCaretRight } from "react-icons/fa6";
+import { useSearchData } from '@/hooks/useSearchData';
+import { FaCaretRight } from 'react-icons/fa6';
 
 interface IEventSummaryProps {
   event: IEvent;
@@ -31,6 +31,45 @@ export const EventSummary = (props: IEventSummaryProps) => {
     } catch (e) {
       alert('복사에 실패하였습니다');
     }
+  };
+  const renderTitle = () => {
+    const { str, type, remainDate } = diffDateCalculate(
+      new Date(event.startDate),
+      new Date(event.endDate)
+    );
+    let color = '';
+    let bgColor = '';
+    let bgTextColor = '';
+    switch (type) {
+      case DiffDateType.END:
+        color = 'text-gray-300';
+        bgColor = 'gray-50';
+        break;
+      case DiffDateType.CURRENT:
+        bgColor = 'green-400';
+        bgTextColor = 'text-white';
+        break;
+      case DiffDateType.DAY_AGO:
+        bgColor = 'yellow-400';
+        bgTextColor = 'text-white';
+        break;
+      case DiffDateType.MONTH_AGO:
+        bgColor = 'blue-400';
+        bgTextColor = 'text-white';
+        break;
+    }
+    return (
+      <>
+        <h3
+          className={`bg-${bgColor} border-${bgColor} ${bgTextColor} border py-1 px-2 rounded`}
+        >
+          {!!remainDate ? remainDate + str : str}
+        </h3>
+        <h2 className={`${color} font-bold text-xl cursor-pointer`}>
+          {event.title}
+        </h2>
+      </>
+    );
   };
   const renderFavoriteBtn = () => {
     if (!!event.isFavorite) {
@@ -130,13 +169,10 @@ export const EventSummary = (props: IEventSummaryProps) => {
   };
 
   return (
-    <div className={classNames(className, 'bg-white w-full')}>
+    <div className={classNames(className, 'bg-white w-full border-y mb-3')}>
       <div className="p-3">
         {/* 타이틀 */}
-        <div className="flex justify-between py-2">
-          {/* <h2>{currentSummaryDate(new Date(event.startDate))}</h2> */}
-          <h2 className="font-bold text-xl cursor-pointer">{event.title}</h2>
-        </div>
+        <div className="flex items-center space-x-1 py-1">{renderTitle()}</div>
         {/* 이미지 */}
         <div>
           {
@@ -181,12 +217,14 @@ export const EventSummary = (props: IEventSummaryProps) => {
         >
           네이버 길찾기
         </button>
-        <button className='flex items-center text-sm px-2 py-1
-           bg-sky-400 text-white rounded'
-          type='button'
+        <button
+          className="flex items-center text-sm px-2 py-1
+           bg-sky-400 text-white rounded"
+          type="button"
           onClick={() => {
             onClick(event);
-          }}>
+          }}
+        >
           지도에서보기
           <FaCaretRight size={16} />
         </button>

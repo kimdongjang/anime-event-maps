@@ -23,6 +23,35 @@ export const BottomSheet = (props: IBottomSheetProps) => {
     useRecoilState(selectCategoryStore);
   const ref = useRef<SheetRef>();
 
+  const renderCategory = () => {
+    return (
+      <div className={'w-full flex items-center'}>
+        <button
+          className={`w-full h-full flex justify-center items-center text-indigo-400 p-2
+  ${selectCategory === MainCategory.MAIN ? 'bg-white' : 'bg-gray-50 border'}`}
+          type="button"
+          onClick={() => setSelectCategory(MainCategory.MAIN)}
+        >
+          <MdHome size={22} />
+          <p>메인</p>
+        </button>
+        <button
+          className={`w-full h-full flex justify-center items-center text-yellow-400 p-2
+        ${
+          selectCategory === MainCategory.FAVORITE
+            ? 'bg-white'
+            : 'bg-gray-50 border'
+        }`}
+          type="button"
+          onClick={() => setSelectCategory(MainCategory.FAVORITE)}
+        >
+          <MdOutlineStar size={22} />
+          <p>북마크</p>
+        </button>
+      </div>
+    );
+  };
+
   return (
     <>
       {/* 모바일용 바텀 시트 */}
@@ -32,26 +61,7 @@ export const BottomSheet = (props: IBottomSheetProps) => {
           <Sheet.Content>
             <Sheet.Scroller>
               <div className="h-[600px]">
-                <div className={'w-full flex items-center'}>
-                  <button
-                    className="w-full h-full flex  justify-center items-center 
-        bg-gray-50 border text-blue-400 p-2"
-                    type="button"
-                    onClick={() => setSelectCategory(MainCategory.MAIN)}
-                  >
-                    <MdHome size={22} />
-                    <p>메인</p>
-                  </button>
-                  <button
-                    className="w-full h-full flex justify-center items-center 
-        bg-gray-100 border text-yellow-400 p-2"
-                    type="button"
-                    onClick={() => setSelectCategory(MainCategory.FAVORITE)}
-                  >
-                    <MdOutlineStar size={22} />
-                    <p>북마크</p>
-                  </button>
-                </div>
+                {renderCategory()}
                 <EventList />
               </div>
             </Sheet.Scroller>

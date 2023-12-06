@@ -1,5 +1,5 @@
-import { IEvent } from "@/services/event/@types";
-import { Coordinates } from "@/types/map";
+import { IEvent } from '@/services/event/@types';
+import { Coordinates } from '@/types/map';
 
 export interface IImage {
   id?: number;
@@ -15,6 +15,5 @@ export interface IMarker {
   checked: boolean;
   event: IEvent;
   marker: naver.maps.Marker;
-  infoWindow: naver.maps.InfoWindow
-
+  infoWindow: naver.maps.InfoWindow;
 }

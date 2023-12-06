@@ -7,7 +7,7 @@ export const sampleEvents: IEvent[] = [
     category: '게임&애니메이션 행사',
     event: 'AGF',
     startDate: '2023-12-02',
-    endDate: '2024-12-03',
+    endDate: '2023-12-03',
     address: '일산 킨텍스',
     doroAddress: '경기 고양시 일산서구 킨텍스로 217-60',
     jibunAddress: '경기 고양시 대화동 2600',

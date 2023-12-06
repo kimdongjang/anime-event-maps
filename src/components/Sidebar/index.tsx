@@ -6,20 +6,21 @@ import {
   MdOutlineStar,
   MdOutlineStarBorder,
 } from 'react-icons/md';
+import { FaSortAmountDown } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
-import { IconButton } from '@mui/material';
 
 import styles from './Sidebar.module.scss';
-import { EventSummary } from '../Event/Summary';
 import { SearchBox } from '../SearchBox';
-import { IEvent } from '@/services/event/@types';
-import { sampleEvents } from '@/constants/sample';
 import { useRecoilState } from 'recoil';
-import { IMarker } from '@/constants/common';
-import { markerStore, selectCategoryStore } from '@/stores/MapDataStore';
+import {
+  markerStore,
+  searchListStore,
+  selectCategoryStore,
+} from '@/stores/MapDataStore';
 import { EventList } from '../Event/List';
-import { useSearchData } from '@/hooks/useSearchData';
 import { MainCategory } from '@/constants/enums';
+import { Dropdown, Select } from 'antd';
+import { sortMenuItems } from '@/constants/menuItems';
 
 interface ISidebar {
   handleShow: any;
@@ -28,9 +29,12 @@ interface ISidebar {
 }
 const Sidebar = (props: ISidebar) => {
   const { className, handleShow, isShow } = props;
+  const [searchList, setSearchList] = useRecoilState(searchListStore);
   const [selectCategory, setSelectCategory] =
     useRecoilState(selectCategoryStore);
-  const renderBtn = () => {
+  const [openFilter, setOpenFilter] = useState(false);
+
+  const renderOpenBtn = () => {
     if (isShow) {
       return (
         <button
@@ -51,40 +55,85 @@ const Sidebar = (props: ISidebar) => {
       );
     }
   };
+  const renderCategory = () => {
+    return (
+      <div className={'w-full flex items-center'}>
+        <button
+          className={`w-full h-full flex justify-center items-center text-indigo-400 p-2
+  ${selectCategory === MainCategory.MAIN ? 'bg-white' : 'bg-gray-50 border'}`}
+          type="button"
+          onClick={() => setSelectCategory(MainCategory.MAIN)}
+        >
+          <MdHome size={22} />
+          <p>메인</p>
+        </button>
+        <button
+          className={`w-full h-full flex justify-center items-center text-yellow-400 p-2
+        ${
+          selectCategory === MainCategory.FAVORITE
+            ? 'bg-white'
+            : 'bg-gray-50 border'
+        }`}
+          type="button"
+          onClick={() => setSelectCategory(MainCategory.FAVORITE)}
+        >
+          <MdOutlineStar size={22} />
+          <p>북마크</p>
+        </button>
+      </div>
+    );
+  };
+
+  const renderSortBtn = () => {
+    return (
+      <button className="text-gray-400 ml-1">
+        <Dropdown menu={{ items: sortMenuItems }} trigger={['click']}>
+          <FaSortAmountDown size={24} />
+        </Dropdown>
+      </button>
+    );
+  };
+  const renderFilterBtn = () => {
+    return (
+      <button
+        className={`${
+          !!openFilter ? 'text-indigo-500 ' : 'text-gray-400'
+        } ml-1`}
+        onClick={() => setOpenFilter(!openFilter)}
+      >
+        <MdFilterAlt size={32} />
+      </button>
+    );
+  };
+  const renderFilterList = () => {
+    const filterList = new Set(searchList.map((data) => data.event));
+    if (!!openFilter) {
+      return (
+        <div className="flex">
+          {[...filterList].map((data, i) => {
+            return <label key={i}>{data}</label>;
+          })}
+        </div>
+      );
+    }
+  };
 
   return (
     <aside className={`fixed flex h-full ${className}`}>
       <div
-        className={`bg-gray-50 h-full w-0 md:w-[45%] lg:w-[40%] xl:w-[35%] flex overflow-y-scroll ${
+        className={`bg-white h-full w-0 md:w-[45%] lg:w-[40%] xl:w-[35%] flex overflow-y-scroll ${
           isShow ? styles.show_side_bar : styles.close_side_bar
         }`}
       >
-        <div className="sticky top-0">{renderBtn()}</div>
-        <div className="flex flex-col w-full">
-          <div className={'w-full flex items-center'}>
-            <button
-              className="w-full h-full flex  justify-center items-center 
-        bg-gray-50 border text-blue-400 p-2"
-              type="button"
-              onClick={() => setSelectCategory(MainCategory.MAIN)}
-            >
-              <MdHome size={22} />
-              <p>메인</p>
-            </button>
-            <button
-              className="w-full h-full flex justify-center items-center 
-        bg-gray-100 border text-yellow-400 p-2"
-              type="button"
-              onClick={() => setSelectCategory(MainCategory.FAVORITE)}
-            >
-              <MdOutlineStar size={22} />
-              <p>북마크</p>
-            </button>
-          </div>
+        <div className="sticky top-0">{renderOpenBtn()}</div>
+        <div className="flex flex-col w-full bg-white">
+          {renderCategory()}
           <div className="flex items-center m-3">
             <SearchBox className="w-full text-base " />
-            <MdFilterAlt size={32} className="text-gray-400 ml-1" />
+            {renderSortBtn()}
+            {renderFilterBtn()}
           </div>
+          {renderFilterList()}
           <EventList />
         </div>
       </div>
