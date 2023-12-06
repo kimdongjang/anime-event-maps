@@ -43,26 +43,24 @@ export const EventSummary = (props: IEventSummaryProps) => {
     switch (type) {
       case DiffDateType.END:
         color = 'text-gray-300';
-        bgColor = 'gray-50';
+        bgColor = 'bg-gray-50 border-gray-300';
         break;
       case DiffDateType.CURRENT:
-        bgColor = 'green-400';
+        bgColor = 'bg-green-400 border-green-400';
         bgTextColor = 'text-white';
         break;
       case DiffDateType.DAY_AGO:
-        bgColor = 'yellow-400';
+        bgColor = 'bg-yellow-400 border-yellow-400';
         bgTextColor = 'text-white';
         break;
       case DiffDateType.MONTH_AGO:
-        bgColor = 'blue-400';
+        bgColor = 'bg-blue-400 border-blue-400';
         bgTextColor = 'text-white';
         break;
     }
     return (
       <>
-        <h3
-          className={`bg-${bgColor} border-${bgColor} ${bgTextColor} border py-1 px-2 rounded`}
-        >
+        <h3 className={`${bgColor} ${bgTextColor} border py-1 px-2 rounded`}>
           {!!remainDate ? remainDate + str : str}
         </h3>
         <h2 className={`${color} font-bold text-xl cursor-pointer`}>
@@ -170,14 +168,14 @@ export const EventSummary = (props: IEventSummaryProps) => {
 
   return (
     <div className={classNames(className, 'bg-white w-full border-y mb-3')}>
-      <div className="p-3">
+      <div className="p-1">
         {/* 타이틀 */}
         <div className="flex items-center space-x-1 py-1">{renderTitle()}</div>
         {/* 이미지 */}
         <div>
           {
             <Image
-              className="event_summary__bg_image max-h-[180px]"
+              className="event_summary__bg_image max-h-[180px] py-1"
               src={event.images.path}
               alt={event.images.alt}
               fill

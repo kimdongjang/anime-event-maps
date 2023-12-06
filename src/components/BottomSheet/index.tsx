@@ -1,11 +1,15 @@
 import { MainCategory } from '@/constants/enums';
+import { sortMenuItems } from '@/constants/menuItems';
 import { useSearchData } from '@/hooks/useSearchData';
-import { selectCategoryStore } from '@/stores/MapDataStore';
+import { searchListStore, selectCategoryStore } from '@/stores/MapDataStore';
+import { Dropdown } from 'antd';
 import { Dispatch, SetStateAction, useRef, useState } from 'react';
-import { MdHome, MdOutlineStar } from 'react-icons/md';
+import { FaSortAmountDown } from 'react-icons/fa';
+import { MdFilterAlt, MdHome, MdOutlineStar } from 'react-icons/md';
 import Sheet, { SheetRef } from 'react-modal-sheet';
 import { useRecoilState } from 'recoil';
 import { EventList } from '../Event/List';
+import { SearchBox } from '../SearchBox';
 
 interface IBottomSheetProps {
   isOpen: boolean;
@@ -21,7 +25,9 @@ export const BottomSheet = (props: IBottomSheetProps) => {
   const { isOpen, setOpen } = props;
   const [selectCategory, setSelectCategory] =
     useRecoilState(selectCategoryStore);
+  const [searchList, setSearchList] = useRecoilState(searchListStore);
   const ref = useRef<SheetRef>();
+  const [openFilter, setOpenFilter] = useState(false);
 
   const renderCategory = () => {
     return (
@@ -33,7 +39,7 @@ export const BottomSheet = (props: IBottomSheetProps) => {
           onClick={() => setSelectCategory(MainCategory.MAIN)}
         >
           <MdHome size={22} />
-          <p>메인</p>
+          <h3>메인</h3>
         </button>
         <button
           className={`w-full h-full flex justify-center items-center text-yellow-400 p-2
@@ -46,10 +52,44 @@ export const BottomSheet = (props: IBottomSheetProps) => {
           onClick={() => setSelectCategory(MainCategory.FAVORITE)}
         >
           <MdOutlineStar size={22} />
-          <p>북마크</p>
+          <h3>북마크</h3>
         </button>
       </div>
     );
+  };
+
+  const renderSortBtn = () => {
+    return (
+      <button className="text-gray-400 ml-1">
+        <Dropdown menu={{ items: sortMenuItems }} trigger={['click']}>
+          <FaSortAmountDown size={24} />
+        </Dropdown>
+      </button>
+    );
+  };
+  const renderFilterBtn = () => {
+    return (
+      <button
+        className={`${
+          !!openFilter ? 'text-indigo-500 ' : 'text-gray-400'
+        } ml-1`}
+        onClick={() => setOpenFilter(!openFilter)}
+      >
+        <MdFilterAlt size={32} />
+      </button>
+    );
+  };
+  const renderFilterList = () => {
+    const filterList = new Set(searchList.map((data) => data.event));
+    if (!!openFilter) {
+      return (
+        <div className="flex">
+          {[...filterList].map((data, i) => {
+            return <label key={i}>{data}</label>;
+          })}
+        </div>
+      );
+    }
   };
 
   return (
@@ -60,8 +100,14 @@ export const BottomSheet = (props: IBottomSheetProps) => {
           <Sheet.Header />
           <Sheet.Content>
             <Sheet.Scroller>
-              <div className="h-[600px]">
+              <div className="flex flex-col bg-white ">
                 {renderCategory()}
+                <div className="flex items-center m-3">
+                  <SearchBox className="w-full text-base " />
+                  {renderSortBtn()}
+                  {renderFilterBtn()}
+                </div>
+                {renderFilterList()}
                 <EventList />
               </div>
             </Sheet.Scroller>

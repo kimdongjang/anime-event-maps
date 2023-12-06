@@ -65,7 +65,7 @@ const Sidebar = (props: ISidebar) => {
           onClick={() => setSelectCategory(MainCategory.MAIN)}
         >
           <MdHome size={22} />
-          <p>메인</p>
+          <h3>메인</h3>
         </button>
         <button
           className={`w-full h-full flex justify-center items-center text-yellow-400 p-2
@@ -78,7 +78,7 @@ const Sidebar = (props: ISidebar) => {
           onClick={() => setSelectCategory(MainCategory.FAVORITE)}
         >
           <MdOutlineStar size={22} />
-          <p>북마크</p>
+          <h3>북마크</h3>
         </button>
       </div>
     );
