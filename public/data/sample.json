@@ -41,7 +41,7 @@
   },
   {
     "id": 3,
-    "title": "코스띠아모",
+    "title": "61회 코스띠아모",
     "category": "놀이공원 행사",
     "event": "코스띠아모",
     "startDate": "2023-12-30",
@@ -53,8 +53,8 @@
     "lat": 37.4370997,
     "lng": 127.024467,
     "images": {
-      "path": "/images/2023seoulcomic.png",
-      "alt": "/anime-event-maps/2023seoulcomic"
+      "path": "/images/costiamo/61회_코스띠아모.png",
+      "alt": "/anime-event-maps/costiamo/61"
     },
     "site": "https://cafe.naver.com/coscomic",
     "isFavorite": false
@@ -93,8 +93,8 @@
     "lat": 37.4370997,
     "lng": 127.024467,
     "images": {
-      "path": "/images/2023seoulcomic.png",
-      "alt": "/anime-event-maps/2023seoulcomic"
+      "path": "/images/costiamo/62회_코스띠아모.jpg",
+      "alt": "/anime-event-maps/costiamo/62"
     },
     "site": "https://cafe.naver.com/coscomic",
     "isFavorite": false
@@ -113,8 +113,8 @@
     "lat": 37.672114742842,
     "lng": 126.75344229799,
     "images": {
-      "path": "/images/2023seoulcomic.png",
-      "alt": "/anime-event-maps/2023seoulcomic"
+      "path": "/images/illustar/2회_일러스타.png",
+      "alt": "/anime-event-maps/illustar/2"
     },
     "site": "https://illustar.net/",
     "isFavorite": false

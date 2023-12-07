@@ -203,7 +203,7 @@ export const EventSummary = (props: IEventSummaryProps) => {
           {renderFavoriteBtn()}
         </div>
         <div>
-          <a className="text-sm p-1">{event.site}</a>
+          <a className="text-sm p-1" href={event.site}>{event.site}</a>
         </div>
         <div className="flex items-center space-x-1 p-1">
           <label className="bg-yellow-100 border-gray-100 rounded text-sm font-medium px-1">
