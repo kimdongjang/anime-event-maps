@@ -1,7 +1,7 @@
 import Head from 'next/head';
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
-  const siteTitle = '애니메이션 행사 맵스';
+  const siteTitle = '애이맵(애니메이션 행사 맵스)';
   const description = `
   최근 애니메이션/게임 행사 정보를 맵으로 확인해볼 수 있어요.
   email: gieunp3644@gmail.com

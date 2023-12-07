@@ -6,23 +6,22 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 import { useEffect, useRef, useState } from 'react';
-import { sampleEvents } from '@/constants/sample';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { markerStore, searchListStore } from '@/stores/MapDataStore';
-import { IMarker } from '@/constants/common';
-import { BottomNavigation } from '@/components/BottomNavigation';
 import { Badge, FloatButton } from 'antd';
-import { MdHome, MdMyLocation, MdRefresh } from 'react-icons/md';
+import { MdSearch, MdMyLocation, MdRefresh } from 'react-icons/md';
 import { BottomSheet } from '@/components/BottomSheet';
 import { useRouter } from 'next/router';
 import useMapHook from '@/hooks/useMapHook';
 import { NaverMap } from '@/types/map';
 import { MainCategory } from '@/constants/enums';
 import { mobileIsOpenStore } from '@/stores/MobileStore';
+import Head from 'next/head';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export default function Main(props: any) {
+  const siteTitle = '애이맵(애니메이션 행사 맵스)';
   const { datas } = props;
   const [searchList, setSearchList] = useRecoilState(searchListStore);
   const [isMobileShow, setIsMobileShow] = useRecoilState(mobileIsOpenStore);
@@ -75,12 +74,15 @@ export default function Main(props: any) {
 
   return (
     <RootLayout>
+      <Head>
+        <title>{siteTitle}</title>
+      </Head>
       <section
         className={`w-[100%] h-screen flex flex-col items-center justify-between ${inter.className}`}
       >
         <div className="w-full h-full">
           {/* 맵 섹션 */}
-          {/* <Map onLoad={onLoadMap} /> */}
+          <Map onLoad={onLoadMap} />
           <div className="bg-gray-100 w-full h-full"></div>
         </div>
       </section>
@@ -119,7 +121,7 @@ export default function Main(props: any) {
           type="button"
         >
           <Badge dot={true}>
-            <MdHome size={36} />
+            <MdSearch size={36} />
           </Badge>
         </button>
       </div>

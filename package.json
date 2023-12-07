@@ -24,6 +24,7 @@
     "classnames": "^2.3.2",
     "css-loader": "^6.8.1",
     "framer-motion": "^10.16.12",
+    "lodash": "^4.17.21",
     "next": "^13.4.5",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -35,11 +36,12 @@
     "swr": "^2.2.4"
   },
   "devDependencies": {
+    "@types/gtag.js": "^0.0.17",
+    "@types/lodash": "^4.14.202",
     "@types/navermaps": "^3.7.3",
     "@types/node": "18.16.3",
     "@types/react": "18.2.0",
     "@types/uuid": "^9.0.4",
-    "@types/gtag.js": "^0.0.17",
     "autoprefixer": "^10.0.1",
     "compression-webpack-plugin": "^10.0.0",
     "eslint": "^8",

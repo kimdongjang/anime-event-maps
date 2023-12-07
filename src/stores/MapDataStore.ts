@@ -15,6 +15,11 @@ export const searchListStore = atom<IEvent[]>({
   default: [],
 });
 
+export const searchFilterStore = atom<IEvent[]>({
+  key: `searchFilterStore`,
+  default: [],
+});
+
 export const selectCategoryStore = atom<MainCategory>({
   key: `selectCategoryStore`,
   default: MainCategory.MAIN,

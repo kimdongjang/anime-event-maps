@@ -183,15 +183,15 @@ export const EventSummary = (props: IEventSummaryProps) => {
             />
           }
         </div>
-        <div>
-          <a className="p-1">{event.site}</a>
-        </div>
-        <div className="flex justify-between items-center  p-1">
+        <div className="flex justify-between items-center px-1">
           <div className="space-x-1">
             <label className="font-medium">{event.address}</label>
             <label className="text-gray-400 text-sm">{event.category}</label>
           </div>
           {renderFavoriteBtn()}
+        </div>
+        <div>
+          <a className="text-sm p-1">{event.site}</a>
         </div>
         <div className="flex items-center space-x-1 p-1">
           <label className="bg-yellow-100 border-gray-100 rounded text-sm font-medium px-1">

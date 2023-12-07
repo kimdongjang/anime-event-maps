@@ -6,29 +6,32 @@
     "event": "AGF",
     "startDate": "2023-12-02",
     "endDate": "2023-12-03",
-    "address": "일산 킨텍스",
+    "eventHall": "일산 킨텍스",
+    "address": "일산 킨텍스 제1전시장 3-5홀",
     "doroAddress": "경기 고양시 일산서구 킨텍스로 217-60",
     "jibunAddress": "경기 고양시 대화동 2600",
-    "lat": 37.672114742842,
-    "lng": 126.75344229799,
+    "lat": 37.668029,
+    "lng": 126.745895,
     "images": {
       "path": "/images/agf2023.jpg",
       "alt": "/anime-event-maps/agf2023"
     },
+    "site": "https://agfkorea.com",
     "isFavorite": "false"
   },
   {
     "id": 2,
-    "title": "175회 Winter 서울 코믹월드",
+    "title": "175회 코믹월드 2023 Winter",
     "category": "애니메이션 행사",
-    "event": "서울코믹월드",
+    "event": "코믹월드",
     "startDate": "2023-12-16",
     "endDate": "2023-12-17",
+    "eventHall": "일산 킨텍스",
     "address": "일산 킨텍스 1전시장 2-5홀",
     "doroAddress": "경기 고양시 일산서구 킨텍스로 217-60",
     "jibunAddress": "경기 고양시 대화동 2600",
-    "lat": 37.672114742842,
-    "lng": 126.75344229799,
+    "lat": 37.668029,
+    "lng": 126.745895,
     "images": {
       "path": "/images/2023seoulcomic.png",
       "alt": "/anime-event-maps/2023seoulcomic"
@@ -38,6 +41,66 @@
   },
   {
     "id": 3,
+    "title": "코스띠아모",
+    "category": "놀이공원 행사",
+    "event": "코스띠아모",
+    "startDate": "2023-12-30",
+    "endDate": "2023-12-31",
+    "eventHall": "서울랜드",
+    "address": "서울랜드",
+    "doroAddress": "경기도 과천시 광명로 181",
+    "jibunAddress": "경기도 과천시 막계동 33",
+    "lat": 37.4370997,
+    "lng": 127.024467,
+    "images": {
+      "path": "/images/2023seoulcomic.png",
+      "alt": "/anime-event-maps/2023seoulcomic"
+    },
+    "site": "https://cafe.naver.com/coscomic",
+    "isFavorite": "false"
+  },
+  {
+    "id": 4,
+    "title": "123회 부산코믹월드",
+    "category": "애니메이션 행사",
+    "event": "코믹월드",
+    "startDate": "2024-01-27",
+    "endDate": "2024-01-28",
+    "eventHall": "부산 벡스코",
+    "address": "부산 벡스코 제1전시장 1홀",
+    "doroAddress": "부산광역시 해운대구 APEC로 55",
+    "jibunAddress": "부산광역시 해운대구 우동 1500",
+    "lat": 35.1688706,
+    "lng": 129.135456,
+    "images": {
+      "path": "/images/2023seoulcomic.png",
+      "alt": "/anime-event-maps/2023seoulcomic"
+    },
+    "site": "https://comicw.co.kr/",
+    "isFavorite": "false"
+  },
+  {
+    "id": 5,
+    "title": "코스띠아모",
+    "category": "놀이공원 행사",
+    "event": "코스띠아모",
+    "startDate": "2024-01-27",
+    "endDate": "2024-01-28",
+    "eventHall": "서울랜드",
+    "address": "서울랜드",
+    "doroAddress": "경기도 과천시 광명로 181",
+    "jibunAddress": "경기도 과천시 막계동 33",
+    "lat": 37.4370997,
+    "lng": 127.024467,
+    "images": {
+      "path": "/images/2023seoulcomic.png",
+      "alt": "/anime-event-maps/2023seoulcomic"
+    },
+    "site": "https://cafe.naver.com/coscomic",
+    "isFavorite": "false"
+  },
+  {
+    "id": 6,
     "title": "제3회 일러스타 페스",
     "category": "애니메이션 행사",
     "event": "일러스타 페스",
@@ -56,21 +119,201 @@
     "isFavorite": "false"
   },
   {
-    "id": 4,
-    "title": "팝콘 행사",
-    "category": "게임 행사",
-    "event": "팝콘",
-    "startDate": "2024-08-16",
-    "endDate": "2024-08-17",
-    "address": "삼성 코엑스",
-    "doroAddress": "서울특별시 강남구 영동대로 513",
-    "jibunAddress": "경기 고양시 대화동 2600",
-    "lat": 37.672114742842,
-    "lng": 126.75344229799,
+    "id": 7,
+    "title": "코스띠아모",
+    "category": "놀이공원 행사",
+    "event": "코스띠아모",
+    "startDate": "2024-02-24",
+    "endDate": "2024-02-25",
+    "eventHall": "서울랜드",
+    "address": "서울랜드",
+    "doroAddress": "경기도 과천시 광명로 181",
+    "jibunAddress": "경기도 과천시 막계동 33",
+    "lat": 37.4370997,
+    "lng": 127.024467,
     "images": {
       "path": "/images/2023seoulcomic.png",
       "alt": "/anime-event-maps/2023seoulcomic"
     },
+    "site": "https://cafe.naver.com/coscomic",
+    "isFavorite": "false"
+  },
+  {
+    "id": 8,
+    "title": "176회 서울코믹월드",
+    "category": "애니메이션 행사",
+    "event": "코믹월드",
+    "startDate": "2024-03-09",
+    "endDate": "2024-03-10",
+    "eventHall": "양재 AT센터",
+    "address": "양재 AT센터 1층-2층 전관",
+    "doroAddress": "서울특별시 서초구 양재2동 강남대로 27 aT센터",
+    "jibunAddress": "서울특별시 서초구 양재동 232",
+    "lat": 37.4681626,
+    "lng": 127.039308,
+    "images": {
+      "path": "/images/2023seoulcomic.png",
+      "alt": "/anime-event-maps/2023seoulcomic"
+    },
+    "site": "https://comicw.co.kr/",
+    "isFavorite": "false"
+  },
+  {
+    "id": 9,
+    "title": "SCF",
+    "category": "애니메이션 행사",
+    "event": "SCF",
+    "startDate": "2024-04-06",
+    "endDate": "2024-04-07",
+    "eventHall": "부산 벡스코",
+    "address": "부산 벡스코 제2전시장 4A-4C",
+    "doroAddress": "부산광역시 해운대구 APEC로 30",
+    "jibunAddress": "부산광역시 해운대구 우동 1413-4",
+    "lat": 35.1657096,
+    "lng": 129.135856,
+    "images": {
+      "path": "/images/2023seoulcomic.png",
+      "alt": "/anime-event-maps/2023seoulcomic"
+    },
+    "site": "https://scfparty.com/",
+    "isFavorite": "false"
+  },
+  {
+    "id": 10,
+    "title": "177회 서울코믹월드",
+    "category": "애니메이션 행사",
+    "event": "코믹월드",
+    "startDate": "2024-05-11",
+    "endDate": "2024-05-12",
+    "eventHall": "수원메쎄",
+    "address": "수원메쎄 (전관)",
+    "doroAddress": "경기도 수원시 권선구 세화로134번길 37",
+    "jibunAddress": "경기도 수원시 권선구 서둔동 296-124",
+    "lat": 37.2663759,
+    "lng": 126.99711,
+    "images": {
+      "path": "/images/2023seoulcomic.png",
+      "alt": "/anime-event-maps/2023seoulcomic"
+    },
+    "site": "https://comicw.co.kr/",
+    "isFavorite": "false"
+  },
+  {
+    "id": 11,
+    "title": "124회 부산코믹월드",
+    "category": "애니메이션 행사",
+    "event": "코믹월드",
+    "startDate": "2024-06-01",
+    "endDate": "2024-06-02",
+    "eventHall": "부산 벡스코",
+    "address": "부산 벡스코 제2전시장 4A-4E",
+    "doroAddress": "부산광역시 해운대구 APEC로 30",
+    "jibunAddress": "부산광역시 해운대구 우동 1413-4",
+    "lat": 35.1657096,
+    "lng": 129.135856,
+    "images": {
+      "path": "/images/2023seoulcomic.png",
+      "alt": "/anime-event-maps/2023seoulcomic"
+    },
+    "site": "https://comicw.co.kr/",
+    "isFavorite": "false"
+  },
+  {
+    "id": 12,
+    "title": "178회 코믹월드 2024 SUMMER",
+    "category": "애니메이션 행사",
+    "event": "코믹월드",
+    "startDate": "2024-07-27",
+    "endDate": "2024-07-28",
+    "eventHall": "일산 킨텍스",
+    "address": "일산 킨텍스 전시장",
+    "doroAddress": "경기 고양시 일산서구 킨텍스로 217-60",
+    "jibunAddress": "경기 고양시 대화동 2600",
+    "lat": 37.668029,
+    "lng": 126.745895,
+    "images": {
+      "path": "/images/2023seoulcomic.png",
+      "alt": "/anime-event-maps/2023seoulcomic"
+    },
+    "site": "https://comicw.co.kr/",
+    "isFavorite": "false"
+  },
+  {
+    "id": 13,
+    "title": "Seoul POPCORN 2024",
+    "category": "게임 행사",
+    "event": "팝콘",
+    "startDate": "2024-08-16",
+    "endDate": "2024-08-18",
+    "address": "삼성 코엑스",
+    "doroAddress": "서울특별시 강남구 영동대로 513",
+    "jibunAddress": "서울특별시 강남구 삼성동 159",
+    "lat": 37.512502,
+    "lng": 127.058796,
+    "images": {
+      "path": "/images/2023seoulcomic.png",
+      "alt": "/anime-event-maps/2023seoulcomic"
+    },
+    "isFavorite": "false"
+  },
+  {
+    "id": 14,
+    "title": "125회 부산코믹월드",
+    "category": "애니메이션 행사",
+    "event": "코믹월드",
+    "startDate": "2024-09-21",
+    "endDate": "2024-09-22",
+    "eventHall": "부산 벡스코",
+    "address": "부산 벡스코 제2전시장 4A-4E",
+    "doroAddress": "부산광역시 해운대구 APEC로 30",
+    "jibunAddress": "부산광역시 해운대구 우동 1413-4",
+    "lat": 35.1657096,
+    "lng": 129.135856,
+    "images": {
+      "path": "/images/2023seoulcomic.png",
+      "alt": "/anime-event-maps/2023seoulcomic"
+    },
+    "site": "https://comicw.co.kr/",
+    "isFavorite": "false"
+  },
+  {
+    "id": 15,
+    "title": "179회 서울코믹월드",
+    "category": "애니메이션 행사",
+    "event": "코믹월드",
+    "startDate": "2024-10-05",
+    "endDate": "2024-10-06",
+    "eventHall": "수원메쎄",
+    "address": "수원메쎄 (전관)",
+    "doroAddress": "경기도 수원시 권선구 세화로134번길 37",
+    "jibunAddress": "경기도 수원시 권선구 서둔동 296-124",
+    "lat": 37.2663759,
+    "lng": 126.99711,
+    "images": {
+      "path": "/images/2023seoulcomic.png",
+      "alt": "/anime-event-maps/2023seoulcomic"
+    },
+    "site": "https://comicw.co.kr/",
+    "isFavorite": "false"
+  },
+  {
+    "id": 16,
+    "title": "180회 코믹월드 2024 Winter",
+    "category": "애니메이션 행사",
+    "event": "코믹월드",
+    "startDate": "2024-12-21",
+    "endDate": "2024-12-22",
+    "eventHall": "일산 킨텍스",
+    "address": "일산 킨텍스 1전시장 2-5홀",
+    "doroAddress": "경기 고양시 일산서구 킨텍스로 217-60",
+    "jibunAddress": "경기 고양시 대화동 2600",
+    "lat": 37.668029,
+    "lng": 126.745895,
+    "images": {
+      "path": "/images/2023seoulcomic.png",
+      "alt": "/anime-event-maps/2023seoulcomic"
+    },
+    "site": "https://comicw.co.kr/",
     "isFavorite": "false"
   }
 ]

@@ -1,26 +1,8 @@
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import {
-  MdFilterAlt,
-  MdHome,
-  MdOutlineStar,
-  MdOutlineStarBorder,
-} from 'react-icons/md';
-import { FaSortAmountDown } from 'react-icons/fa';
-import { useEffect, useState } from 'react';
 
 import styles from './Sidebar.module.scss';
-import { SearchBox } from '../SearchBox';
-import { useRecoilState } from 'recoil';
-import {
-  markerStore,
-  searchListStore,
-  selectCategoryStore,
-} from '@/stores/MapDataStore';
-import { EventList } from '../Event/List';
-import { MainCategory } from '@/constants/enums';
-import { Dropdown, Select } from 'antd';
-import { sortMenuItems } from '@/constants/menuItems';
+import { SearchForm } from '../SearchForm';
 
 interface ISidebar {
   handleShow: any;
@@ -29,10 +11,6 @@ interface ISidebar {
 }
 const Sidebar = (props: ISidebar) => {
   const { className, handleShow, isShow } = props;
-  const [searchList, setSearchList] = useRecoilState(searchListStore);
-  const [selectCategory, setSelectCategory] =
-    useRecoilState(selectCategoryStore);
-  const [openFilter, setOpenFilter] = useState(false);
 
   const renderOpenBtn = () => {
     if (isShow) {
@@ -55,68 +33,6 @@ const Sidebar = (props: ISidebar) => {
       );
     }
   };
-  const renderCategory = () => {
-    return (
-      <div className={'w-full flex items-center'}>
-        <button
-          className={`w-full h-full flex justify-center items-center text-indigo-400 p-2
-  ${selectCategory === MainCategory.MAIN ? 'bg-white' : 'bg-gray-50 border'}`}
-          type="button"
-          onClick={() => setSelectCategory(MainCategory.MAIN)}
-        >
-          <MdHome size={22} />
-          <h3>메인</h3>
-        </button>
-        <button
-          className={`w-full h-full flex justify-center items-center text-yellow-400 p-2
-        ${
-          selectCategory === MainCategory.FAVORITE
-            ? 'bg-white'
-            : 'bg-gray-50 border'
-        }`}
-          type="button"
-          onClick={() => setSelectCategory(MainCategory.FAVORITE)}
-        >
-          <MdOutlineStar size={22} />
-          <h3>북마크</h3>
-        </button>
-      </div>
-    );
-  };
-
-  const renderSortBtn = () => {
-    return (
-      <button className="text-gray-400 ml-1">
-        <Dropdown menu={{ items: sortMenuItems }} trigger={['click']}>
-          <FaSortAmountDown size={24} />
-        </Dropdown>
-      </button>
-    );
-  };
-  const renderFilterBtn = () => {
-    return (
-      <button
-        className={`${
-          !!openFilter ? 'text-indigo-500 ' : 'text-gray-400'
-        } ml-1`}
-        onClick={() => setOpenFilter(!openFilter)}
-      >
-        <MdFilterAlt size={32} />
-      </button>
-    );
-  };
-  const renderFilterList = () => {
-    const filterList = new Set(searchList.map((data) => data.event));
-    if (!!openFilter) {
-      return (
-        <div className="flex">
-          {[...filterList].map((data, i) => {
-            return <label key={i}>{data}</label>;
-          })}
-        </div>
-      );
-    }
-  };
 
   return (
     <aside className={`fixed flex h-full ${className}`}>
@@ -126,16 +42,7 @@ const Sidebar = (props: ISidebar) => {
         }`}
       >
         <div className="sticky top-0">{renderOpenBtn()}</div>
-        <div className="flex flex-col w-full bg-white">
-          {renderCategory()}
-          <div className="flex items-center m-3">
-            <SearchBox className="w-full text-base " />
-            {renderSortBtn()}
-            {renderFilterBtn()}
-          </div>
-          {renderFilterList()}
-          <EventList />
-        </div>
+        <SearchForm />
       </div>
     </aside>
   );
