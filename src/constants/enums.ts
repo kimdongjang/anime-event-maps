@@ -9,7 +9,10 @@ export enum ISort {
 }
 
 export enum FilterType {
+  /** 행사별 */
   EVENT = 1,
+  /** 행사장별 */
   LOCATION = 2,
+  /**지역별 */
   ADDRESS = 3,
 }

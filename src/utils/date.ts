@@ -5,6 +5,8 @@ export enum DiffDateType {
   WEEKS_AGO = 4,
   MONTH_AGO = 5,
   YEARS_AGO = 6,
+  DAY_SEVEN = 7,
+  DAY_THREE = 8,
 }
 export interface IDiffDate {
   str: string;
@@ -38,6 +40,18 @@ export const diffDateCalculate = (
     }
   } else {
     const days = startDiffDay;
+    if (startDiffDay <= 3)
+      return {
+        str: '일 후',
+        type: DiffDateType.DAY_THREE,
+        remainDate: Math.floor(days),
+      };
+    if (startDiffDay <= 7)
+      return {
+        str: '일 후',
+        type: DiffDateType.DAY_SEVEN,
+        remainDate: Math.floor(days),
+      };
     if (startDiffDay < 14)
       return {
         str: '일 후',
@@ -65,4 +79,13 @@ export const diffDateCalculate = (
       remainDate: Math.floor(years),
     };
   }
+};
+
+export const checkEndEvent = (endDate: Date) => {
+  const today = new Date();
+  const diff = endDate.valueOf() - today.valueOf();
+  const diffDay = Math.floor(diff / (1000 * 60 * 60 * 24)) + 1;
+  if (diffDay < 0) {
+    return false;
+  } else return true;
 };

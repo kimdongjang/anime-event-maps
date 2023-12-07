@@ -1,5 +1,5 @@
 import { IMarker } from '@/constants/common';
-import { MainCategory } from '@/constants/enums';
+import { FilterType, MainCategory } from '@/constants/enums';
 import { sampleEvents } from '@/constants/sample';
 import { IEvent } from '@/services/event/@types';
 import { getLocalstorageEvent } from '@/utils/localStorages';
@@ -15,9 +15,18 @@ export const searchListStore = atom<IEvent[]>({
   default: [],
 });
 
-export const searchFilterStore = atom<IEvent[]>({
+export interface ISearchFilter {
+  list: string[];
+  type: FilterType;
+  isEnd: boolean;
+}
+export const searchFilterStore = atom<ISearchFilter>({
   key: `searchFilterStore`,
-  default: [],
+  default: {
+    list: [],
+    type: FilterType.EVENT,
+    isEnd: false,
+  },
 });
 
 export const selectCategoryStore = atom<MainCategory>({

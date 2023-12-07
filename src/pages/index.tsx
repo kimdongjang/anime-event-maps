@@ -17,6 +17,8 @@ import { NaverMap } from '@/types/map';
 import { MainCategory } from '@/constants/enums';
 import { mobileIsOpenStore } from '@/stores/MobileStore';
 import Head from 'next/head';
+import { getLocalstorageEvent } from '@/utils/localStorages';
+import { IEvent } from '@/services/event/@types';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -29,7 +31,17 @@ export default function Main(props: any) {
   const router = useRouter();
 
   useEffect(() => {
-    setSearchList(datas);
+    const favoriteList: IEvent[] = getLocalstorageEvent();
+    setSearchList(
+      datas.map((event: IEvent) => {
+        let find = favoriteList.find((str) => str.id === event.id);
+        if (!!find) {
+          let temp = { ...event };
+          temp.isFavorite = true;
+          return temp;
+        } else return event;
+      })
+    );
   }, []);
 
   useEffect(() => {
@@ -50,7 +62,7 @@ export default function Main(props: any) {
     if (isDesktopShow) {
       return (
         <button
-          className="rounded bg-blue-300 hover:bg-blue-200  h-full w-10"
+          className="bg-indigo-200 hover:bg-blue-200 h-full w-10"
           onClick={() => setIsDesktopShow(false)}
         >
           <ChevronRightIcon />
@@ -59,7 +71,7 @@ export default function Main(props: any) {
     } else {
       return (
         <button
-          className="rounded bg-blue-300 hover:bg-blue-200  h-full w-10"
+          className="bg-indigo-200 hover:bg-blue-200 h-full w-10"
           onClick={() => setIsDesktopShow(true)}
         >
           <ChevronLeftIcon />

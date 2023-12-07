@@ -31,14 +31,14 @@ export interface ISelectOption {
 export const searchFilterList: ISelectOption[] = [
   {
     label: '행사별',
-    value: 1,
+    value: FilterType.EVENT,
   },
   {
-    label: '장소별',
-    value: 2,
+    label: '행사장별',
+    value: FilterType.LOCATION,
   },
   {
     label: '지역별',
-    value: 3,
+    value: FilterType.ADDRESS,
   },
 ];

@@ -17,7 +17,7 @@
       "alt": "/anime-event-maps/agf2023"
     },
     "site": "https://agfkorea.com",
-    "isFavorite": "false"
+    "isFavorite": false
   },
   {
     "id": 2,
@@ -37,7 +37,7 @@
       "alt": "/anime-event-maps/2023seoulcomic"
     },
     "site": "https://comicw.co.kr/bbs/board.php?bo_table=notice&wr_id=3986",
-    "isFavorite": "false"
+    "isFavorite": false
   },
   {
     "id": 3,
@@ -57,7 +57,7 @@
       "alt": "/anime-event-maps/2023seoulcomic"
     },
     "site": "https://cafe.naver.com/coscomic",
-    "isFavorite": "false"
+    "isFavorite": false
   },
   {
     "id": 4,
@@ -77,7 +77,7 @@
       "alt": "/anime-event-maps/2023seoulcomic"
     },
     "site": "https://comicw.co.kr/",
-    "isFavorite": "false"
+    "isFavorite": false
   },
   {
     "id": 5,
@@ -97,7 +97,7 @@
       "alt": "/anime-event-maps/2023seoulcomic"
     },
     "site": "https://cafe.naver.com/coscomic",
-    "isFavorite": "false"
+    "isFavorite": false
   },
   {
     "id": 6,
@@ -106,6 +106,7 @@
     "event": "일러스타 페스",
     "startDate": "2024-02-17",
     "endDate": "2024-02-18",
+    "eventHall": "일산 킨텍스",
     "address": "일산 킨텍스 2전시장 7-8홀",
     "doroAddress": "경기 고양시 일산서구 킨텍스로 217-60",
     "jibunAddress": "경기 고양시 대화동 2600",
@@ -116,7 +117,7 @@
       "alt": "/anime-event-maps/2023seoulcomic"
     },
     "site": "https://illustar.net/",
-    "isFavorite": "false"
+    "isFavorite": false
   },
   {
     "id": 7,
@@ -136,7 +137,7 @@
       "alt": "/anime-event-maps/2023seoulcomic"
     },
     "site": "https://cafe.naver.com/coscomic",
-    "isFavorite": "false"
+    "isFavorite": false
   },
   {
     "id": 8,
@@ -156,7 +157,7 @@
       "alt": "/anime-event-maps/2023seoulcomic"
     },
     "site": "https://comicw.co.kr/",
-    "isFavorite": "false"
+    "isFavorite": false
   },
   {
     "id": 9,
@@ -176,7 +177,7 @@
       "alt": "/anime-event-maps/2023seoulcomic"
     },
     "site": "https://scfparty.com/",
-    "isFavorite": "false"
+    "isFavorite": false
   },
   {
     "id": 10,
@@ -196,7 +197,7 @@
       "alt": "/anime-event-maps/2023seoulcomic"
     },
     "site": "https://comicw.co.kr/",
-    "isFavorite": "false"
+    "isFavorite": false
   },
   {
     "id": 11,
@@ -216,7 +217,7 @@
       "alt": "/anime-event-maps/2023seoulcomic"
     },
     "site": "https://comicw.co.kr/",
-    "isFavorite": "false"
+    "isFavorite": false
   },
   {
     "id": 12,
@@ -236,7 +237,7 @@
       "alt": "/anime-event-maps/2023seoulcomic"
     },
     "site": "https://comicw.co.kr/",
-    "isFavorite": "false"
+    "isFavorite": false
   },
   {
     "id": 13,
@@ -245,6 +246,7 @@
     "event": "팝콘",
     "startDate": "2024-08-16",
     "endDate": "2024-08-18",
+    "eventHall": "삼성 코엑스",
     "address": "삼성 코엑스",
     "doroAddress": "서울특별시 강남구 영동대로 513",
     "jibunAddress": "서울특별시 강남구 삼성동 159",
@@ -254,7 +256,7 @@
       "path": "/images/2023seoulcomic.png",
       "alt": "/anime-event-maps/2023seoulcomic"
     },
-    "isFavorite": "false"
+    "isFavorite": false
   },
   {
     "id": 14,
@@ -274,7 +276,7 @@
       "alt": "/anime-event-maps/2023seoulcomic"
     },
     "site": "https://comicw.co.kr/",
-    "isFavorite": "false"
+    "isFavorite": false
   },
   {
     "id": 15,
@@ -294,7 +296,7 @@
       "alt": "/anime-event-maps/2023seoulcomic"
     },
     "site": "https://comicw.co.kr/",
-    "isFavorite": "false"
+    "isFavorite": false
   },
   {
     "id": 16,
@@ -314,6 +316,6 @@
       "alt": "/anime-event-maps/2023seoulcomic"
     },
     "site": "https://comicw.co.kr/",
-    "isFavorite": "false"
+    "isFavorite": false
   }
 ]

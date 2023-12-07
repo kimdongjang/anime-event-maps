@@ -1,12 +1,16 @@
 import { searchFilterList } from '@/constants/common';
-import { MainCategory } from '@/constants/enums';
+import { FilterType, MainCategory } from '@/constants/enums';
 import { sortMenuItems } from '@/constants/menuItems';
-import { searchListStore, selectCategoryStore } from '@/stores/MapDataStore';
+import {
+  searchFilterStore,
+  searchListStore,
+  selectCategoryStore,
+} from '@/stores/MapDataStore';
 import { Checkbox, Dropdown, Select } from 'antd';
 import _ from 'lodash';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaSortAmountDown } from 'react-icons/fa';
-import { MdFilterAlt, MdHome, MdOutlineStar } from 'react-icons/md';
+import { MdFilterAlt, MdHome, MdOutlineStar, MdCheck } from 'react-icons/md';
 import { useRecoilState } from 'recoil';
 import { EventList } from '../Event/List';
 import { SearchBox } from '../SearchBox';
@@ -15,18 +19,58 @@ export const SearchForm = () => {
   const [searchList, setSearchList] = useRecoilState(searchListStore);
   const [selectCategory, setSelectCategory] =
     useRecoilState(selectCategoryStore);
+  const [filter, setFilter] = useRecoilState(searchFilterStore);
   const [openFilter, setOpenFilter] = useState(false);
+  const [filterList, setFilterList] = useState<string[]>([]);
 
   const handleSelectFilter = (value: number) => {
-    let finder = _.find(searchFilterList, {
-      value: value,
-    });
-    // let tempList = [...genreList];
-    // if (!!finder) {
-    //   tempList.push(finder);
-    //   setGenreList(tempList);
-    // }
+    setFilter({ list: [], type: value, isEnd: filter.isEnd });
   };
+
+  const handleClickFilter = (data: string) => {
+    let tempList = [...filter.list];
+    console.log(data);
+    let idx = tempList.findIndex((x) => x === data);
+    // 못찾았으면 필터에 추가
+    if (idx < 0) {
+      tempList.push(data);
+    }
+    // 찾았으면 삭제
+    else {
+      tempList.splice(idx, 1);
+    }
+    setFilter({
+      type: filter.type,
+      list: tempList,
+      isEnd: filter.isEnd,
+    });
+  };
+
+  /**
+   * 콤보박스 필터 변경시
+   */
+  useEffect(() => {
+    switch (filter.type) {
+      case FilterType.EVENT:
+        setFilterList([...new Set(searchList.map((data) => data.event))]);
+        break;
+      case FilterType.LOCATION:
+        setFilterList([...new Set(searchList.map((data) => data.eventHall))]);
+        break;
+      case FilterType.ADDRESS:
+        setFilterList([
+          ...new Set(
+            searchList.map(
+              (data) =>
+                data.doroAddress?.split(' ')[0] +
+                ' ' +
+                data.doroAddress?.split(' ')[1]
+            )
+          ),
+        ]);
+        break;
+    }
+  }, [filter, searchList]);
 
   const renderCategory = () => {
     return (
@@ -70,41 +114,50 @@ export const SearchForm = () => {
   const renderFilterBtn = () => {
     return (
       <button
-        className={`${
-          !!openFilter ? 'text-indigo-500 ' : 'text-gray-400'
-        } ml-1`}
-        onClick={() => setOpenFilter(!openFilter)}
+        className={`${!!openFilter ? 'text-sky-300 ' : 'text-gray-400'} ml-1`}
+        onClick={() => {
+          setOpenFilter(!openFilter);
+        }}
       >
         <MdFilterAlt size={32} />
       </button>
     );
   };
+
   const renderFilterList = () => {
-    const filterList = new Set(searchList.map((data) => data.event));
-    if (!!openFilter) {
-      return (
-        <div>
-          <div className="flex items-center justify-between mx-1 mb-1">
-            <Select
-              options={searchFilterList}
-              defaultValue={1}
-              className="p-1"
-              onChange={handleSelectFilter}
-            />
-            <Checkbox className="">{'종료된 이벤트'}</Checkbox>
-          </div>
-          <div className="flex flex-wrap space-x-2 mb-3 mx-3">
-            {[...filterList].map((data, i) => {
-              return (
-                <button key={i} className="border p-1 rounded-xl">
-                  <h4>{data}</h4>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      );
-    }
+    return (
+      <div className="flex flex-wrap space-x-2 mb-2 mx-3">
+        {[...filterList].map((data, i) => {
+          let finder = filter.list.find((x) => x === data);
+          if (!!finder) {
+            return (
+              <button
+                key={i}
+                className="flex items-center
+                 bg-blue-400 border border-blue-400
+              text-white space-x-1 px-2 py-1 my-1 rounded-xl"
+                type="button"
+                onClick={() => handleClickFilter(data)}
+              >
+                <MdCheck />
+                <h4>{data}</h4>
+              </button>
+            );
+          } else {
+            return (
+              <button
+                key={i}
+                className="border px-2 py-1 my-1 rounded-xl"
+                type="button"
+                onClick={() => handleClickFilter(data)}
+              >
+                <h4>{data}</h4>
+              </button>
+            );
+          }
+        })}
+      </div>
+    );
   };
 
   return (
@@ -115,7 +168,30 @@ export const SearchForm = () => {
         {renderSortBtn()}
         {renderFilterBtn()}
       </div>
-      {renderFilterList()}
+      {!!openFilter && (
+        <div>
+          <div className="flex items-center justify-between mx-1 mb-1">
+            <Select
+              options={searchFilterList}
+              defaultValue={1}
+              className="p-1 w-[7rem]"
+              onChange={handleSelectFilter}
+            />
+            <Checkbox
+              value={filter.isEnd}
+              onChange={(e) => {
+                setFilter({
+                  ...filter,
+                  isEnd: e.target.checked,
+                });
+              }}
+            >
+              {'종료된 이벤트'}
+            </Checkbox>
+          </div>
+          {renderFilterList()}
+        </div>
+      )}
       <EventList />
     </div>
   );

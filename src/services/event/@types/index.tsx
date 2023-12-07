@@ -12,9 +12,10 @@ export interface IEvent {
 
   minPrice?: number;
   maxPrice?: number;
-  address?: string;
-  jibunAddress?: string;
-  doroAddress?: string;
+  eventHall: string;
+  address: string;
+  jibunAddress: string;
+  doroAddress: string;
   lat: number;
   lng: number;
 

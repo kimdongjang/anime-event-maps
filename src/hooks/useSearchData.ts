@@ -11,11 +11,15 @@ import {
   getLocalstorageEvent,
   setLocalstorageEvent,
 } from '@/utils/localStorages';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
+import { mutate } from 'swr';
+
+export const EVENT_DATA_KEY = '/eventdata';
 
 export const useSearchData = () => {
   const [searchList, setSearchList] = useRecoilState(searchListStore);
+
   // const [selectCategory, setSelectCategory] =
   //   useRecoilState(selectCategoryStore);
 
@@ -32,24 +36,6 @@ export const useSearchData = () => {
   // }, [selectCategory]);
 
   // 초기 로딩시 searchList 기반으로 초기화진행
-  useEffect(() => {
-    initSearchList();
-  }, []);
-
-  const initSearchList = () => {
-    const locals: IEvent[] = getLocalstorageEvent();
-
-    setSearchList(
-      searchList.map((event) => {
-        let find = locals.find((str) => str.id === event.id);
-        if (!!find) {
-          let temp = { ...event };
-          temp.isFavorite = true;
-          return temp;
-        } else return event;
-      })
-    );
-  };
 
   const setFavoriteEvent = (obj: IEvent, value: boolean) => {
     let tempList = [...searchList];

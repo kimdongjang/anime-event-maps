@@ -16,7 +16,7 @@ const Sidebar = (props: ISidebar) => {
     if (isShow) {
       return (
         <button
-          className="rounded  bg-blue-300 hover:bg-blue-200 h-full w-10"
+          className="bg-indigo-200 hover:bg-blue-200 h-full w-10"
           onClick={() => handleShow(false)}
         >
           <ChevronRightIcon />
@@ -25,7 +25,7 @@ const Sidebar = (props: ISidebar) => {
     } else {
       return (
         <button
-          className="rounded  bg-blue-300 hover:bg-blue-200 h-full w-10"
+          className="bg-indigo-200 hover:bg-blue-200 h-full w-10"
           onClick={() => handleShow(true)}
         >
           <ChevronLeftIcon />

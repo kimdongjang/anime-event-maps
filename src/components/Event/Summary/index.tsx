@@ -49,8 +49,20 @@ export const EventSummary = (props: IEventSummaryProps) => {
         bgColor = 'bg-green-400 border-green-400';
         bgTextColor = 'text-white';
         break;
+      case DiffDateType.DAY_THREE:
+        bgColor = 'bg-amber-400 border-amber-400';
+        bgTextColor = 'text-white';
+        break;
+      case DiffDateType.DAY_SEVEN:
+        bgColor = 'bg-emerald-400 border-emerald-400';
+        bgTextColor = 'text-white';
+        break;
       case DiffDateType.DAY_AGO:
-        bgColor = 'bg-yellow-400 border-yellow-400';
+        bgColor = 'bg-lime-400 border-lime-400';
+        bgTextColor = 'text-white';
+        break;
+      case DiffDateType.WEEKS_AGO:
+        bgColor = 'bg-purple-400 border-purple-400';
         bgTextColor = 'text-white';
         break;
       case DiffDateType.MONTH_AGO:
@@ -70,7 +82,7 @@ export const EventSummary = (props: IEventSummaryProps) => {
     );
   };
   const renderFavoriteBtn = () => {
-    if (!!event.isFavorite) {
+    if (event.isFavorite) {
       return (
         <button
           className="rounded-full text-yellow-400 
