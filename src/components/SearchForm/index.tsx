@@ -7,7 +7,6 @@ import {
   selectCategoryStore,
 } from '@/stores/MapDataStore';
 import { Checkbox, Dropdown, Select } from 'antd';
-import _ from 'lodash';
 import { useEffect, useState } from 'react';
 import { FaSortAmountDown } from 'react-icons/fa';
 import { MdFilterAlt, MdHome, MdOutlineStar, MdCheck } from 'react-icons/md';
@@ -86,11 +85,10 @@ export const SearchForm = () => {
         </button>
         <button
           className={`w-full h-full flex justify-center items-center text-yellow-400 p-2
-        ${
-          selectCategory === MainCategory.FAVORITE
-            ? 'bg-white'
-            : 'bg-gray-50 border'
-        }`}
+        ${selectCategory === MainCategory.FAVORITE
+              ? 'bg-white'
+              : 'bg-gray-50 border'
+            }`}
           type="button"
           onClick={() => setSelectCategory(MainCategory.FAVORITE)}
         >

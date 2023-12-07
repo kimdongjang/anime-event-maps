@@ -1,6 +1,5 @@
 import { IMarker } from '@/constants/common';
 import { MainCategory } from '@/constants/enums';
-import { sampleEvents } from '@/constants/sample';
 import { IEvent } from '@/services/event/@types';
 import {
   markerStore,

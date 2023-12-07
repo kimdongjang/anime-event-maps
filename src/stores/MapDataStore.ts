@@ -1,6 +1,5 @@
 import { IMarker } from '@/constants/common';
 import { FilterType, MainCategory } from '@/constants/enums';
-import { sampleEvents } from '@/constants/sample';
 import { IEvent } from '@/services/event/@types';
 import { getLocalstorageEvent } from '@/utils/localStorages';
 import { atom } from 'recoil';
