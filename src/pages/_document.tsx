@@ -25,6 +25,10 @@ export default function Document() {
                   `,
           }}
         />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap&family=Montserrat:wght@500;700&family=Poppins:wght@600;700&display=swap"
+          rel="stylesheet"
+        />
       </Head>
       <body>
         <Main />

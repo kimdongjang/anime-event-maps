@@ -16,3 +16,21 @@ export const setLocalstorageEvent = (value: IEvent) => {
   }
   localStorage.setItem('myFavoriteList', JSON.stringify([...temp]));
 };
+
+export const getLocalstorageNotice = () => {
+  const temp = localStorage.getItem(`isReadNotice1.0.0`);
+  // 스토리지가 비어있을 경우, 초기값은 배열로 저장
+  return !!temp ? JSON.parse(temp) : undefined;
+};
+
+export const setLocalstorageNotice = () => {
+  let nextDate = new Date();
+  nextDate.setDate(nextDate.getDate() + 7);
+  localStorage.setItem(
+    'isReadNotice1.0.0',
+    JSON.stringify({
+      isRead: true,
+      expire: nextDate,
+    })
+  );
+};

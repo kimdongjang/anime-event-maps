@@ -8,6 +8,7 @@ import { Hydrate, QueryClient, QueryClientProvider } from 'react-query';
 import { useEffect } from 'react';
 import * as gtag from '../utils/gtag';
 import { useRouter } from 'next/router';
+import { ConfigProvider } from 'antd';
 
 const notoSansKr = Noto_Sans_KR({
   // preload: true, 기본값
@@ -20,6 +21,7 @@ export default function App({ Component, pageProps }: AppProps) {
   const queryClient = new QueryClient();
   const router = useRouter();
 
+  // 구글 아날리틱스 연동
   useEffect(() => {
     const handleRouteChange = (url: URL) => {
       gtag.pageview(url);
@@ -36,11 +38,19 @@ export default function App({ Component, pageProps }: AppProps) {
     <RecoilRoot>
       <QueryClientProvider client={queryClient}>
         <Hydrate state={pageProps.dehydratedProps}>
-          <main
-            className={classNames(notoSansKr.className, notoSansKr.variable)}
+          <ConfigProvider
+            theme={{
+              token: {
+                fontFamily: 'Noto Sans KR',
+              },
+            }}
           >
-            <Component {...pageProps} />
-          </main>
+            <main
+              className={classNames(notoSansKr.className, notoSansKr.variable)}
+            >
+              <Component {...pageProps} />
+            </main>
+          </ConfigProvider>
         </Hydrate>
       </QueryClientProvider>
     </RecoilRoot>
