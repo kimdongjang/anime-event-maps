@@ -1,4 +1,4 @@
-import { MainCategory } from '@/constants/enums';
+import { FilterType, MainCategory } from '@/constants/enums';
 import useMapHook from '@/hooks/useMapHook';
 import { IEvent } from '@/services/event/@types';
 import {
@@ -28,18 +28,57 @@ export const EventList = () => {
     // 모바일인 경우 편의성을 위해 창을 내려줌
     setIsMobileShow(false);
   };
+  const filterList = () => {
+    if (filter.list.length === 0) {
+      return searchList;
+    } else {
+      switch (filter.type) {
+        case FilterType.EVENT:
+          return searchList.filter((event) => {
+            // 필터에 추가된 이름들과 일치한다면
+            if (!!filter.list.find((f) => f === event.event)) {
+              return event;
+            }
+          });
+        case FilterType.ADDRESS:
+          return searchList.filter((event) => {
+            // 필터에 추가된 이름들과 일치한다면
+            if (!!filter.list.find((f) => event.doroAddress.includes(f))) {
+              return event;
+            }
+          });
+
+        case FilterType.LOCATION:
+          return searchList.filter((event) => {
+            // 필터에 추가된 이름들과 일치한다면
+            if (!!filter.list.find((f) => f === event.eventHall)) {
+              return event;
+            }
+          });
+        default:
+          return searchList;
+      }
+    }
+  };
   const renderEventList = () => {
+    const renderList = filterList();
     switch (selectCategory) {
       case MainCategory.MAIN:
-        return searchList.map((data, i) => {
+        return renderList.map((event, i) => {
+          // 종료된 이벤트가 체크되어 있다면
           if (filter.isEnd) {
             return (
-              <EventSummary event={data} key={i} onClick={handleEventClick} />
+              <EventSummary event={event} key={i} onClick={handleEventClick} />
             );
           } else {
-            if (checkEndEvent(new Date(data.endDate))) {
+            // 종료 날짜를 비교해서 예정된 이벤트만 출력
+            if (checkEndEvent(new Date(event.endDate))) {
               return (
-                <EventSummary event={data} key={i} onClick={handleEventClick} />
+                <EventSummary
+                  event={event}
+                  key={i}
+                  onClick={handleEventClick}
+                />
               );
             }
           }

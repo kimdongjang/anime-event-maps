@@ -70,7 +70,7 @@ export const diffDateCalculate = (
       return {
         str: '개월 후',
         type: DiffDateType.MONTH_AGO,
-        remainDate: Math.floor(months + 1),
+        remainDate: Math.floor(months),
       };
     const years = days / 365;
     return {
@@ -81,6 +81,10 @@ export const diffDateCalculate = (
   }
 };
 
+/**
+ * true면 예정인 이벤트
+ * false면 종료된 이벤트
+ */
 export const checkEndEvent = (endDate: Date) => {
   const today = new Date();
   const diff = endDate.valueOf() - today.valueOf();

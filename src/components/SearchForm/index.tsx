@@ -19,7 +19,7 @@ export const SearchForm = () => {
   const [selectCategory, setSelectCategory] =
     useRecoilState(selectCategoryStore);
   const [filter, setFilter] = useRecoilState(searchFilterStore);
-  const [openFilter, setOpenFilter] = useState(false);
+  const [openFilter, setOpenFilter] = useState(true);
   const [filterList, setFilterList] = useState<string[]>([]);
 
   const handleSelectFilter = (value: number) => {
@@ -85,10 +85,11 @@ export const SearchForm = () => {
         </button>
         <button
           className={`w-full h-full flex justify-center items-center text-yellow-400 p-2
-        ${selectCategory === MainCategory.FAVORITE
-              ? 'bg-white'
-              : 'bg-gray-50 border'
-            }`}
+        ${
+          selectCategory === MainCategory.FAVORITE
+            ? 'bg-white'
+            : 'bg-gray-50 border'
+        }`}
           type="button"
           onClick={() => setSelectCategory(MainCategory.FAVORITE)}
         >

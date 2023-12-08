@@ -94,7 +94,7 @@ export default function Main(props: any) {
             <ul className="px-3">
               <li>행사 이벤트 위치 지도에서 보기 기능</li>
               <li>북마크 기능</li>
-              <li>필터 기능(작업중)</li>
+              <li>필터 기능 추가 완료</li>
             </ul>
             <h4 className="font-semibold pt-3">업데이트예정 v1.1.0</h4>
             <ul className="px-3">
@@ -108,7 +108,7 @@ export default function Main(props: any) {
               <a href="mailto:gieunp3644@gmail.com" className="ml-1">
                 gieunp3644@gmail.com
               </a>
-              로 보내주시면 감사하겠습니다.
+              혹은 트위터 @gieunp로 연락주시면 감사하겠습니다.
             </p>
           </div>
         </Modal>
