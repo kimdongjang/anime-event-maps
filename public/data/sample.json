@@ -37,7 +37,49 @@
       "alt": "/anime-event-maps/2023seoulcomic"
     },
     "site": "https://comicw.co.kr/bbs/board.php?bo_table=notice&wr_id=3986",
-    "isFavorite": false
+    "isFavorite": false,
+    "priceList": [
+      {
+        "type": "현장구매",
+        "name": "일반입장",
+        "price": 10000
+      },
+      {
+        "type": "현장구매",
+        "name": "코스어입장",
+        "price": 10000
+      },
+      {
+        "type": "현장구매",
+        "name": "코스어패키지",
+        "price": 15000
+      },
+      {
+        "type": "현장구매",
+        "name": "얼리입장권",
+        "price": 20000
+      },
+      {
+        "type": "선예매",
+        "name": "일반입장",
+        "price": 7000
+      },
+      {
+        "type": "선예매",
+        "name": "코스어입장",
+        "price": 7000
+      },
+      {
+        "type": "선예매",
+        "name": "코스어패키지",
+        "price": 10000
+      },
+      {
+        "type": "선예매",
+        "name": "얼리입장권",
+        "price": 14000
+      }
+    ]
   },
   {
     "id": 3,

@@ -28,6 +28,12 @@ export interface ISelectOption {
   value: any;
 }
 
+export interface ITableColumn {
+  title: string;
+  dataIndex: string;
+  key: string;
+}
+
 export const searchFilterList: ISelectOption[] = [
   {
     label: '행사별',

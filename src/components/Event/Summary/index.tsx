@@ -12,6 +12,9 @@ import { diffDateCalculate, DiffDateType } from '@/utils/date';
 import { setLocalstorageEvent } from '@/utils/localStorages';
 import { useSearchData } from '@/hooks/useSearchData';
 import { FaCaretRight } from 'react-icons/fa6';
+import { Popover, Table } from 'antd';
+import { filter } from 'lodash';
+import { ITableColumn } from '@/constants/common';
 
 interface IEventSummaryProps {
   event: IEvent;
@@ -155,26 +158,68 @@ export const EventSummary = (props: IEventSummaryProps) => {
       </div>
     );
   };
+
   const renderPrice = () => {
     let price = <></>;
-    if (!!event.minPrice) {
+    let minPrice = event.priceList?.map((data) => data.price);
+    let maxPrice = event.priceList?.map((data) => data.price);
+    if (!!event.priceList) {
+      let columns: ITableColumn[] = [];
+      const type = event.priceList.map((data) => {
+        return {
+          title: data.name,
+          dataIndex: data.name,
+          key: data.name,
+        };
+      });
+      if (!!type) {
+        columns = type;
+      }
+
+      // event.priceList.map((data) => {
+      //   if (!columns.find((f) => f.title === data.name)) {
+      //     columns.push({
+      //       title: data.name,
+      //       dataIndex: data.name,
+      //       key: data.name,
+      //     });
+      //   }
+      // });
+
+      // const datas: any[] = [];
+      // event.priceList.map((data, i) => {
+      //   if (!!datas.find((f) => f.key === i)) {
+      //   } else {
+      //     datas.push({
+      //       key: i,
+      //     });
+      //   }
+      // });
+
+      console.log(columns);
+      const content = <Table columns={columns}></Table>;
       price = (
         <>
-          <p>{event.minPrice}</p>
+          <p>{minPrice && Math.min(...minPrice)}</p>
           <p>~</p>
-          <p>{event.maxPrice}</p>
+          <p>{maxPrice && Math.max(...maxPrice)}</p>
+          <Popover content={content} title="입장료">
+            <button className="border px-2 rounded text-sm">자세히보기</button>
+          </Popover>
         </>
       );
     } else {
-      price = <p>무료</p>;
+      price = <></>;
     }
     return (
-      <div className="flex items-center space-x-1 p-1">
-        <label className="bg-red-100 border-gray-100 rounded text-sm font-medium px-1">
-          입장권
-        </label>
-        {price}
-      </div>
+      !!event.priceList && (
+        <div className="flex items-center space-x-1 p-1">
+          <label className="bg-red-100 border-gray-100 rounded text-sm font-medium px-1">
+            입장권
+          </label>
+          {price}
+        </div>
+      )
     );
   };
 
@@ -203,7 +248,9 @@ export const EventSummary = (props: IEventSummaryProps) => {
           {renderFavoriteBtn()}
         </div>
         <div>
-          <a className="text-sm p-1" href={event.site}>{event.site}</a>
+          <a className="text-sm p-1" href={event.site}>
+            {event.site}
+          </a>
         </div>
         <div className="flex items-center space-x-1 p-1">
           <label className="bg-yellow-100 border-gray-100 rounded text-sm font-medium px-1">

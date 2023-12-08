@@ -10,8 +10,7 @@ export interface IEvent {
 
   images: IImage;
 
-  minPrice?: number;
-  maxPrice?: number;
+  priceList?: IPrice[];
   eventHall: string;
   address: string;
   jibunAddress: string;
@@ -21,4 +20,10 @@ export interface IEvent {
 
   site?: string;
   isFavorite: boolean;
+}
+
+export interface IPrice {
+  type?: string;
+  name: string;
+  price: number;
 }

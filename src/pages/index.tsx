@@ -23,6 +23,7 @@ import {
   setLocalstorageNotice,
 } from '@/utils/localStorages';
 import { IEvent } from '@/services/event/@types';
+import { ModalNotice } from '@/components/ModalNotice';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -63,56 +64,7 @@ export default function Main(props: any) {
 
   const renderModal = () => {
     if (monunted) {
-      return (
-        <Modal
-          title="공지사항"
-          centered
-          open={modalOpen}
-          onOk={() => {
-            setLocalstorageNotice();
-            setModalOpen(false);
-          }}
-          onCancel={() => {
-            setLocalstorageNotice();
-            setModalOpen(false);
-          }}
-          okButtonProps={{
-            className: 'bg-blue-500',
-            content: '확인',
-          }}
-        >
-          <div className="flex flex-col">
-            <p>
-              애이맵(애니메이션 행사 맵스)은 애니메이션/게임 오프라인 행사
-              정보들을 모아서 사용자에게 제공하는 사이트입니다.
-            </p>
-            <p>
-              수동으로 데이터를 입력하는 것이기에 맞지 않는 정보가 있을 수도
-              있습니다.
-            </p>
-            <h4 className="font-semibold pt-3">현재버전 v1.0.0</h4>
-            <ul className="px-3">
-              <li>행사 이벤트 위치 지도에서 보기 기능</li>
-              <li>북마크 기능</li>
-              <li>필터 기능 추가 완료</li>
-            </ul>
-            <h4 className="font-semibold pt-3">업데이트예정 v1.1.0</h4>
-            <ul className="px-3">
-              <li>내 위치 확인 기능</li>
-              <li>상위 핀 기능</li>
-              <li>행사별 트위터 컴포넌트 연결</li>
-              <li>행사별 페이지 번호 생성 및 공유 기능</li>
-            </ul>
-            <p className="pt-3">
-              건의사항은 자유롭게
-              <a href="mailto:gieunp3644@gmail.com" className="ml-1">
-                gieunp3644@gmail.com
-              </a>
-              혹은 트위터 @gieunp로 연락주시면 감사하겠습니다.
-            </p>
-          </div>
-        </Modal>
-      );
+      return <ModalNotice modalOpen={modalOpen} setModalOpen={setModalOpen} />;
     }
   };
 
