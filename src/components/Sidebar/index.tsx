@@ -16,7 +16,7 @@ const Sidebar = (props: ISidebar) => {
     if (isShow) {
       return (
         <button
-          className="bg-indigo-200 hover:bg-blue-200 h-full w-10"
+          className="bg-indigo-50 hover:bg-blue-100 h-full w-10 border"
           onClick={() => handleShow(false)}
         >
           <ChevronRightIcon />
@@ -25,7 +25,7 @@ const Sidebar = (props: ISidebar) => {
     } else {
       return (
         <button
-          className="bg-indigo-200 hover:bg-blue-200 h-full w-10"
+          className="bg-indigo-50 hover:bg-blue-100 h-full w-10 border"
           onClick={() => handleShow(true)}
         >
           <ChevronLeftIcon />
@@ -37,9 +37,8 @@ const Sidebar = (props: ISidebar) => {
   return (
     <aside className={`fixed flex h-full ${className}`}>
       <div
-        className={`bg-white h-full w-0 md:w-[45%] lg:w-[40%] xl:w-[35%] flex overflow-y-scroll ${
-          isShow ? styles.show_side_bar : styles.close_side_bar
-        }`}
+        className={`bg-white h-full w-0 md:w-[45%] lg:w-[40%] xl:w-[35%] flex overflow-y-scroll ${isShow ? styles.show_side_bar : styles.close_side_bar
+          }`}
       >
         <div className="sticky top-0">{renderOpenBtn()}</div>
         <SearchForm />

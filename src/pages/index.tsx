@@ -86,7 +86,7 @@ export default function Main(props: any) {
     if (isDesktopShow) {
       return (
         <button
-          className="bg-indigo-200 hover:bg-blue-200 h-full w-10"
+          className="bg-indigo-50 hover:bg-blue-100 h-full w-10 border"
           onClick={() => setIsDesktopShow(false)}
         >
           <ChevronRightIcon />
@@ -95,7 +95,7 @@ export default function Main(props: any) {
     } else {
       return (
         <button
-          className="bg-indigo-200 hover:bg-blue-200 h-full w-10"
+          className="bg-indigo-50 hover:bg-blue-100 h-full w-10 border"
           onClick={() => setIsDesktopShow(true)}
         >
           <ChevronLeftIcon />
