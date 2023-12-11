@@ -65,8 +65,10 @@ export default function Main(props: any) {
     }
   }, []);
 
+  /**
+   * 파라미터 쿼리에 따라 해당 아이디 이벤트로 지도를 이동, 마커 팝업을 띄움
+   */
   useEffect(() => {
-    console.log(params, searchList);
     const paramId = params.get('id');
     if (!!paramId && !!searchList) {
       const findEvent = searchList.find(

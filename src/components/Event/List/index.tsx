@@ -24,16 +24,6 @@ export const EventList = () => {
 
   const handleEventClick = (event: IEvent) => {
     router.push(`?id=${event.id.toString()}`);
-    // if (!!router.query.search && router.query.search === 'mobile') {
-    //   router.push(`?search=mobile&id=${event.id.toString()}`);
-    // } else {
-    // }
-    // morphMarker(event);
-    // // 화면이 깨지는 이슈가 있어서 1.5초후에 적용
-    // setTimeout(() => openInfoWindow(event), 1500);
-
-    // // 모바일인 경우 편의성을 위해 창을 내려줌
-    // setIsMobileShow(false);
   };
   const filterList = () => {
     if (filter.list.length === 0) {

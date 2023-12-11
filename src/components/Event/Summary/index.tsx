@@ -12,6 +12,7 @@ import { diffDateCalculate, DiffDateType } from '@/utils/date';
 import { setLocalstorageEvent } from '@/utils/localStorages';
 import { useSearchData } from '@/hooks/useSearchData';
 import { FaCaretRight } from 'react-icons/fa6';
+import { CiShare1 } from 'react-icons/ci';
 import { Popover, Table } from 'antd';
 import { filter } from 'lodash';
 import { ITableColumn } from '@/constants/common';
@@ -244,7 +245,21 @@ export const EventSummary = (props: IEventSummaryProps) => {
             <label className="font-medium">{event.address}</label>
             <label className="text-gray-400 text-sm">{event.category}</label>
           </div>
-          {renderFavoriteBtn()}
+          <div className="space-x-1 flex items-center">
+            <button className="p-1 rounded-full border border-gray-400 text-gray-700">
+              <CiShare1
+                size={20}
+                onClick={() => {
+                  window.navigator.share({
+                    title: event.title,
+                    text: `${event.address}`,
+                    url: `${process.env.NEXT_PUBLIC_PATH_NAME}/?id=${event.id}`,
+                  });
+                }}
+              />
+            </button>
+            {renderFavoriteBtn()}
+          </div>
         </div>
         <div>
           <a className="text-sm p-1" href={event.site}>
