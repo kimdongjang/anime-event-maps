@@ -24,6 +24,7 @@ import {
 } from '@/utils/localStorages';
 import { IEvent } from '@/services/event/@types';
 import { ModalNotice } from '@/components/ModalNotice';
+import { useSearchParams } from 'next/navigation';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -36,6 +37,8 @@ export default function Main(props: any) {
   const [modalOpen, setModalOpen] = useState(true);
   const [monunted, setMounted] = useState(false);
   const router = useRouter();
+  const params = useSearchParams();
+  const { morphMarker, openInfoWindow } = useMapHook();
 
   useEffect(() => {
     const favoriteList: IEvent[] = getLocalstorageEvent();
@@ -61,6 +64,24 @@ export default function Main(props: any) {
       }
     }
   }, []);
+
+  useEffect(() => {
+    console.log(params, searchList);
+    const paramId = params.get('id');
+    if (!!paramId && !!searchList) {
+      const findEvent = searchList.find(
+        (event: IEvent) => event.id.toString() == paramId
+      );
+      if (!!findEvent) {
+        morphMarker(findEvent);
+        // 화면이 깨지는 이슈가 있어서 1.5초후에 적용
+        setTimeout(() => openInfoWindow(findEvent), 1500);
+
+        // 모바일인 경우 편의성을 위해 창을 내려줌
+        setIsMobileShow(false);
+      }
+    }
+  }, [params, searchList]);
 
   const renderModal = () => {
     if (monunted) {
@@ -162,7 +183,7 @@ export default function Main(props: any) {
 
         <button
           onClick={() => {
-            router.push('?search');
+            // router.push('?search=mobile');
             setIsMobileShow(true);
           }}
           className="border border-gray-400 bg-white rounded-full p-2"

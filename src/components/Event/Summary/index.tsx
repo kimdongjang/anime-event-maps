@@ -196,7 +196,6 @@ export const EventSummary = (props: IEventSummaryProps) => {
       //   }
       // });
 
-      console.log(columns);
       const content = <Table columns={columns}></Table>;
       price = (
         <>
