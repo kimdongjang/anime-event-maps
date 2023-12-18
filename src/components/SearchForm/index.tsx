@@ -113,7 +113,9 @@ export const SearchForm = () => {
   const renderFilterBtn = () => {
     return (
       <button
-        className={`${!!openFilter ? 'text-sky-300 ' : 'text-gray-400'} ml-1`}
+        className={`${
+          !!openFilter ? 'text-indigo-400 ' : 'text-gray-400'
+        } ml-1`}
         onClick={() => {
           setOpenFilter(!openFilter);
         }}

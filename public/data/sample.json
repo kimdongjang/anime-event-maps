@@ -141,7 +141,49 @@
       "alt": "/anime-event-maps/2023seoulcomic"
     },
     "site": "https://comicw.co.kr/",
-    "isFavorite": false
+    "isFavorite": false,
+    "priceList": [
+      {
+        "type": "현장구매",
+        "name": "일반입장",
+        "price": 10000
+      },
+      {
+        "type": "현장구매",
+        "name": "코스어입장",
+        "price": 10000
+      },
+      {
+        "type": "현장구매",
+        "name": "코스어패키지",
+        "price": 15000
+      },
+      {
+        "type": "현장구매",
+        "name": "얼리입장권",
+        "price": 20000
+      },
+      {
+        "type": "선예매",
+        "name": "일반입장",
+        "price": 7000
+      },
+      {
+        "type": "선예매",
+        "name": "코스어입장",
+        "price": 7000
+      },
+      {
+        "type": "선예매",
+        "name": "코스어패키지",
+        "price": 10000
+      },
+      {
+        "type": "선예매",
+        "name": "얼리입장권",
+        "price": 14000
+      }
+    ]
   },
   {
     "id": 5,
@@ -235,7 +277,29 @@
       "alt": "/anime-event-maps/2023seoulcomic"
     },
     "site": "https://cafe.naver.com/coscomic",
-    "isFavorite": false
+    "isFavorite": false,
+    "priceList": [
+      {
+        "type": "현장예매",
+        "name": "자유이용권",
+        "price": 20000
+      },
+      {
+        "type": "현장예매",
+        "name": "오후이용권",
+        "price": 18000
+      },
+      {
+        "type": "현장예매",
+        "name": "코스프레 장터자리",
+        "price": 5000
+      },
+      {
+        "type": "현장예매",
+        "name": "캐리어보관",
+        "price": 2000
+      }
+    ]
   },
   {
     "id": 8,
@@ -255,7 +319,49 @@
       "alt": "/anime-event-maps/2023seoulcomic"
     },
     "site": "https://comicw.co.kr/",
-    "isFavorite": false
+    "isFavorite": false,
+    "priceList": [
+      {
+        "type": "현장구매",
+        "name": "일반입장",
+        "price": 10000
+      },
+      {
+        "type": "현장구매",
+        "name": "코스어입장",
+        "price": 10000
+      },
+      {
+        "type": "현장구매",
+        "name": "코스어패키지",
+        "price": 15000
+      },
+      {
+        "type": "현장구매",
+        "name": "얼리입장권",
+        "price": 20000
+      },
+      {
+        "type": "선예매",
+        "name": "일반입장",
+        "price": 7000
+      },
+      {
+        "type": "선예매",
+        "name": "코스어입장",
+        "price": 7000
+      },
+      {
+        "type": "선예매",
+        "name": "코스어패키지",
+        "price": 10000
+      },
+      {
+        "type": "선예매",
+        "name": "얼리입장권",
+        "price": 14000
+      }
+    ]
   },
   {
     "id": 9,
