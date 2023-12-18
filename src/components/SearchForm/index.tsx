@@ -9,10 +9,12 @@ import {
 import { Checkbox, Dropdown, Select } from 'antd';
 import { useEffect, useState } from 'react';
 import { FaSortAmountDown } from 'react-icons/fa';
+import { IoCalendarNumber } from 'react-icons/io5';
 import { MdFilterAlt, MdHome, MdOutlineStar, MdCheck } from 'react-icons/md';
 import { useRecoilState } from 'recoil';
 import { EventList } from '../Event/List';
 import { SearchBox } from '../SearchBox';
+import { Calender } from '../Calender';
 
 export const SearchForm = () => {
   const [searchList, setSearchList] = useRecoilState(searchListStore);
@@ -95,6 +97,19 @@ export const SearchForm = () => {
         >
           <MdOutlineStar size={22} />
           <h3>북마크</h3>
+        </button>
+        <button
+          className={`w-full h-full flex justify-center items-center text-emerald-400 p-2
+        ${
+          selectCategory === MainCategory.CALENDER
+            ? 'bg-white'
+            : 'bg-gray-50 border'
+        }`}
+          type="button"
+          onClick={() => setSelectCategory(MainCategory.CALENDER)}
+        >
+          <IoCalendarNumber size={22} />
+          <h3>캘린더</h3>
         </button>
       </div>
     );
@@ -193,7 +208,8 @@ export const SearchForm = () => {
           {renderFilterList()}
         </div>
       )}
-      <EventList />
+      {selectCategory !== MainCategory.CALENDER && <EventList />}
+      {selectCategory === MainCategory.CALENDER && <Calender />}
     </div>
   );
 };

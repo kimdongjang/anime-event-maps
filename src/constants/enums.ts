@@ -1,6 +1,7 @@
 export enum MainCategory {
   MAIN = 1,
   FAVORITE = 2,
+  CALENDER = 3,
 }
 
 export enum ISort {
