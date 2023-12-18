@@ -99,7 +99,29 @@
       "alt": "/anime-event-maps/costiamo/61"
     },
     "site": "https://cafe.naver.com/coscomic",
-    "isFavorite": false
+    "isFavorite": false,
+    "priceList": [
+      {
+        "type": "현장예매",
+        "name": "자유이용권",
+        "price": 20000
+      },
+      {
+        "type": "현장예매",
+        "name": "오후이용권",
+        "price": 18000
+      },
+      {
+        "type": "현장예매",
+        "name": "코스프레 장터자리",
+        "price": 5000
+      },
+      {
+        "type": "현장예매",
+        "name": "캐리어보관",
+        "price": 2000
+      }
+    ]
   },
   {
     "id": 4,
@@ -139,7 +161,29 @@
       "alt": "/anime-event-maps/costiamo/62"
     },
     "site": "https://cafe.naver.com/coscomic",
-    "isFavorite": false
+    "isFavorite": false,
+    "priceList": [
+      {
+        "type": "현장예매",
+        "name": "자유이용권",
+        "price": 20000
+      },
+      {
+        "type": "현장예매",
+        "name": "오후이용권",
+        "price": 18000
+      },
+      {
+        "type": "현장예매",
+        "name": "코스프레 장터자리",
+        "price": 5000
+      },
+      {
+        "type": "현장예매",
+        "name": "캐리어보관",
+        "price": 2000
+      }
+    ]
   },
   {
     "id": 6,
@@ -159,7 +203,19 @@
       "alt": "/anime-event-maps/illustar/2"
     },
     "site": "https://illustar.net/",
-    "isFavorite": false
+    "isFavorite": false,
+    "priceList": [
+      {
+        "type": "온라인예매",
+        "name": "종일 입장권",
+        "price": 12000
+      },
+      {
+        "type": "온라인예매",
+        "name": "오후 입장권",
+        "price": 7000
+      }
+    ]
   },
   {
     "id": 7,

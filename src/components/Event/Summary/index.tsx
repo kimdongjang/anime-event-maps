@@ -165,44 +165,45 @@ export const EventSummary = (props: IEventSummaryProps) => {
     let minPrice = event.priceList?.map((data) => data.price);
     let maxPrice = event.priceList?.map((data) => data.price);
     if (!!event.priceList) {
+      let names = [
+        ...new Set(
+          event.priceList.map((data, i) => {
+            return data.name;
+          })
+        ),
+      ];
+      names.unshift('type');
+
       let columns: ITableColumn[] = [];
-      const type = event.priceList.map((data) => {
+      columns = names.map((name) => {
         return {
-          title: data.name,
-          dataIndex: data.name,
-          key: data.name,
+          title: name,
+          dataIndex: name,
+          key: name,
         };
       });
-      if (!!type) {
-        columns = type;
-      }
+      let types = [
+        ...new Set(
+          event.priceList.map((data, i) => {
+            return data.type;
+          })
+        ),
+      ];
+      let datas = types.map((type, i) => {
+        let data: any = { type: type, key: i };
+        let findlist = event.priceList?.filter((e) => type === e.type);
+        findlist?.map((f) => {
+          data[f.name] = f.price.toLocaleString('ko-KR');
+        });
+        return data;
+      });
 
-      // event.priceList.map((data) => {
-      //   if (!columns.find((f) => f.title === data.name)) {
-      //     columns.push({
-      //       title: data.name,
-      //       dataIndex: data.name,
-      //       key: data.name,
-      //     });
-      //   }
-      // });
-
-      // const datas: any[] = [];
-      // event.priceList.map((data, i) => {
-      //   if (!!datas.find((f) => f.key === i)) {
-      //   } else {
-      //     datas.push({
-      //       key: i,
-      //     });
-      //   }
-      // });
-
-      const content = <Table columns={columns}></Table>;
+      const content = <Table columns={columns} dataSource={datas}></Table>;
       price = (
         <>
-          <p>{minPrice && Math.min(...minPrice)}</p>
+          <p>{minPrice && Math.min(...minPrice).toLocaleString('ko-KR')}</p>
           <p>~</p>
-          <p>{maxPrice && Math.max(...maxPrice)}</p>
+          <p>{maxPrice && Math.max(...maxPrice).toLocaleString('ko-KR')}</p>
           <Popover content={content} title="입장료">
             <button className="border px-2 rounded text-sm">자세히보기</button>
           </Popover>
