@@ -14,7 +14,7 @@ import { MdFilterAlt, MdHome, MdOutlineStar, MdCheck } from 'react-icons/md';
 import { useRecoilState } from 'recoil';
 import { EventList } from '../Event/List';
 import { SearchBox } from '../SearchBox';
-import { Calender } from '../Calender';
+import { Calendar } from '../Calendar';
 
 export const SearchForm = () => {
   const [searchList, setSearchList] = useRecoilState(searchListStore);
@@ -209,7 +209,7 @@ export const SearchForm = () => {
         </div>
       )}
       {selectCategory !== MainCategory.CALENDER && <EventList />}
-      {selectCategory === MainCategory.CALENDER && <Calender />}
+      {selectCategory === MainCategory.CALENDER && <Calendar />}
     </div>
   );
 };

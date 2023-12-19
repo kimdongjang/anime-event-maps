@@ -37,8 +37,9 @@ const Sidebar = (props: ISidebar) => {
   return (
     <aside className={`fixed flex h-full ${className}`}>
       <div
-        className={`bg-white h-full w-0 md:w-[45%] lg:w-[40%] xl:w-[35%] flex overflow-y-scroll ${isShow ? styles.show_side_bar : styles.close_side_bar
-          }`}
+        className={`bg-white h-full w-0 md:w-[50%] lg:w-[50%] xl:w-[40%] flex overflow-y-scroll ${
+          isShow ? styles.show_side_bar : styles.close_side_bar
+        }`}
       >
         <div className="sticky top-0">{renderOpenBtn()}</div>
         <SearchForm />
