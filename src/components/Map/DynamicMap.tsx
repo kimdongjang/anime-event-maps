@@ -8,7 +8,6 @@ import { useRecoilState } from 'recoil';
 
 const Map = ({ mapId = 'map' }) => {
   const [searchList, setSearchList] = useRecoilState(searchListStore);
-  const [markerList, setMarkerList] = useState<IMarker[]>();
 
   const renderMarker = (event: IEvent, index: number) => {
     return (

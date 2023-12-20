@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import dynamic from 'next/dynamic';
 
-const DynamicMap = dynamic(import('./DynamicMap'), {
+const DynamicMap = dynamic(() => import('./DynamicMap'), {
   loading: () => <></>,
   ssr: false,
 });
