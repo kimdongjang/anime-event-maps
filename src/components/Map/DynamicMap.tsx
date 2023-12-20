@@ -37,16 +37,16 @@ const Map = ({ mapId = 'map' }) => {
   };
 
   return (
-    <MapContainer
-      center={[INITIAL_CENTER.lat, INITIAL_CENTER.lng]}
-      zoom={INITIAL_ZOOM}
-      scrollWheelZoom={false}
-    >
-      {searchList.map((event, i) => {
-        return renderMarker(event, i);
-      })}
-      <div id={mapId} style={{ width: '100%', height: '100%' }} />
-    </MapContainer>
+    // <MapContainer
+    //   center={[INITIAL_CENTER.lat, INITIAL_CENTER.lng]}
+    //   zoom={INITIAL_ZOOM}
+    //   scrollWheelZoom={false}
+    // >
+    //   {searchList.map((event, i) => {
+    //     return renderMarker(event, i);
+    //   })}
+    <div id={mapId} style={{ width: '100%', height: '100%' }} />
+    // </MapContainer>
   );
 };
 
