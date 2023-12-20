@@ -101,14 +101,14 @@ const useMapHook = () => {
       const markerList: IMarker[] = [];
       searchList.map((data, i) => {
         // 선택된 리스트를 지도에 마커로 표시
-        // renderMarker(data);
-        // const { marker, infoWindow } = renderMarker(data);
-        // markerList.push({
-        //   checked: true,
-        //   event: data,
-        //   marker: marker,
-        //   infoWindow: infoWindow
-        // })
+        renderMarker(data);
+        const { marker, infoWindow } = renderMarker(data);
+        markerList.push({
+          checked: true,
+          event: data,
+          marker: marker,
+          infoWindow: infoWindow,
+        });
       });
       setMarkerList(markerList);
     }
