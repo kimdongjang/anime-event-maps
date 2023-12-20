@@ -92,8 +92,8 @@ const useMapHook = () => {
     });
     return {
       marker,
-      infoWindow
-    }
+      infoWindow,
+    };
   };
 
   useEffect(() => {
@@ -102,24 +102,24 @@ const useMapHook = () => {
       searchList.map((data, i) => {
         // 선택된 리스트를 지도에 마커로 표시
         // renderMarker(data);
-        const { marker, infoWindow } = renderMarker(data);
-        markerList.push({
-          checked: true,
-          event: data,
-          marker: marker,
-          infoWindow: infoWindow
-        })
+        // const { marker, infoWindow } = renderMarker(data);
+        // markerList.push({
+        //   checked: true,
+        //   event: data,
+        //   marker: marker,
+        //   infoWindow: infoWindow
+        // })
       });
-      setMarkerList(markerList)
+      setMarkerList(markerList);
     }
   }, [naverMap]);
 
   const openInfoWindow = (event: IEvent) => {
     if (!!naverMap) {
-      const find = markerList?.find(data => data.event.id === event.id)
-      find?.infoWindow.open(naverMap, find.marker)
+      const find = markerList?.find((data) => data.event.id === event.id);
+      find?.infoWindow.open(naverMap, find.marker);
     }
-  }
+  };
 
   const morphMarker = (event: IEvent) => {
     if (!!naverMap) {

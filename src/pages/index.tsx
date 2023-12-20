@@ -1,5 +1,4 @@
 import { Inter } from 'next/font/google';
-import { Map } from '@/components/Map';
 import RootLayout from '@/layout/RootLayout';
 import Sidebar from '@/components/Sidebar';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
@@ -25,6 +24,7 @@ import {
 import { IEvent } from '@/services/event/@types';
 import { ModalNotice } from '@/components/ModalNotice';
 import { useSearchParams } from 'next/navigation';
+import Map from '@/components/Map';
 
 const inter = Inter({ subsets: ['latin'] });
 

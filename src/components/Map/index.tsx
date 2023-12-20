@@ -1,13 +1,15 @@
 import { INITIAL_CENTER, INITIAL_ZOOM } from '@/hooks/useMapHook';
-import { IEvent } from '@/services/event/@types';
 import { markerStore } from '@/stores/MapDataStore';
 import { Coordinates, NaverMap } from '@/types/map';
-import Image from 'next/image';
 import Script from 'next/script';
 import { useEffect, useRef, useState } from 'react';
 import { useRecoilState } from 'recoil';
+import dynamic from 'next/dynamic';
 
-import styles from './Map.module.scss';
+const DynamicMap = dynamic(import('./DynamicMap'), {
+  loading: () => <></>,
+  ssr: false,
+});
 
 type Props = {
   mapId?: string;
@@ -17,13 +19,12 @@ type Props = {
   onLoad?: (map: NaverMap) => void;
 };
 
-export const Map = ({
+const Map = ({
   mapId = 'map',
   initialCenter = INITIAL_CENTER,
   initialZoom = INITIAL_ZOOM,
   onLoad,
 }: Props) => {
-  const [markerList, setMarkerList] = useRecoilState(markerStore);
   const mapRef = useRef<NaverMap | null>(null);
   const [naverMap, setNaverMap] = useState<NaverMap>();
 
@@ -72,7 +73,9 @@ export const Map = ({
         src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_NCP_CLIENT_ID}`}
         onReady={initializeMap}
       />
-      <div id={mapId} style={{ width: '100%', height: '100%' }} />
+      <DynamicMap />
     </>
   );
 };
+
+export default Map;
