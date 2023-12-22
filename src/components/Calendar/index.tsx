@@ -1,16 +1,76 @@
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
-import { searchListStore } from '@/stores/MapDataStore';
+import { searchFilterStore, searchListStore } from '@/stores/MapDataStore';
+import { checkEndEvent } from '@/utils/date';
+import { FilterType } from '@/constants/enums';
 
 export const Calendar = () => {
   const [searchList, setSearchList] = useRecoilState(searchListStore);
+  const [filter, setFilter] = useRecoilState(searchFilterStore);
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  // const renderCallback = useCallback(() => {
+  //   const renderList = filterList();
+  //   return renderList.map((event, i) => {
+  //     // 종료된 이벤트가 체크되어 있다면
+  //     if (filter.isEnd) {
+  //       return {
+  //         title: event.title,
+  //         start: new Date(event.startDate),
+  //         end: new Date(event.endDate),
+  //       };
+  //     } else {
+  //       // 종료 날짜를 비교해서 예정된 이벤트만 출력
+  //       if (checkEndEvent(new Date(event.endDate))) {
+  //         return {
+  //           title: event.title,
+  //           start: new Date(event.startDate),
+  //           end: new Date(event.endDate),
+  //         };
+  //       }
+  //     }
+  //   });
+  // }, []);
+
+  const filterList = () => {
+    if (filter.list.length === 0) {
+      return searchList;
+    } else {
+      switch (filter.type) {
+        case FilterType.EVENT:
+          return searchList.filter((event) => {
+            // 필터에 추가된 이름들과 일치한다면
+            if (!!filter.list.find((f) => f === event.event)) {
+              return event;
+            }
+          });
+        case FilterType.ADDRESS:
+          return searchList.filter((event) => {
+            // 필터에 추가된 이름들과 일치한다면
+            if (!!filter.list.find((f) => event.doroAddress.includes(f))) {
+              return event;
+            }
+          });
+
+        case FilterType.LOCATION:
+          return searchList.filter((event) => {
+            // 필터에 추가된 이름들과 일치한다면
+            if (!!filter.list.find((f) => f === event.eventHall)) {
+              return event;
+            }
+          });
+        default:
+          return searchList;
+      }
+    }
+  };
+
   if (!mounted) return <></>;
   else
     return (
@@ -27,12 +87,16 @@ export const Calendar = () => {
           height={'80vh'}
           displayEventTime={false}
           eventClassNames={'text-xs'}
-          events={searchList.map((event, i) => {
-            return {
-              title: event.title,
-              start: new Date(event.startDate),
-              end: new Date(event.endDate),
-            };
+          events={filterList().map((event, i) => {
+            if (!!event) {
+              return {
+                title: event.title,
+                start: new Date(event.startDate),
+                end: new Date(event.endDate),
+              };
+            } else {
+              return {};
+            }
           })}
         />
       </div>
