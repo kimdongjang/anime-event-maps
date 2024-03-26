@@ -10,8 +10,8 @@
     "address": "일산 킨텍스 제1전시장 3-5홀",
     "doroAddress": "경기 고양시 일산서구 킨텍스로 217-60",
     "jibunAddress": "경기 고양시 대화동 2600",
-    "lat": 37.668029,
-    "lng": 126.745895,
+    "lat": 37.660937,
+    "lng": 126.745904,
     "images": {
       "path": "/images/agf2023.jpg",
       "alt": "/anime-event-maps/agf2023"
@@ -30,8 +30,8 @@
     "address": "일산 킨텍스 1전시장 2-5홀",
     "doroAddress": "경기 고양시 일산서구 킨텍스로 217-60",
     "jibunAddress": "경기 고양시 대화동 2600",
-    "lat": 37.668029,
-    "lng": 126.745895,
+    "lat": 37.660937,
+    "lng": 126.745904,
     "images": {
       "path": "/images/2023seoulcomic.png",
       "alt": "/anime-event-maps/2023seoulcomic"
@@ -397,8 +397,8 @@
     "lat": 37.2663759,
     "lng": 126.99711,
     "images": {
-      "path": "/images/2023seoulcomic.png",
-      "alt": "/anime-event-maps/2023seoulcomic"
+      "path": "/images/202405seoul.png",
+      "alt": "/anime-event-maps/202405seoulcomic"
     },
     "site": "https://comicw.co.kr/",
     "isFavorite": false,
@@ -508,8 +508,8 @@
     "address": "일산 킨텍스 전시장",
     "doroAddress": "경기 고양시 일산서구 킨텍스로 217-60",
     "jibunAddress": "경기 고양시 대화동 2600",
-    "lat": 37.668029,
-    "lng": 126.745895,
+    "lat": 37.660937,
+    "lng": 126.745904,
     "images": {
       "path": "/images/2023seoulcomic.png",
       "alt": "/anime-event-maps/2023seoulcomic"
@@ -587,13 +587,33 @@
     "address": "일산 킨텍스 1전시장 2-5홀",
     "doroAddress": "경기 고양시 일산서구 킨텍스로 217-60",
     "jibunAddress": "경기 고양시 대화동 2600",
-    "lat": 37.668029,
-    "lng": 126.745895,
+    "lat": 37.660937,
+    "lng": 126.745904,
     "images": {
       "path": "/images/2023seoulcomic.png",
       "alt": "/anime-event-maps/2023seoulcomic"
     },
     "site": "https://comicw.co.kr/",
+    "isFavorite": false
+  },
+  {
+    "id": 17,
+    "title": "2024 플레이엑스포",
+    "category": "게임 행사",
+    "event": "플레이엑스포",
+    "startDate": "2024-05-23",
+    "endDate": "2024-05-26",
+    "eventHall": "일산 킨텍스",
+    "address": "일산 킨텍스 1전시장 3-5홀",
+    "doroAddress": "경기 고양시 일산서구 킨텍스로 217-60",
+    "jibunAddress": "경기 고양시 대화동 2600",
+    "lat": 37.660937,
+    "lng": 126.745904,
+    "images": {
+      "path": "/images/2024playx4.jpg",
+      "alt": "/anime-event-maps/2024playx4"
+    },
+    "site": "https://www.playx4.or.kr/b2c/playx4/page1.php",
     "isFavorite": false
   }
 ]
