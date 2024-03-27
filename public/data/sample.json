@@ -615,5 +615,89 @@
     },
     "site": "https://www.playx4.or.kr/b2c/playx4/page1.php",
     "isFavorite": false
+  },
+  {
+    "id": 18,
+    "title": "65회 코스띠아모",
+    "category": "놀이공원 행사",
+    "event": "코스띠아모",
+    "startDate": "2024-04-27",
+    "endDate": "2024-04-28",
+    "eventHall": "서울랜드",
+    "address": "서울랜드",
+    "doroAddress": "경기도 과천시 광명로 181",
+    "jibunAddress": "경기도 과천시 막계동 33",
+    "lat": 37.4370997,
+    "lng": 127.024467,
+    "images": {
+      "path": "/images/costiamo/64회_코스띠아모.png",
+      "alt": "/anime-event-maps/costiamo/64"
+    },
+    "site": "https://cafe.naver.com/coscomic",
+    "isFavorite": false,
+    "priceList": [
+      {
+        "type": "현장예매",
+        "name": "자유이용권",
+        "price": 20000
+      },
+      {
+        "type": "현장예매",
+        "name": "오후이용권",
+        "price": 18000
+      },
+      {
+        "type": "현장예매",
+        "name": "코스프레 장터자리",
+        "price": 5000
+      },
+      {
+        "type": "현장예매",
+        "name": "캐리어보관",
+        "price": 2000
+      }
+    ]
+  },
+  {
+    "id": 19,
+    "title": "66회 코스띠아모",
+    "category": "놀이공원 행사",
+    "event": "코스띠아모",
+    "startDate": "2024-05-18",
+    "endDate": "2024-05-19",
+    "eventHall": "서울랜드",
+    "address": "서울랜드",
+    "doroAddress": "경기도 과천시 광명로 181",
+    "jibunAddress": "경기도 과천시 막계동 33",
+    "lat": 37.4370997,
+    "lng": 127.024467,
+    "images": {
+      "path": "/images/costiamo/65회_코스띠아모.png",
+      "alt": "/anime-event-maps/costiamo/65"
+    },
+    "site": "https://cafe.naver.com/coscomic",
+    "isFavorite": false,
+    "priceList": [
+      {
+        "type": "현장예매",
+        "name": "자유이용권",
+        "price": 20000
+      },
+      {
+        "type": "현장예매",
+        "name": "오후이용권",
+        "price": 18000
+      },
+      {
+        "type": "현장예매",
+        "name": "코스프레 장터자리",
+        "price": 5000
+      },
+      {
+        "type": "현장예매",
+        "name": "캐리어보관",
+        "price": 2000
+      }
+    ]
   }
 ]
