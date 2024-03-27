@@ -5,6 +5,6 @@ export default async function Test({
 } : {
   params: { user: string }
 }){
-  const { rows } = await sql`SELECT * from TEST_TABLE where user_id=${params.user}`;
+  const { rows } = await sql`SELECT * from event_list`;
   return rows;
 }

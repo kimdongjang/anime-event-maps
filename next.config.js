@@ -7,6 +7,7 @@ const nextConfig = {
   reactStrictMode: false,
   env:{
     POSTGRES_URL: process.env.POSTGRES_URL,
+    BLOB_READ_WRITE_TOKEN: process.env.BLOB_READ_WRITE_TOKEN,
   }
 
   // styles 폴더와 같은 공간에 모아두고 싶은 경우에 해제
