@@ -41,7 +41,7 @@ export const useSearchData = () => {
     let idx = tempList.findIndex((event) => event.id == obj.id);
     let copy = { ...obj };
     copy.isFavorite = value;
-    tempList.splice(idx, 1, copy);
+    tempList.splice(idx, 1, copy);    
     setSearchList(tempList);
     setLocalstorageEvent(obj);
   };

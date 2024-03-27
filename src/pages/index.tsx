@@ -50,6 +50,12 @@ export default function Main(props: any) {
           temp.isFavorite = true;
           return temp;
         } else return event;
+      }).sort((a: IEvent,b: IEvent) => {
+        // 문자열로 된 날짜를 Date 객체로 변환하여 비교
+        const dateA: Date = new Date(a.startDate);
+        const dateB: Date = new Date(b.startDate);
+  
+        return dateA.getTime() - dateB.getTime();
       })
     );
     setMounted(true);
