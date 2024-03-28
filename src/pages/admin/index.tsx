@@ -1,83 +1,38 @@
-import React, { useState } from 'react';
-import {
-  DesktopOutlined,
-  FileOutlined,
-  PieChartOutlined,
-  TeamOutlined,
-  UserOutlined,
-} from '@ant-design/icons';
-import type { MenuProps } from 'antd';
-import { Breadcrumb, Layout, Menu, theme } from 'antd';
-import Test from "@/api/test"
-
-const { Header, Content, Footer, Sider } = Layout;
-
-type MenuItem = Required<MenuProps>['items'][number];
-
-function getItem(
-  label: React.ReactNode,
-  key: React.Key,
-  icon?: React.ReactNode,
-  children?: MenuItem[],
-): MenuItem {
-  return {
-    key,
-    icon,
-    children,
-    label,
-  } as MenuItem;
-}
-
-const items: MenuItem[] = [
-  getItem('Option 1', '1', <PieChartOutlined />),
-  getItem('Option 2', '2', <DesktopOutlined />),
-  getItem('User', 'sub1', <UserOutlined />, [
-    getItem('Tom', '3'),
-    getItem('Bill', '4'),
-    getItem('Alex', '5'),
-  ]),
-  getItem('Team', 'sub2', <TeamOutlined />, [getItem('Team 1', '6'), getItem('Team 2', '8')]),
-  getItem('Files', '9', <FileOutlined />),
-];
+import { signIn } from 'next-auth/react'
+import { useState } from 'react'
 
 const Admin = () => {
-    const test = Test({params: { user:'tester'}});
-    console.log(test)
-  const [collapsed, setCollapsed] = useState(false);
-  const {
-    token: { colorBgContainer, borderRadiusLG },
-  } = theme.useToken();
+  const [username, setUsername] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const handleLogin = async () => {
+    await signIn('credentials', { username, password, callbackUrl: '/admin/manage' })
+  }
+
 
   return (
-    <Layout style={{ minHeight: '100vh' }}>
-      <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
-        <div className="demo-logo-vertical" />
-        <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} />
-      </Sider>
-      <Layout>
-        {/* <Header style={{ padding: 0, background: colorBgContainer }} /> */}
-        <Content style={{ margin: '0 16px' }}>
-          <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item>User</Breadcrumb.Item>
-            <Breadcrumb.Item>Bill</Breadcrumb.Item>
-          </Breadcrumb>
-          <div
-            style={{
-              padding: 24,
-              minHeight: 360,
-              background: colorBgContainer,
-              borderRadius: borderRadiusLG,
-            }}
-          >
-            Bill is a cat.
+    <div className='flex items-center justify-center min-h-screen from-purple-900 via-indigo-800 to-indigo-500 bg-gradient-to-br'>
+      <div className='w-full max-w-lg px-10 py-8 mx-auto bg-white border rounded-lg shadow-2xl'>
+        <div className='max-w-md mx-auto space-y-3'>
+          <h3 className="text-lg font-semibold">&#128540; My Account</h3>
+          <div>
+            <label className="block py-1">Your Name</label>
+            <input type="password" placeholder="username"  className="border w-full py-2 px-2 rounded shadow hover:border-indigo-600 ring-1 ring-inset ring-gray-300 font-mono"
+            value={username} onChange={(e) => setUsername(e.target.value)} />
+            <p className="text-sm mt-2 px-2 hidden text-gray-600">Text helper</p>
           </div>
-        </Content>
-        <Footer style={{ textAlign: 'center' }}>
-          Ant Design ©{new Date().getFullYear()} Created by Ant UED
-        </Footer>
-      </Layout>
-    </Layout>
-  );
-};
+          <div>
+            <label className="block py-1">Password</label>
+            <input type="password" placeholder="password"  className="border w-full py-2 px-2 rounded shadow hover:border-indigo-600 ring-1 ring-inset ring-gray-300 font-mono" 
+            value={password} onChange={(e) => setPassword(e.target.value)} />
+          </div>
+          <div className="flex gap-3 pt-3 items-center">
+            <button className="border hover:border-indigo-600 px-4 py-2 rounded-lg shadow ring-1 ring-inset ring-gray-300"
+            onClick={handleLogin}>Login</button>            
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
 
 export default Admin;
