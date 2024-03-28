@@ -1,4 +1,5 @@
 import { signIn } from 'next-auth/react'
+import { KeyboardEventHandler } from 'react';
 import { useState } from 'react'
 
 const Admin = () => {
@@ -6,6 +7,11 @@ const Admin = () => {
   const [password, setPassword] = useState<string>('');
   const handleLogin = async () => {
     await signIn('credentials', { username, password, callbackUrl: '/admin/manage' })
+  }
+  const handleKeyDown = (event:KeyboardEventHandler) => {
+    if(event.key === "Enter"){
+      handleLogin();
+    }
   }
 
 
@@ -23,7 +29,7 @@ const Admin = () => {
           <div>
             <label className="block py-1">Password</label>
             <input type="password" placeholder="password"  className="border w-full py-2 px-2 rounded shadow hover:border-indigo-600 ring-1 ring-inset ring-gray-300 font-mono" 
-            value={password} onChange={(e) => setPassword(e.target.value)} />
+            value={password} onChange={(e) => setPassword(e.target.value)} onKeyDown={handleKeyDown}/>
           </div>
           <div className="flex gap-3 pt-3 items-center">
             <button className="border hover:border-indigo-600 px-4 py-2 rounded-lg shadow ring-1 ring-inset ring-gray-300"
