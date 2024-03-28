@@ -25,5 +25,6 @@ export default NextAuth({
   ],
   session:{
     maxAge:300,
-  }
+  },
+  secret: process.env.NEXTAUTH_SECRET, 
 })
