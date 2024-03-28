@@ -1,5 +1,4 @@
 import { signIn } from 'next-auth/react'
-import { KeyboardEventHandler } from 'react';
 import { useState } from 'react'
 
 const Admin = () => {
@@ -8,8 +7,8 @@ const Admin = () => {
   const handleLogin = async () => {
     await signIn('credentials', { username, password, callbackUrl: '/admin/manage' })
   }
-  const handleKeyDown = (event:KeyboardEventHandler) => {
-    if(event.key === "Enter"){
+  const handleKeyDown = (e:React.KeyboardEvent<HTMLInputElement>) => {
+    if(e.key === "Enter"){
       handleLogin();
     }
   }
