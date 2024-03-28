@@ -24,6 +24,6 @@ export default NextAuth({
     })
   ],
   session:{
-    maxAge:60,
+    maxAge:300,
   }
 })

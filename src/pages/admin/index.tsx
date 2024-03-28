@@ -16,7 +16,7 @@ const Admin = () => {
           <h3 className="text-lg font-semibold">&#128540; My Account</h3>
           <div>
             <label className="block py-1">Your Name</label>
-            <input type="password" placeholder="username"  className="border w-full py-2 px-2 rounded shadow hover:border-indigo-600 ring-1 ring-inset ring-gray-300 font-mono"
+            <input type="text" placeholder="username"  className="border w-full py-2 px-2 rounded shadow hover:border-indigo-600 ring-1 ring-inset ring-gray-300 font-mono"
             value={username} onChange={(e) => setUsername(e.target.value)} />
             <p className="text-sm mt-2 px-2 hidden text-gray-600">Text helper</p>
           </div>
