@@ -81,9 +81,13 @@ export default function Main(props: any) {
         (event: IEvent) => event.id.toString() == paramId
       );
       if (!!findEvent) {
-        morphMarker(findEvent);
-        // 화면이 깨지는 이슈가 있어서 1.5초후에 적용
-        setTimeout(() => openInfoWindow(findEvent), 1500);
+        // 화면이 깨지는 이슈가 있어서 2초후에 적용
+        setTimeout(() => {
+          morphMarker(findEvent);          
+        }, 1000);
+        setTimeout(() => {
+          openInfoWindow(findEvent)      
+        }, 2500);
 
         // 모바일인 경우 편의성을 위해 창을 내려줌
         setIsMobileShow(false);
