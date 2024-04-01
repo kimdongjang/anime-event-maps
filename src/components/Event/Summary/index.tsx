@@ -17,13 +17,13 @@ import { Popover, Table } from 'antd';
 import { filter } from 'lodash';
 import { ITableColumn } from '@/constants/common';
 
-interface IEventDisplayProps {
+interface IEventSummaryProps {
   event: IEvent;
   className?: string;
   onClick: (event: IEvent) => void;
 }
 
-export const EventDisplay = (props: IEventDisplayProps) => {
+export const EventSummary = (props: IEventSummaryProps) => {
   const router = useRouter();
   const { event, className, onClick } = props;
   const { setFavoriteEvent } = useSearchData();
@@ -75,14 +75,16 @@ export const EventDisplay = (props: IEventDisplayProps) => {
         break;
     }
     return (
-      <>
-        <h3 className={`${bgColor} ${bgTextColor} border px-1 rounded mr-1`}>
-          {!!remainDate ? remainDate + str : str}
-        </h3>
-        <h2 className={`${color} font-bold text-xl cursor-pointer`}>
-          {event.title}
-        </h2>
-      </>
+        <div className='flex'>
+            <h3 className={`${bgColor} ${bgTextColor} border px-1 rounded inline-block mr-1`}>
+                {!!remainDate ? remainDate + str : str}
+            </h3>
+            <div className='flex items-center space-x-1'>
+                <h2 className={`${color} font-bold text-xl cursor-pointer`}>
+                    {event.title}
+                </h2>
+            </div>
+        </div>
     );
   };
   const renderFavoriteBtn = () => {
@@ -228,59 +230,48 @@ export const EventDisplay = (props: IEventDisplayProps) => {
     <div className={classNames(className, 'bg-white w-full border-y mb-3')}>
       <div className="p-1">
         {/* 타이틀 */}
-        <div className="flex items-center space-x-1 py-1">{renderTitle()}</div>
-        {/* 이미지 */}
-        <div>
-          {
-            <Image
-              className="event_display__bg_image max-h-[180px] py-1"
-              src={event.images.path}
-              alt={event.images.alt}
-              fill
-              objectFit="cover"
-            />
-          }
+        <div className="flex justify-between">
+            {renderTitle()}
+            <div className="space-x-1 flex items-center">
+                <button className="p-1 rounded-full border border-gray-400 text-gray-700">
+                <CiShare1
+                    size={20}
+                    onClick={() => {
+                    window.navigator.share({
+                        title: event.title,
+                        text: `${event.address}`,
+                        url: `${process.env.NEXT_PUBLIC_PATH_NAME}/?id=${event.id}`,
+                    });
+                    }}
+                />
+                </button>
+                {renderFavoriteBtn()}
+            </div>
         </div>
-        <div className="flex justify-between items-center px-1">
-          <div className="space-x-1">
-            <label className="font-medium">{event.address}</label>
-            <label className="text-gray-400 text-sm">{event.category}</label>
-          </div>
-          <div className="space-x-1 flex items-center">
-            <button className="p-1 rounded-full border border-gray-400 text-gray-700">
-              <CiShare1
-                size={20}
-                onClick={() => {
-                  window.navigator.share({
-                    title: event.title,
-                    text: `${event.address}`,
-                    url: `${process.env.NEXT_PUBLIC_PATH_NAME}/?id=${event.id}`,
-                  });
-                }}
-              />
-            </button>
-            {renderFavoriteBtn()}
-          </div>
+        <label className="font-medium">{event.address}</label>
+       
+        <div className="flex justify-between items-center ">
+            <div className='flex'>
+                <label className="bg-gray-100 border-gray-100 rounded text-sm font-medium px-1 mr-1">
+                    기간
+                </label>
+                <p>{event.startDate}</p>
+                <p>~</p>
+                <p>{event.endDate}</p>
+            </div>
         </div>
-        <div>
-          <a className="text-sm p-1" href={event.site}>
+        {/* <div>
+          <a className="text-sm" href={event.site}>
             {event.site}
           </a>
-        </div>
-        <div className="flex items-center space-x-1 p-1">
-          <label className="bg-gray-100 border-gray-100 rounded text-sm font-medium px-1">
-            기간
-          </label>
-          <p>{event.startDate}</p>
-          <p>~</p>
-          <p>{event.endDate}</p>
-        </div>
-        {renderPrice()}
+        </div> */}
+        
+        {/* {renderPrice()} */}
         {/* 위치 */}
-        {renderLocation()}
+        {/* {renderLocation()} */}
       </div>
-      <div className="flex justify-end space-x-1 p-3">
-        <button
+      <div className="flex justify-end space-x-1 p-1">
+        {/* <button
           className="bg-blue-400 hover:bg-blue-500 text-white text-sm rounded px-2 py-1 "
           type="button"
           onClick={() => {
@@ -288,18 +279,18 @@ export const EventDisplay = (props: IEventDisplayProps) => {
           }}
         >
           네이버 길찾기
-        </button>
-        <button
+        </button> */}
+        {/* <button
           className="flex items-center text-sm px-2 py-1
-           bg-sky-400 text-white rounded"
+           bg-gray-200 text-white rounded line-through"
           type="button"
           onClick={() => {
             onClick(event);
           }}
         >
-          지도에서보기
+          자세히보기
           <FaCaretRight size={16} />
-        </button>
+        </button> */}
       </div>
     </div>
   );
