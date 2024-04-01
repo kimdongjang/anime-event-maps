@@ -96,9 +96,18 @@ export const EventList = () => {
       case MainCategory.FAVORITE:
         return searchList
           .filter((filter) => filter.isFavorite === true)
-          .map((data, i) => (
-            <EventDisplay event={data} key={i} onClick={handleEventClick} />
-          ));
+          .map((event, i) => {
+            if(isSummary){
+              return (
+                <EventSummary event={event} key={i} onClick={handleEventClick} />
+              )
+            }
+            else{
+              return (
+                <EventDisplay event={event} key={i} onClick={handleEventClick} />
+              );
+            }
+          });
       default:
         break;
     }
