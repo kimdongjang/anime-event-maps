@@ -254,7 +254,7 @@ export const EventDisplay = (props: IEventDisplayProps) => {
                   window.navigator.share({
                     title: event.title,
                     text: `${event.address}`,
-                    url: `${process.env.NEXT_PUBLIC_PATH_NAME}/?id=${event.id}`,
+                    url: `${process.env.NEXT_PUBLIC_PATH_NAME}?id=${event.id}`,
                   });
                 }}
               />
