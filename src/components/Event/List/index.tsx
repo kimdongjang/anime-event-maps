@@ -68,7 +68,9 @@ export const EventList = () => {
           // 종료된 이벤트가 체크되어 있다면
           if (filter.isEnd) {
             if(isSummary){
-              <EventSummary event={event} key={i} onClick={handleEventClick} />
+              return (
+                <EventSummary event={event} key={i} onClick={handleEventClick} />
+              )
             }
             else{
               return (
@@ -80,20 +82,12 @@ export const EventList = () => {
             if (checkEndEvent(new Date(event.endDate))) {
               if(isSummary){
                 return (
-                  <EventSummary
-                    event={event}
-                    key={i}
-                    onClick={handleEventClick}
-                  />
+                  <EventSummary event={event} key={i} onClick={handleEventClick} />
                 );
               }
               else{
                 return (
-                  <EventDisplay
-                    event={event}
-                    key={i}
-                    onClick={handleEventClick}
-                  />
+                  <EventDisplay event={event} key={i} onClick={handleEventClick} />
                 );
               }
             }
