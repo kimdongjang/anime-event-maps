@@ -11,7 +11,7 @@ import { mobileIsOpenStore } from '@/stores/MobileStore';
 import { checkEndEvent } from '@/utils/date';
 import { useRouter } from 'next/router';
 import { useRecoilState } from 'recoil';
-import { EventSummary } from '../Summary';
+import { EventDisplay } from '../Display';
 
 export const EventList = () => {
   const [isMobileShow, setIsMobileShow] = useRecoilState(mobileIsOpenStore);
@@ -65,13 +65,13 @@ export const EventList = () => {
           // 종료된 이벤트가 체크되어 있다면
           if (filter.isEnd) {
             return (
-              <EventSummary event={event} key={i} onClick={handleEventClick} />
+              <EventDisplay event={event} key={i} onClick={handleEventClick} />
             );
           } else {
             // 종료 날짜를 비교해서 예정된 이벤트만 출력
             if (checkEndEvent(new Date(event.endDate))) {
               return (
-                <EventSummary
+                <EventDisplay
                   event={event}
                   key={i}
                   onClick={handleEventClick}
@@ -84,7 +84,7 @@ export const EventList = () => {
         return searchList
           .filter((filter) => filter.isFavorite === true)
           .map((data, i) => (
-            <EventSummary event={data} key={i} onClick={handleEventClick} />
+            <EventDisplay event={data} key={i} onClick={handleEventClick} />
           ));
       default:
         break;

@@ -17,13 +17,13 @@ import { Popover, Table } from 'antd';
 import { filter } from 'lodash';
 import { ITableColumn } from '@/constants/common';
 
-interface IEventSummaryProps {
+interface IEventDisplayProps {
   event: IEvent;
   className?: string;
   onClick: (event: IEvent) => void;
 }
 
-export const EventSummary = (props: IEventSummaryProps) => {
+export const EventDisplay = (props: IEventDisplayProps) => {
   const router = useRouter();
   const { event, className, onClick } = props;
   const { setFavoriteEvent } = useSearchData();
@@ -233,7 +233,7 @@ export const EventSummary = (props: IEventSummaryProps) => {
         <div>
           {
             <Image
-              className="event_summary__bg_image max-h-[180px] py-1"
+              className="event_display__bg_image max-h-[180px] py-1"
               src={event.images.path}
               alt={event.images.alt}
               fill

@@ -5,6 +5,7 @@ import {
   searchFilterStore,
   searchListStore,
   selectCategoryStore,
+  isSummaryStore,
 } from '@/stores/MapDataStore';
 import { Checkbox, Dropdown, Select } from 'antd';
 import { useEffect, useState } from 'react';
@@ -21,6 +22,7 @@ export const SearchForm = () => {
   const [selectCategory, setSelectCategory] =
     useRecoilState(selectCategoryStore);
   const [filter, setFilter] = useRecoilState(searchFilterStore);
+  const [isSummary, setIsSummary] = useRecoilState(isSummaryStore);
   const [openFilter, setOpenFilter] = useState(true);
   const [filterList, setFilterList] = useState<string[]>([]);
 
@@ -193,17 +195,27 @@ export const SearchForm = () => {
               className="p-1 w-[7rem]"
               onChange={handleSelectFilter}
             />
-            <Checkbox
-              value={filter.isEnd}
-              onChange={(e) => {
-                setFilter({
-                  ...filter,
-                  isEnd: e.target.checked,
-                });
-              }}
-            >
-              {'종료된 이벤트'}
-            </Checkbox>
+            <div>
+              <Checkbox
+                value={isSummary}
+                onChange={(e) => {
+                  setIsSummary(e.target.checked);
+                }}
+              >
+                {'요약해서 보기'}
+              </Checkbox>
+              <Checkbox
+                value={filter.isEnd}
+                onChange={(e) => {
+                  setFilter({
+                    ...filter,
+                    isEnd: e.target.checked,
+                  });
+                }}
+              >
+                {'종료된 이벤트'}
+              </Checkbox>
+            </div>
           </div>
           {renderFilterList()}
         </div>

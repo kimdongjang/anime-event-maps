@@ -32,3 +32,8 @@ export const selectCategoryStore = atom<MainCategory>({
   key: `selectCategoryStore`,
   default: MainCategory.MAIN,
 });
+
+export const isSummaryStore = atom<boolean>({
+  key: `isSummaryStore`,
+  default: false,
+});
