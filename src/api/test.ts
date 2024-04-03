@@ -1,6 +1,6 @@
 import { sql } from "@vercel/postgres";
 
-export default async function Test({
+export default async function getEventList({
   params
 } : {
   params: { user: string }
