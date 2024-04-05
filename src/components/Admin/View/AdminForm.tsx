@@ -1,3 +1,4 @@
+import { IEvent } from '@/services/event/@types';
 import { PlusOutlined } from '@ant-design/icons';
 import {
   Button,
@@ -15,7 +16,7 @@ import {
   TreeSelect,
   Upload,
 } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
@@ -29,98 +30,69 @@ const normFile = (e: any) => {
 
 
 const AdminForm = () => {
-    const [componentDisabled, setComponentDisabled] = useState<boolean>(true);
-  
-    return (
-      <>
-        <Checkbox
-          checked={componentDisabled}
-          onChange={(e) => setComponentDisabled(e.target.checked)}
-        >
-          Form disabled
-        </Checkbox>
-        <Form
-          labelCol={{ span: 4 }}
-          wrapperCol={{ span: 14 }}
-          layout="horizontal"
-          disabled={componentDisabled}
-          style={{ maxWidth: 600 }}
-        >
-          <Form.Item label="Checkbox" name="disabled" valuePropName="checked">
-            <Checkbox>Checkbox</Checkbox>
-          </Form.Item>
-          <Form.Item label="Radio">
-            <Radio.Group>
-              <Radio value="apple"> Apple </Radio>
-              <Radio value="pear"> Pear </Radio>
-            </Radio.Group>
-          </Form.Item>
-          <Form.Item label="Input">
-            <Input />
-          </Form.Item>
-          <Form.Item label="Select">
-            <Select>
-              <Select.Option value="demo">Demo</Select.Option>
-            </Select>
-          </Form.Item>
-          <Form.Item label="TreeSelect">
-            <TreeSelect
-              treeData={[
-                { title: 'Light', value: 'light', children: [{ title: 'Bamboo', value: 'bamboo' }] },
-              ]}
-            />
-          </Form.Item>
-          <Form.Item label="Cascader">
-            <Cascader
-              options={[
-                {
-                  value: 'zhejiang',
-                  label: 'Zhejiang',
-                  children: [
-                    {
-                      value: 'hangzhou',
-                      label: 'Hangzhou',
-                    },
-                  ],
-                },
-              ]}
-            />
-          </Form.Item>
-          <Form.Item label="DatePicker">
-            <DatePicker />
-          </Form.Item>
-          <Form.Item label="RangePicker">
-            <RangePicker />
-          </Form.Item>
-          <Form.Item label="InputNumber">
-            <InputNumber />
-          </Form.Item>
-          <Form.Item label="TextArea">
-            <TextArea rows={4} />
-          </Form.Item>
-          <Form.Item label="Switch" valuePropName="checked">
-            <Switch />
-          </Form.Item>
-          <Form.Item label="Upload" valuePropName="fileList" getValueFromEvent={normFile}>
-            <Upload action="/upload.do" listType="picture-card">
-              <button style={{ border: 0, background: 'none' }} type="button">
-                <PlusOutlined />
-                <div style={{ marginTop: 8 }}>Upload</div>
-              </button>
-            </Upload>
-          </Form.Item>
-          <Form.Item label="Button">
-            <Button>Button</Button>
-          </Form.Item>
-          <Form.Item label="Slider">
-            <Slider />
-          </Form.Item>
-          <Form.Item label="ColorPicker">
-            <ColorPicker />
-          </Form.Item>
-        </Form>
-      </>
-    )
+  const [form] = Form.useForm();
+
+  const onFinish = (values: any) => {
+    console.log('Finish:', values);
+  };
+  return (
+    <>
+      <Form
+        labelCol={{ span: 4 }}
+        wrapperCol={{ span: 14 }}
+        layout="horizontal"
+        style={{ maxWidth: 600 }}
+        form={form} 
+        onFinish={onFinish}
+      >
+        <Form.Item label="타이틀 이름" name="title"
+          rules={[{ required: true, message: 'Please input!' }]}>
+          <Input />
+        </Form.Item>
+        <Form.Item label="행사장" name="address" 
+      rules={[{ required: true, message: 'Please input!' }]}>
+          <Input />
+        </Form.Item>
+        <Form.Item label="카테고리 선택" name="category" 
+      rules={[{ required: true, message: 'Please input!' }]}>
+          <Select>
+            <Select.Option value="demo">Demo</Select.Option>
+          </Select>
+        </Form.Item>
+        <Form.Item label="사이트 주소" name="site">
+          <Input />
+        </Form.Item>
+        <Form.Item label="날짜" name="date"
+      rules={[{ required: true, message: 'Please input!' }]}>
+          <RangePicker />
+        </Form.Item>
+        <Form.Item label="도로명 주소" name="doroAddress">
+          <Input />
+        </Form.Item>
+        <Form.Item label="지번 주소" name="jibunAddress">
+          <Input />
+        </Form.Item>
+        <Form.Item label="대표 이미지" valuePropName="fileList" getValueFromEvent={normFile}>
+          <Upload action="/upload.do" listType="picture-card">
+            <button style={{ border: 0, background: 'none' }} type="button">
+              <PlusOutlined />
+              <div style={{ marginTop: 8 }}>Upload</div>
+            </button>
+          </Upload>
+        </Form.Item>
+        <Form.Item wrapperCol={{ offset: 4}} shouldUpdate>
+        {() => (
+          <Button
+            type="primary"
+            htmlType="submit"
+          >
+              추가
+          </Button>
+        )}
+     </Form.Item>
+      </Form>
+    </>
+  )
 }
 
 export default AdminForm;

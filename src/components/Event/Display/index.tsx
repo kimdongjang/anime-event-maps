@@ -232,6 +232,7 @@ export const EventDisplay = (props: IEventDisplayProps) => {
         {/* 이미지 */}
         <div>
           {
+            event.images && 
             <Image
               className="event_display__bg_image max-h-[180px] py-1"
               src={event.images.path}

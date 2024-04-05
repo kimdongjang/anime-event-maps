@@ -8,7 +8,7 @@ export interface IEvent {
   startDate: string;
   endDate: string;
 
-  images: IImage;
+  images?: IImage;
 
   priceList?: IPrice[];
   eventHall: string;
