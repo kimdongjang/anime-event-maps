@@ -466,12 +466,22 @@
     "isFavorite": false,
     "priceList": [
       {
-        "type": "온라인예매",
-        "name": "종일 입장권",
+        "type": "얼리버드",
+        "name": "선행 입장권",
         "price": 12000
       },
       {
-        "type": "온라인예매",
+        "type": "얼리버드",
+        "name": "오후 입장권",
+        "price": 7000
+      },      
+      {
+        "type": "일반예매",
+        "name": "선행 입장권",
+        "price": 14000
+      },
+      {
+        "type": "일반예매",
         "name": "오후 입장권",
         "price": 7000
       }
