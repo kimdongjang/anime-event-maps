@@ -46,6 +46,7 @@ export const ModalNotice = (props: IModalNotice) => {
         </ul>
         <h4 className="font-semibold pt-3">업데이트예정</h4>
         <ul className="px-3">
+          <li>지도 따라가기, 같은 행사장 슬라이드로 보기</li>
           <li>내 위치 확인 기능</li>
           <li>상위 핀 기능</li>
         </ul>

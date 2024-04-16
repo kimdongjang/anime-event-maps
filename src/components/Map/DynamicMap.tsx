@@ -17,8 +17,8 @@ const Map = ({ mapId = 'map' }) => {
   const renderMarker = () => {
     console.log(searchList)
     if(!!searchList){
-      return searchList.map(data => {
-        return <Marker position={{lat:data.lat, lng:data.lng}} icon={icon}>
+      return searchList.map((data, i) => {
+        return <Marker position={{lat:data.lat, lng:data.lng}} icon={icon} key={i}> 
           <Popup>
             <div>
               <Image width={300} src={data.images?.path}/>
