@@ -36,18 +36,18 @@ export const ModalNotice = (props: IModalNotice) => {
           수동으로 데이터를 입력하는 것이기에 맞지 않는 정보가 있을 수도
           있습니다.
         </p>
-        <h4 className="font-semibold pt-3">현재버전 v1.0.2</h4>
+        <h4 className="font-semibold pt-3">현재버전 v1.1.0</h4>
         <ul className="px-3">
-          <li>행사 이벤트 위치 지도에서 보기 기능</li>
+          <li>네이버 지도를 leaflet 지도로 업데이트 완료</li>
           <li>북마크 기능</li>
           <li>필터 기능</li>
           <li>캘린더 기능</li>
+          <li>리스트 크게 보기 / 리스트 작게 보기 기능</li>
         </ul>
         <h4 className="font-semibold pt-3">업데이트예정</h4>
         <ul className="px-3">
           <li>내 위치 확인 기능</li>
           <li>상위 핀 기능</li>
-          <li>리스트 크게 보기 / 리스트 작게 보기 기능</li>
         </ul>
         <p className="pt-3">
           건의사항은 자유롭게
