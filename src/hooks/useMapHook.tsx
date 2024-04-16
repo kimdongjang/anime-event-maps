@@ -7,8 +7,8 @@ import { markerStore, searchListStore } from '@/stores/MapDataStore';
 import { IMarker } from '@/constants/common';
 
 export const INITIAL_CENTER: Coordinates = {
-  lat: 37.4862618,
-  lng: 127.1222903,
+  lat: 37.2663759,
+  lng: 126.99711,
 };
 export const INITIAL_ZOOM = 11;
 
