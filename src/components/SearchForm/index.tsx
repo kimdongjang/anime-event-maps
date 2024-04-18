@@ -27,39 +27,72 @@ export const SearchForm = () => {
   const [openFilter, setOpenFilter] = useState(true);
   const [displayFilterList, setDisplayFilterList] = useState<string[]>([]);
   
-  console.log('searchFilter', searchEventList)
 
   const handleSelectFilter = (value: number) => {
-    setSearchEventList({ addedEventList: [], type: value, isEnd: searchEventList.isEnd });
+    setSearchEventList({ searchedList: [], addedFilter:[], type: value, isEnd: searchEventList.isEnd });
   };
 
-  const handleClickDisplayFilter = (data?: IEvent) => {
-    if(!data) return;
-    let tempList = [...searchEventList.addedEventList];
-    let idx = -1;
-    switch (searchEventList.type) {
-      case FilterType.EVENT:
-        idx = tempList.findIndex((event) => event.event === data?.event);
-        break;
-      case FilterType.LOCATION:
-        idx = tempList.findIndex((event) => event.eventHall === data?.eventHall);
-        break;
-      case FilterType.ADDRESS:
-        idx = tempList.findIndex((event) => event.doroAddress.includes(data?.doroAddress));
-        break;
-    }
+  /**
+   * 필터를 클릭한 경우, 검색하는 필터 리스트에 추가해둔다.
+   * @param name 
+   * @returns 
+   */
+  const handleClickDisplayFilter = (name: string) => {
+    let filterList = [...searchEventList.addedFilter];
+    let idx = filterList.findIndex((data) => data === name);
     // 디스플레이된 필터 토글기능
     // 못찾았으면 필터에 추가
     if (idx < 0) {
-      tempList.push(data);
+      filterList.push(name);
     }
     // 찾았으면 삭제
     else {
-      tempList.splice(idx, 1);
+      filterList.splice(idx, 1);
     }
+
+    let searchedList = [];
+    console.log('filterList',filterList)
+    
+    if (filterList.length === 0) {
+      searchedList = eventList;
+    } else {
+      switch (searchEventList.type) {
+        case FilterType.EVENT:
+          searchedList = eventList.filter((event) => {
+            // 필터에 추가된 이름들과 일치한다면
+            if (!!filterList.find((f) => f === event.event)) {
+              return event;
+            }
+          });
+          break;
+        case FilterType.ADDRESS:
+          searchedList = eventList.filter((event) => {
+            // 필터에 추가된 이름들과 일치한다면
+            if (!!filterList.find((f) => event.doroAddress.includes(f))) {
+              return event;
+            }
+          });
+          break;
+
+        case FilterType.LOCATION:
+          searchedList = eventList.filter((event) => {
+            // 필터에 추가된 이름들과 일치한다면
+            if (!!filterList.find((f) => f === event.eventHall)) {
+              return event;
+            }
+          });
+          break;
+        default:
+          searchedList = eventList;
+          break;
+      }
+    }
+    console.log('searchedList',searchedList)
+    
     setSearchEventList({
       type: searchEventList.type,
-      addedEventList: tempList,
+      searchedList: searchedList,
+      addedFilter: filterList,
       isEnd: searchEventList.isEnd,
     });
   };
@@ -161,18 +194,8 @@ export const SearchForm = () => {
     return (
       <div className="flex flex-wrap space-x-2 mb-2 mx-3">
         {[...displayFilterList].map((name, i) => {
-          let finder:IEvent|undefined;
-          switch (searchEventList.type) {
-            case FilterType.EVENT:
-              finder = searchEventList.addedEventList.find((event) => event.event === name);
-              break;
-            case FilterType.LOCATION:
-              finder = searchEventList.addedEventList.find((event) => event.eventHall === name);
-              break;
-            case FilterType.ADDRESS:
-              finder = searchEventList.addedEventList.find((event) => event.doroAddress.includes(name));
-              break;
-          }
+          let finder = searchEventList.addedFilter.find((data) => data === name);;
+          
           if (!!finder) {
             return (
               <button
@@ -181,7 +204,7 @@ export const SearchForm = () => {
                  bg-blue-400 border border-blue-400
               text-white space-x-1 px-2 py-1 my-1 rounded-xl"
                 type="button"
-                onClick={() => handleClickDisplayFilter(finder)}
+                onClick={() => handleClickDisplayFilter(name)}
               >
                 <MdCheck />
                 <h4>{name}</h4>
@@ -193,7 +216,7 @@ export const SearchForm = () => {
                 key={i}
                 className="border px-2 py-1 my-1 rounded-xl"
                 type="button"
-                onClick={() => handleClickDisplayFilter(finder)}
+                onClick={() => handleClickDisplayFilter(name)}
               >
                 <h4>{name}</h4>
               </button>

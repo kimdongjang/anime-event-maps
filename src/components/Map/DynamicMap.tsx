@@ -39,7 +39,7 @@ const Map = ({ mapId = 'map' }) => {
    */
   const renderList = () => {
     // 필터에 체크된 이벤트 리스트 혹은 전체 이벤트 리스트
-    let list = searchEventList.addedEventList.length !== 0 ? searchEventList.addedEventList : eventList
+    let list = searchEventList.searchedList.length !== 0 ? searchEventList.searchedList : eventList
 
     // 거기에 추가로 이벤트 행사장별 리스트를 생성함
     const eventHallFilter = [...new Set(list.map((data) => data.eventHall))];
@@ -59,17 +59,6 @@ const Map = ({ mapId = 'map' }) => {
       case MainCategory.MAIN:
         return eventHallList.map((events, i) => {
           return renderMarkers(events)
-          // // 종료된 이벤트가 체크되어 있다면 전체 출력
-          // if (searchEventList.isEnd) {
-          //   return renderMarkers(events);
-          // } else {
-          //   return renderMarkers(events.map(event => {
-          //     // 종료 날짜를 비교해서 예정된 이벤트만 출력
-          //     if (checkEndEvent(new Date(event.endDate))) {
-          //       return event;
-          //     }
-          //   }))
-          // }
         });
       case MainCategory.FAVORITE:
         return eventHallList.map((events, i) => {
@@ -98,56 +87,46 @@ const Map = ({ mapId = 'map' }) => {
             }}
           >
             {events.map((event, i) => {
-              return (
-                <SwiperSlide className='p-3 pb-7' key={i}>
-                  <Image src={event.images?.path} />
-                  <h3>{event.title}</h3>
-                  <div className='m-0'>{event.address}</div>
-                  <div className='flex items-center'>
-                    <span className="bg-yellow-100 border-gray-100 rounded text-sm font-medium px-1">기간</span>
-                    <span>{event.startDate}~{event.endDate}</span>
-                  </div>
-                </SwiperSlide>
-              )
+              // 종료된 이벤트가 체크되어 있다면 전체 출력
+              if (searchEventList.isEnd) {
+                return (
+                  <SwiperSlide className='p-3 pb-10' key={i}>
+                    <Image src={event.images?.path} />
+                    <h3>{event.title}</h3>
+                    <div className='m-0'>{event.address}</div>
+                    <div className='flex items-center'>
+                      <span className="bg-yellow-100 border-gray-100 rounded text-sm font-medium px-1">기간</span>
+                      <span>{event.startDate}~{event.endDate}</span>
+                    </div>
+                  </SwiperSlide>
+                )
+              } else {
+                // 종료 날짜를 비교해서 예정된 이벤트만 출력
+                if (checkEndEvent(new Date(event.endDate))) {
+                  return (
+                    <SwiperSlide className='p-3 pb-10' key={i}>
+                      <Image src={event.images?.path} />
+                      <h3>{event.title}</h3>
+                      <div className='m-0'>{event.address}</div>
+                      <div className='flex items-center'>
+                        <span className="bg-yellow-100 border-gray-100 rounded text-sm font-medium px-1">기간</span>
+                        <span>{event.startDate}~{event.endDate}</span>
+                      </div>
+                    </SwiperSlide>
+                  )
+                }
+              }
             })}
           </Swiper>
         <div>
-          <button onClick={() => swiperRef.current?.slidePrev()} className='fixed bottom-[6%] left-[35%] z-[1]'><AiFillCaretLeft className='text-blue-500' size={20}/></button>
-          <button onClick={() => swiperRef.current?.slideNext()} className='fixed bottom-[6%] right-[35%] z-[1]'><AiFillCaretRight className='text-blue-500' size={20}/></button>
+          <button onClick={() => swiperRef.current?.slidePrev()} className='fixed bottom-[5%] left-[35%] z-[1]'><AiFillCaretLeft className='text-blue-500' size={30}/></button>
+          <button onClick={() => swiperRef.current?.slideNext()} className='fixed bottom-[5%] right-[35%] z-[1]'><AiFillCaretRight className='text-blue-500' size={30}/></button>
         </div>
         </Popup>
       </Marker>
     )
   }
 
-  //   if(!!eventList){
-  //     return eventHallList.map((data, i) => {
-  //       // 행사장에 있
-  //       if(data.length !== 1){
-
-  //       }
-  //       else{
-
-  //       }
-  //       return <Marker position={{lat:data.lat, lng:data.lng}} icon={icon} key={i}> 
-  //         <Popup>
-  //           <div>
-  //             <Image width={250} src={data.images?.path}/>
-  //             <h3>{data.title}</h3>
-  //             <div className='m-0'>{data.address}</div>
-  //             <div className='flex items-center'>
-  //             <span className="bg-yellow-100 border-gray-100 rounded text-sm font-medium px-1">기간</span>
-  //               <span>{data.startDate}~{data.endDate}</span>
-  //             </div>
-  //           </div>
-  //         </Popup>
-  //       </Marker>
-  //     })
-  //   }
-  //   else{
-  //     return <></>
-  //   }
-  // }
 
   return (
     <div >
@@ -158,11 +137,6 @@ const Map = ({ mapId = 'map' }) => {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         {renderList()}
-        {/* <Marker position={INITIAL_CENTER} icon={icon}>
-          <Popup>
-            A pretty CSS3 popup. <br /> Easily customizable.
-          </Popup>
-        </Marker> */}
       </MapContainer>
     </div>
   );

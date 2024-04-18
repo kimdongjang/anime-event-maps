@@ -71,7 +71,7 @@ export const Calendar = () => {
   //     }
   //   }
   // };
-  const renderList = searchEventList.addedEventList.length !== 0 ? searchEventList.addedEventList : eventList;
+  const renderList = searchEventList.searchedList.length !== 0 ? searchEventList.searchedList : eventList;
   if (!mounted) return <></>;
   else
     return (
