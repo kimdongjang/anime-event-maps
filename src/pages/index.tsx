@@ -6,7 +6,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 import { useEffect, useRef, useState } from 'react';
 import { useRecoilState, useSetRecoilState } from 'recoil';
-import { markerStore, searchListStore } from '@/stores/MapDataStore';
+import { markerStore, eventListStore } from '@/stores/MapDataStore';
 import { Badge, FloatButton, Modal } from 'antd';
 import { MdSearch, MdMyLocation, MdRefresh } from 'react-icons/md';
 import { BsFillMegaphoneFill } from 'react-icons/bs';
@@ -31,18 +31,24 @@ const inter = Inter({ subsets: ['latin'] });
 export default function Main(props: any) {
   const siteTitle = '애이맵(애니메이션 행사 맵스)';
   const { datas } = props;
-  const [searchList, setSearchList] = useRecoilState(searchListStore);
+  const [eventList, setEventList] = useRecoilState(eventListStore);
   const [isMobileShow, setIsMobileShow] = useRecoilState(mobileIsOpenStore);
-  const [isDesktopShow, setIsDesktopShow] = useState(true);
+  const [isDesktopShow, setIsDesktopShow] = useState(false);
   const [modalOpen, setModalOpen] = useState(true);
   const [monunted, setMounted] = useState(false);
   const router = useRouter();
   const params = useSearchParams();
   const { morphMarker, openInfoWindow } = useMapHook();
 
+  /** 
+   * 메인 페이지 초기 로딩시 초기화 진행
+   */
   useEffect(() => {
     const favoriteList: IEvent[] = getLocalstorageEvent();
-    setSearchList(
+    
+    // datas: static한 데이터
+    // 모든 행사장 리스트 초기화 진행(시간 순서 별로)
+    setEventList(
       datas.map((event: IEvent) => {
         let find = favoriteList.find((str) => str.id === event.id);
         if (!!find) {
@@ -76,8 +82,8 @@ export default function Main(props: any) {
    */
   useEffect(() => {
     const paramId = params.get('id');
-    if (!!paramId && !!searchList) {
-      const findEvent = searchList.find(
+    if (!!paramId && !!eventList) {
+      const findEvent = eventList.find(
         (event: IEvent) => event.id.toString() == paramId
       );
       if (!!findEvent) {
@@ -93,7 +99,7 @@ export default function Main(props: any) {
         setIsMobileShow(false);
       }
     }
-  }, [params, searchList]);
+  }, [params, eventList]);
 
   const renderModal = () => {
     if (monunted) {

@@ -2,8 +2,8 @@ import { searchFilterList } from '@/constants/common';
 import { FilterType, MainCategory } from '@/constants/enums';
 import { sortMenuItems } from '@/constants/menuItems';
 import {
-  searchFilterStore,
   searchListStore,
+  eventListStore,
   selectCategoryStore,
   isSummaryStore,
 } from '@/stores/MapDataStore';
@@ -16,24 +16,39 @@ import { useRecoilState } from 'recoil';
 import { EventList } from '../Event/List';
 import { SearchBox } from '../SearchBox';
 import { Calendar } from '../Calendar';
+import { IEvent } from '@/services/event/@types';
 
 export const SearchForm = () => {
-  const [searchList, setSearchList] = useRecoilState(searchListStore);
+  const [eventList, setEventList] = useRecoilState(eventListStore);
   const [selectCategory, setSelectCategory] =
     useRecoilState(selectCategoryStore);
-  const [filter, setFilter] = useRecoilState(searchFilterStore);
+  const [searchEventList, setSearchEventList] = useRecoilState(searchListStore);
   const [isSummary, setIsSummary] = useRecoilState(isSummaryStore);
   const [openFilter, setOpenFilter] = useState(true);
-  const [filterList, setFilterList] = useState<string[]>([]);
+  const [displayFilterList, setDisplayFilterList] = useState<string[]>([]);
+  
+  console.log('searchFilter', searchEventList)
 
   const handleSelectFilter = (value: number) => {
-    setFilter({ list: [], type: value, isEnd: filter.isEnd });
+    setSearchEventList({ addedEventList: [], type: value, isEnd: searchEventList.isEnd });
   };
 
-  const handleClickFilter = (data: string) => {
-    let tempList = [...filter.list];
-    console.log(data);
-    let idx = tempList.findIndex((x) => x === data);
+  const handleClickDisplayFilter = (data?: IEvent) => {
+    if(!data) return;
+    let tempList = [...searchEventList.addedEventList];
+    let idx = -1;
+    switch (searchEventList.type) {
+      case FilterType.EVENT:
+        idx = tempList.findIndex((event) => event.event === data?.event);
+        break;
+      case FilterType.LOCATION:
+        idx = tempList.findIndex((event) => event.eventHall === data?.eventHall);
+        break;
+      case FilterType.ADDRESS:
+        idx = tempList.findIndex((event) => event.doroAddress.includes(data?.doroAddress));
+        break;
+    }
+    // 디스플레이된 필터 토글기능
     // 못찾았으면 필터에 추가
     if (idx < 0) {
       tempList.push(data);
@@ -42,28 +57,28 @@ export const SearchForm = () => {
     else {
       tempList.splice(idx, 1);
     }
-    setFilter({
-      type: filter.type,
-      list: tempList,
-      isEnd: filter.isEnd,
+    setSearchEventList({
+      type: searchEventList.type,
+      addedEventList: tempList,
+      isEnd: searchEventList.isEnd,
     });
   };
 
   /**
-   * 콤보박스 필터 변경시
+   * handleSelectFilter로 인해 콤보박스 필터 변경시
    */
   useEffect(() => {
-    switch (filter.type) {
+    switch (searchEventList.type) {
       case FilterType.EVENT:
-        setFilterList([...new Set(searchList.map((data) => data.event))]);
+        setDisplayFilterList([...new Set(eventList.map((data) => data.event))]);
         break;
       case FilterType.LOCATION:
-        setFilterList([...new Set(searchList.map((data) => data.eventHall))]);
+        setDisplayFilterList([...new Set(eventList.map((data) => data.eventHall))]);
         break;
       case FilterType.ADDRESS:
-        setFilterList([
+        setDisplayFilterList([
           ...new Set(
-            searchList.map(
+            eventList.map(
               (data) =>
                 data.doroAddress?.split(' ')[0] +
                 ' ' +
@@ -73,7 +88,7 @@ export const SearchForm = () => {
         ]);
         break;
     }
-  }, [filter, searchList]);
+  }, [searchEventList, eventList]);
 
   const renderCategory = () => {
     return (
@@ -145,8 +160,19 @@ export const SearchForm = () => {
   const renderFilterList = () => {
     return (
       <div className="flex flex-wrap space-x-2 mb-2 mx-3">
-        {[...filterList].map((data, i) => {
-          let finder = filter.list.find((x) => x === data);
+        {[...displayFilterList].map((name, i) => {
+          let finder:IEvent|undefined;
+          switch (searchEventList.type) {
+            case FilterType.EVENT:
+              finder = searchEventList.addedEventList.find((event) => event.event === name);
+              break;
+            case FilterType.LOCATION:
+              finder = searchEventList.addedEventList.find((event) => event.eventHall === name);
+              break;
+            case FilterType.ADDRESS:
+              finder = searchEventList.addedEventList.find((event) => event.doroAddress.includes(name));
+              break;
+          }
           if (!!finder) {
             return (
               <button
@@ -155,10 +181,10 @@ export const SearchForm = () => {
                  bg-blue-400 border border-blue-400
               text-white space-x-1 px-2 py-1 my-1 rounded-xl"
                 type="button"
-                onClick={() => handleClickFilter(data)}
+                onClick={() => handleClickDisplayFilter(finder)}
               >
                 <MdCheck />
-                <h4>{data}</h4>
+                <h4>{name}</h4>
               </button>
             );
           } else {
@@ -167,9 +193,9 @@ export const SearchForm = () => {
                 key={i}
                 className="border px-2 py-1 my-1 rounded-xl"
                 type="button"
-                onClick={() => handleClickFilter(data)}
+                onClick={() => handleClickDisplayFilter(finder)}
               >
-                <h4>{data}</h4>
+                <h4>{name}</h4>
               </button>
             );
           }
@@ -205,10 +231,10 @@ export const SearchForm = () => {
                 {'요약해서 보기'}
               </Checkbox>
               <Checkbox
-                value={filter.isEnd}
+                value={searchEventList.isEnd}
                 onChange={(e) => {
-                  setFilter({
-                    ...filter,
+                  setSearchEventList({
+                    ...searchEventList,
                     isEnd: e.target.checked,
                   });
                 }}

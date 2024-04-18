@@ -4,8 +4,8 @@ import { IEvent } from '@/services/event/@types';
 import {
   isSummaryStore,
   markerStore,
-  searchFilterStore,
   searchListStore,
+  eventListStore,
   selectCategoryStore,
 } from '@/stores/MapDataStore';
 import { mobileIsOpenStore } from '@/stores/MobileStore';
@@ -17,10 +17,11 @@ import { EventSummary } from '../Summary';
 
 export const EventList = () => {
   const [isMobileShow, setIsMobileShow] = useRecoilState(mobileIsOpenStore);
-  const [searchList, setSearchList] = useRecoilState(searchListStore);
-  const [filter, setFilter] = useRecoilState(searchFilterStore);
+  const [eventList, setEventList] = useRecoilState(eventListStore);
+  const [searchEventList, setSearchEventList] = useRecoilState(searchListStore);
   const [selectCategory, setSelectCategory] =
     useRecoilState(selectCategoryStore);
+  // 이벤트 리스트 요약 여부
   const [isSummary, setIsSummary] = useRecoilState(isSummaryStore);
   const { morphMarker, openInfoWindow } = useMapHook();
   const router = useRouter();
@@ -28,45 +29,46 @@ export const EventList = () => {
   const handleEventClick = (event: IEvent) => {
     router.push(`?id=${event.id.toString()}`);
   };
-  const filterList = () => {
-    if (filter.list.length === 0) {
-      return searchList;
-    } else {
-      switch (filter.type) {
-        case FilterType.EVENT:
-          return searchList.filter((event) => {
-            // 필터에 추가된 이름들과 일치한다면
-            if (!!filter.list.find((f) => f === event.event)) {
-              return event;
-            }
-          });
-        case FilterType.ADDRESS:
-          return searchList.filter((event) => {
-            // 필터에 추가된 이름들과 일치한다면
-            if (!!filter.list.find((f) => event.doroAddress.includes(f))) {
-              return event;
-            }
-          });
+  // const filterList = () => {
+  //   if (searchEventList.addedEventList.length === 0) {
+  //     return eventList;
+  //   } else {
+  //     switch (searchEventList.type) {
+  //       case FilterType.EVENT:
+  //         return eventList.filter((event) => {
+  //           // 필터에 추가된 이름들과 일치한다면
+  //           if (!!searchEventList.addedEventList.find((f) => f === event.event)) {
+  //             return event;
+  //           }
+  //         });
+  //       case FilterType.ADDRESS:
+  //         return eventList.filter((event) => {
+  //           // 필터에 추가된 이름들과 일치한다면
+  //           if (!!searchEventList.addedEventList.find((f) => event.doroAddress.includes(f))) {
+  //             return event;
+  //           }
+  //         });
 
-        case FilterType.LOCATION:
-          return searchList.filter((event) => {
-            // 필터에 추가된 이름들과 일치한다면
-            if (!!filter.list.find((f) => f === event.eventHall)) {
-              return event;
-            }
-          });
-        default:
-          return searchList;
-      }
-    }
-  };
+  //       case FilterType.LOCATION:
+  //         return eventList.filter((event) => {
+  //           // 필터에 추가된 이름들과 일치한다면
+  //           if (!!searchEventList.addedEventList.find((f) => f === event.eventHall)) {
+  //             return event;
+  //           }
+  //         });
+  //       default:
+  //         return eventList;
+  //     }
+  //   }
+  // };
+
   const renderEventList = () => {
-    const renderList = filterList();
+    const renderList = searchEventList.addedEventList.length !== 0 ? searchEventList.addedEventList : eventList;
     switch (selectCategory) {
       case MainCategory.MAIN:
         return renderList.map((event, i) => {
           // 종료된 이벤트가 체크되어 있다면
-          if (filter.isEnd) {
+          if (searchEventList.isEnd) {
             if(isSummary){
               return (
                 <EventSummary event={event} key={i} onClick={handleEventClick} />
@@ -94,7 +96,7 @@ export const EventList = () => {
           }
         });
       case MainCategory.FAVORITE:
-        return searchList
+        return eventList
           .filter((filter) => filter.isFavorite === true)
           .map((event, i) => {
             if(isSummary){
