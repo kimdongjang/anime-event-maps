@@ -80,8 +80,8 @@ const Map = ({ mapId = 'map' }) => {
     }
   };
 
+  const swiperRef = useRef<SwiperType>();
   const renderMarkers = (events: IEvent[]) => {
-    const swiperRef = useRef<SwiperType>();
     return (
       <Marker position={{ lat: events[0].lat, lng: events[0].lng }} icon={icon} >
         <Popup className='w-[300px]'>
@@ -99,7 +99,7 @@ const Map = ({ mapId = 'map' }) => {
           >
             {events.map((event, i) => {
               return (
-                <SwiperSlide className='p-3 pb-7'>
+                <SwiperSlide className='p-3 pb-7' key={i}>
                   <Image src={event.images?.path} />
                   <h3>{event.title}</h3>
                   <div className='m-0'>{event.address}</div>
