@@ -64,6 +64,7 @@ export const EventList = () => {
 
   const renderEventList = () => {
     const renderList = searchEventList.searchedList.length !== 0 ? searchEventList.searchedList : eventList;
+
     switch (selectCategory) {
       case MainCategory.MAIN:
         return renderList.map((event, i) => {

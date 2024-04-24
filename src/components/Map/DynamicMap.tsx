@@ -44,6 +44,7 @@ const Map = ({ mapId = 'map' }) => {
     // 거기에 추가로 이벤트 행사장별 리스트를 생성함
     const eventHallFilter = [...new Set(list.map((data) => data.eventHall))];
 
+
     // 행사장 별로 묶어서 리스트를 초기화
     const eventHallList = eventHallFilter.map(hall => {
       let temps: IEvent[] = [];
@@ -54,6 +55,7 @@ const Map = ({ mapId = 'map' }) => {
       });
       return temps;
     })
+    console.log(eventHallList)
 
     switch (selectCategory) {
       case MainCategory.MAIN:
@@ -71,6 +73,11 @@ const Map = ({ mapId = 'map' }) => {
 
   const swiperRef = useRef<SwiperType>();
   const renderMarkers = (events: IEvent[]) => {
+    // 모두 종료된 이벤트라면 마커를 생성하지 않기
+    if(events.filter(event => checkEndEvent(new Date(event.endDate))).length === 0){
+      return;
+    }
+
     return (
       <Marker position={{ lat: events[0].lat, lng: events[0].lng }} icon={icon} >
         <Popup className='w-[300px]'>
