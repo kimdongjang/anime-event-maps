@@ -38,7 +38,7 @@ export default function Main(props: any) {
   const [monunted, setMounted] = useState(false);
   const router = useRouter();
   const params = useSearchParams();
-  const { morphMarker, openInfoWindow } = useMapHook();
+  const {  openInfoWindow } = useMapHook();
 
   /** 
    * 메인 페이지 초기 로딩시 초기화 진행
@@ -89,7 +89,7 @@ export default function Main(props: any) {
       if (!!findEvent) {
         // 화면이 깨지는 이슈가 있어서 2초후에 적용
         setTimeout(() => {
-          morphMarker(findEvent);          
+          // morphMarker(findEvent);          
         }, 1000);
         setTimeout(() => {
           openInfoWindow(findEvent)      

@@ -7,6 +7,7 @@ import {
   searchListStore,
   eventListStore,
   selectCategoryStore,
+  curPositionStore,
 } from '@/stores/MapDataStore';
 import { mobileIsOpenStore } from '@/stores/MobileStore';
 import { checkEndEvent } from '@/utils/date';
@@ -14,6 +15,7 @@ import { useRouter } from 'next/router';
 import { useRecoilState } from 'recoil';
 import { EventDisplay } from '../Display';
 import { EventSummary } from '../Summary';
+import { useMapEvents } from 'react-leaflet';
 
 export const EventList = () => {
   const [isMobileShow, setIsMobileShow] = useRecoilState(mobileIsOpenStore);
@@ -23,10 +25,14 @@ export const EventList = () => {
     useRecoilState(selectCategoryStore);
   // 이벤트 리스트 요약 여부
   const [isSummary, setIsSummary] = useRecoilState(isSummaryStore);
-  const { morphMarker, openInfoWindow } = useMapHook();
+  const [curPosition, setCurPosition] = useRecoilState(curPositionStore);  
   const router = useRouter();
+  
 
   const handleEventClick = (event: IEvent) => {
+    // morphMarker(event);
+    setCurPosition({lat: event.lat, lng: event.lng});
+    
     router.push(`?id=${event.id.toString()}`);
   };
   // const filterList = () => {

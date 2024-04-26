@@ -1,6 +1,8 @@
 import { IMarker } from '@/constants/common';
 import { FilterType, MainCategory } from '@/constants/enums';
+import { INITIAL_CENTER } from '@/hooks/useMapHook';
 import { IEvent } from '@/services/event/@types';
+import { Coordinates } from '@/types/map';
 import { getLocalstorageEvent } from '@/utils/localStorages';
 import { atom } from 'recoil';
 
@@ -53,4 +55,9 @@ export const selectCategoryStore = atom<MainCategory>({
 export const isSummaryStore = atom<boolean>({
   key: `isSummaryStore`,
   default: false,
+});
+
+export const curPositionStore = atom<Coordinates>({
+  key: `curPositionStore`,
+  default: INITIAL_CENTER,
 });

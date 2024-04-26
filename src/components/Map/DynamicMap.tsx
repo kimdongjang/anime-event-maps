@@ -3,7 +3,7 @@ import useMapHook, { INITIAL_CENTER, INITIAL_ZOOM } from '@/hooks/useMapHook';
 import { IEvent } from '@/services/event/@types';
 import { eventListStore, searchListStore, selectCategoryStore } from '@/stores/MapDataStore';
 import { useEffect, useRef, useState } from 'react';
-import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
+import { MapContainer, Marker, Popup, TileLayer, useMapEvents } from 'react-leaflet';
 import { useRecoilState } from 'recoil';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
@@ -24,6 +24,7 @@ import { Swiper as SwiperType } from 'swiper';
 
 import { AiFillCaretRight } from "react-icons/ai";
 import { AiFillCaretLeft } from "react-icons/ai";
+import LocationMarker from './LocationMarker';
 
 const icon = L.icon({ iconUrl: "/images/markers/marker-icon.png" });
 
@@ -31,7 +32,7 @@ const Map = ({ mapId = 'map' }) => {
   const [eventList, setEventList] = useRecoilState(eventListStore);
   const [searchEventList, setSearchEventList] = useRecoilState(searchListStore);
   const [selectCategory, setSelectCategory] = useRecoilState(selectCategoryStore);
-
+  
   /**
    * 렌더링 하는 마커는 같은 행사장에 여러 행사가 있을 수 있기 때문에
    * 행사장별로 묶어서 렌더링한다
@@ -55,7 +56,6 @@ const Map = ({ mapId = 'map' }) => {
       });
       return temps;
     })
-    console.log(eventHallList)
 
     switch (selectCategory) {
       case MainCategory.MAIN:
@@ -144,6 +144,7 @@ const Map = ({ mapId = 'map' }) => {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         {renderList()}
+        <LocationMarker />
       </MapContainer>
     </div>
   );
