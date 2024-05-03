@@ -13,7 +13,7 @@ const LocationMarker = () => {
   const [curPosition, setCurPosition] = useRecoilState(curPositionStore);
   const map = useMapEvents({
     locationfound(e) {
-      map.flyTo(curPosition, map.getZoom())
+      map.flyTo(curPosition, 16)
     },
   })
 
