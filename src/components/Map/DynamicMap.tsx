@@ -61,12 +61,12 @@ const Map = ({ mapId = 'map' }) => {
     switch (selectCategory) {
       case MainCategory.MAIN:
         return eventHallList.map((events, i) => {
-          return <LocationMarkers events={events}/>
+          return <LocationMarkers events={events} key={i}/>
         });
       case MainCategory.FAVORITE:
-        return eventHallList.map((events, i) => 
+        return eventHallList.map((events) => 
            events.filter((filter) => filter.isFavorite === true)
-        ).map(events => <LocationMarkers events={events}/>);
+        ).map((events, i) => <LocationMarkers events={events} key={i}/>);
       default:
         return <></>;
     }
