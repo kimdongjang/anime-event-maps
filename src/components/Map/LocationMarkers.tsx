@@ -34,7 +34,7 @@ const LocationMarkers = (props: ILocationMarkers) => {
 
   const map = useMapEvents({
     locationfound(e) {
-      map.flyTo(curPosition, 16)
+      map.flyTo({lat:curPosition.lat-0.01, lng:curPosition.lng}, 15)
     },
   })
 
