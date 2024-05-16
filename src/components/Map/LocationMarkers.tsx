@@ -62,7 +62,6 @@ const LocationMarkers = (props: ILocationMarkers) => {
           }}
         >
           {events.map((event, i) => {
-            console.log(i, event)
             // 종료된 이벤트가 체크되어 있다면 전체 출력
             if (searchEventList.isEnd) {
               return (

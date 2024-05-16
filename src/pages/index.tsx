@@ -4,7 +4,7 @@ import Sidebar from '@/components/Sidebar';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { markerStore, eventListStore } from '@/stores/MapDataStore';
 import { Badge, FloatButton, Modal } from 'antd';
@@ -38,7 +38,9 @@ export default function Main(props: any) {
   const [monunted, setMounted] = useState(false);
   const router = useRouter();
   const params = useSearchParams();
-  const {  openInfoWindow } = useMapHook();
+  const { openInfoWindow } = useMapHook();
+
+  const testRef = useRef(false);
 
   /** 
    * 메인 페이지 초기 로딩시 초기화 진행
@@ -106,38 +108,31 @@ export default function Main(props: any) {
       return <ModalNotice modalOpen={modalOpen} setModalOpen={setModalOpen} />;
     }
   };
+  useEffect(() => {
+    testRef.current = isMobileShow;
+  },[isMobileShow])
 
   
   useEffect(() => {
-    const handlePopState = (event: PopStateEvent) => {
-      if (event.state && event.state.page === 'confirmPage') {
-        const confirmLeave = window.confirm('이 페이지를 떠나시겠습니까?');
-        if (!confirmLeave) {
-          // 사용자가 떠나는 것을 취소한 경우 상태를 다시 푸시합니다.
-          router.push('/', undefined, { shallow: true });
-        }
-      } else {
-        alert('뒤로 가기 버튼이 눌렸습니다.');
+    const handleBeforeunload = (event: BeforeUnloadEvent) => {
+      // 데스크탑인경우: 아무 처리도 하지 않음
+      if(!testRef.current){
+        return;
+      }
+      else{
+        // 모바일인경우: 검색창 내리기
+        setIsMobileShow(false);
+        event.preventDefault();
+        return;
       }
     };
 
-    // popstate 이벤트 리스너 추가
-    window.addEventListener('popstate', handlePopState);
+    window.addEventListener('beforeunload', handleBeforeunload);
 
-    // 컴포넌트가 언마운트될 때 이벤트 리스너 제거
     return () => {
-      window.removeEventListener('popstate', handlePopState);
+      window.removeEventListener('beforeunload', handleBeforeunload);
     };
   }, [router]);
-
-  // useEffect(() => {
-  //   window.onpopstate = () => {
-  //     // 뒤로가기가 실행될 경우 추가 action 등록
-  //     if (!!isMobileShow) {
-  //       setIsMobileShow(false);
-  //     }
-  //   };
-  // }, [isMobileShow]);
 
   const { initializeMap } = useMapHook();
   const onLoadMap = (map: NaverMap) => {
