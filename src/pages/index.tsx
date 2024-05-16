@@ -123,7 +123,6 @@ export default function Main(props: any) {
         // 모바일인경우: 검색창 내리기
         setIsMobileShow(false);
         event.preventDefault();
-        return;
       }
     };
 
