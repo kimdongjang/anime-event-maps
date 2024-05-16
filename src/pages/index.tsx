@@ -107,14 +107,37 @@ export default function Main(props: any) {
     }
   };
 
+  
   useEffect(() => {
-    window.onpopstate = () => {
-      // 뒤로가기가 실행될 경우 추가 action 등록
-      if (!!isMobileShow) {
-        setIsMobileShow(false);
+    const handlePopState = (event: PopStateEvent) => {
+      if (event.state && event.state.page === 'confirmPage') {
+        const confirmLeave = window.confirm('이 페이지를 떠나시겠습니까?');
+        if (!confirmLeave) {
+          // 사용자가 떠나는 것을 취소한 경우 상태를 다시 푸시합니다.
+          router.push('/', undefined, { shallow: true });
+        }
+      } else {
+        alert('뒤로 가기 버튼이 눌렸습니다.');
       }
     };
-  }, [isMobileShow]);
+
+    // popstate 이벤트 리스너 추가
+    window.addEventListener('popstate', handlePopState);
+
+    // 컴포넌트가 언마운트될 때 이벤트 리스너 제거
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, [router]);
+
+  // useEffect(() => {
+  //   window.onpopstate = () => {
+  //     // 뒤로가기가 실행될 경우 추가 action 등록
+  //     if (!!isMobileShow) {
+  //       setIsMobileShow(false);
+  //     }
+  //   };
+  // }, [isMobileShow]);
 
   const { initializeMap } = useMapHook();
   const onLoadMap = (map: NaverMap) => {
