@@ -33,7 +33,7 @@ export default function Main(props: any) {
   const { datas } = props;
   const [eventList, setEventList] = useRecoilState(eventListStore);
   const [isMobileShow, setIsMobileShow] = useRecoilState(mobileIsOpenStore);
-  const [isDesktopShow, setIsDesktopShow] = useState(false);
+  const [isDesktopShow, setIsDesktopShow] = useState(true);
   const [modalOpen, setModalOpen] = useState(true);
   const [monunted, setMounted] = useState(false);
   const router = useRouter();
