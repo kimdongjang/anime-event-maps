@@ -4,7 +4,7 @@ export interface IEvent {
   id: number;
   title: string;
   category: string;
-  event: string;
+  eventName: string;
   startDate: string;
   endDate: string;
 
@@ -20,6 +20,11 @@ export interface IEvent {
 
   site?: string;
   isFavorite: boolean;
+}
+
+export interface ICategory {
+  id: number;
+  name:string;
 }
 
 export interface IPrice {

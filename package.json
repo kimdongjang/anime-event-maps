@@ -30,6 +30,7 @@
     "axios": "^1.4.0",
     "classnames": "^2.3.2",
     "css-loader": "^6.8.1",
+    "dayjs": "^1.11.11",
     "framer-motion": "^10.16.12",
     "leaflet": "^1.9.4",
     "lodash": "^4.17.21",
@@ -44,7 +45,7 @@
     "recoil": "^0.7.7",
     "style-loader": "^3.3.3",
     "swiper": "^11.1.1",
-    "swr": "^2.2.4"
+    "swr": "^2.2.5"
   },
   "devDependencies": {
     "@types/gtag.js": "^0.0.17",

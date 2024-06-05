@@ -60,7 +60,7 @@ export const SearchForm = () => {
         case FilterType.EVENT:
           searchedList = eventList.filter((event) => {
             // 필터에 추가된 이름들과 일치한다면
-            if (!!filterList.find((f) => f === event.event)) {
+            if (!!filterList.find((f) => f === event.eventName)) {
               return event;
             }
           });
@@ -103,7 +103,7 @@ export const SearchForm = () => {
   useEffect(() => {
     switch (searchEventList.type) {
       case FilterType.EVENT:
-        setDisplayFilterList([...new Set(eventList.map((data) => data.event))]);
+        setDisplayFilterList([...new Set(eventList.map((data) => data.eventName))]);
         break;
       case FilterType.LOCATION:
         setDisplayFilterList([...new Set(eventList.map((data) => data.eventHall))]);

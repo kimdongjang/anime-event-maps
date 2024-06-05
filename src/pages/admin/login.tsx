@@ -1,11 +1,11 @@
 import { signIn } from 'next-auth/react'
 import { useState } from 'react'
 
-const Admin = () => {
+const AdminLogin = () => {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const handleLogin = async () => {
-    await signIn('credentials', { username, password, callbackUrl: '/admin/manage' })
+    await signIn('credentials', { username, password, callbackUrl: '/admin/home' })
   }
   const handleKeyDown = (e:React.KeyboardEvent<HTMLInputElement>) => {
     if(e.key === "Enter"){
@@ -40,4 +40,4 @@ const Admin = () => {
   )
 }
 
-export default Admin;
+export default AdminLogin;

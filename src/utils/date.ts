@@ -93,3 +93,11 @@ export const checkEndEvent = (endDate: Date) => {
     return false;
   } else return true;
 };
+
+export function formatYmd(date:Date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 +1을 해야 합니다.
+  const day = String(date.getDate()).padStart(2, '0');
+
+  return `${year}-${month}-${day}`;
+}
