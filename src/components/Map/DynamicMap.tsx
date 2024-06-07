@@ -140,7 +140,7 @@ const Map = ({ mapId = 'map' }) => {
       <MapContainer center={INITIAL_CENTER} zoom={11} scrollWheelZoom={true} style={{ height: '1600px', zIndex: 0 }} >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
         />
         {renderList()}
         {/* <LocationMarker /> */}

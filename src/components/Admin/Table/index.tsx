@@ -51,8 +51,8 @@ const AdminTable = (props: IAdminTableProps) => {
     },
     {
       title: '도로명 주소',
-      key: 'doroAdreess',
-      dataIndex: 'doroAdreess',
+      key: 'doroAddress',
+      dataIndex: 'doroAddress',
     },
     {
       title: '지번 주소',

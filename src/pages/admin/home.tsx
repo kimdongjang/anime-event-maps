@@ -43,7 +43,6 @@ const Home = () => {
     return (
         <AdminLayout>
             <div className='bg-gray-200 border-2 rounded-md m-2'>
-
                 <AdminTable title={'조회'} list={!data ? [] : data.map(event => {
                     // 각 row를 event 타입으로 변환하여 반환
                     return {

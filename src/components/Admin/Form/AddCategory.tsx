@@ -63,9 +63,9 @@ const AddCategory = ({ mode }: IAddCategoryProps) => {
         size="small"
         bordered
         dataSource={adminManage.categoryList}
-        renderItem={(item) => {
+        renderItem={(item,i) => {
           if (mode === 'category') {
-            return <List.Item actions={[<a onClick={() => deleteItem(item.id)}>삭제</a>]} key={item.id}>{item.name}</List.Item>
+            return <List.Item actions={[<a onClick={() => deleteItem(item.id)} key={i}>삭제</a>]} key={item.id}>{item.name}</List.Item>
           }
         }}
       />

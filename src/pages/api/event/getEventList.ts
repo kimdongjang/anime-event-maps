@@ -1,4 +1,4 @@
-import { selectEventList, selectEventListById } from "@/services/event";
+import { selectEventList } from "@/services/event";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {

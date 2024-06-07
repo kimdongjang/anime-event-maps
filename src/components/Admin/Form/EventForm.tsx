@@ -1,5 +1,9 @@
+
+import { useGetEventListById } from '@/hooks/event/useEventApi';
+import { useGetImageById } from '@/hooks/image/useImageApi';
 import { insertEventList, updateEvent } from '@/services/event';
 import { IEvent } from '@/services/event/@types';
+import { insertImage } from '@/services/image';
 import { adminManageStore } from '@/stores/AdminManageStore';
 import { formatYmd } from '@/utils/date';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
@@ -39,15 +43,6 @@ const normFile = (e: any) => {
   return e?.fileList;
 };
 
-const fetcher = (url: string, id?: string | string[]) =>
-  fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ id }),
-  }).then((res) => res.json());
-
 interface IEventFormProps {
   mode: 'create' | 'update';
   id?: string | string[];
@@ -62,6 +57,16 @@ const EventForm = (props: IEventFormProps) => {
   const [adminManage, setAdminManage] = useRecoilState(adminManageStore);
   const [title, setTitle] = useState('');
 
+  const image = useGetImageById(Number(id));
+  const event = useGetEventListById(Number(id));
+  console.log(event)
+
+  useEffect(() => {
+    if (!!image)
+      setImageUrl(image.path)
+  }, [image])
+
+
   useEffect(() => {
     switch (mode) {
       case 'create':
@@ -75,13 +80,7 @@ const EventForm = (props: IEventFormProps) => {
     }
   }, [mode])
 
-  console.log('id',id)
-  const { data, error } = useSWR<any>(['/api/event/getEventListById', id], ([url]) => fetcher(url, id));
-
-  console.log(data)
-  console.log(adminManage)
-
-  const onFinish = async (values:IEvent) => {
+  const onFinish = async (values: IEvent) => {
     switch (mode) {
       case 'create':
         handleInsert(values)
@@ -95,7 +94,7 @@ const EventForm = (props: IEventFormProps) => {
 
   };
   const handleInsert = async (values: Omit<IEvent, 'id'>) => {
-    const result = await insertEventList({
+    const eventId = await insertEventList({
       address: '',
       category: values.category,
       doroAddress: values.doroAddress,
@@ -110,12 +109,16 @@ const EventForm = (props: IEventFormProps) => {
       startDate: dayjs(values.startDate).format('YYYY-MM-DD'),
       endDate: dayjs(values.endDate).format('YYYY-MM-DD'),
       title: values.title,
-      images: {
-        path: blob?.url,
-        alt: '',
-      }
     });
-    console.log('Finish:', result);
+
+    if (!!blob) {
+      await insertImage({
+        alt: '',
+        path: blob?.url,
+        eventId: eventId,
+      })
+    }
+    console.log('Finish:', eventId);
   }
   const handleUpdate = async (values: IEvent) => {
     const result = await updateEvent({
@@ -134,11 +137,14 @@ const EventForm = (props: IEventFormProps) => {
       startDate: dayjs(values.startDate).format('YYYY-MM-DD'),
       endDate: dayjs(values.endDate).format('YYYY-MM-DD'),
       title: values.title,
-      images: {
-        path: blob?.url,
-        alt: '',
-      }
     });
+    if (!!blob) {
+      await insertImage({
+        alt: '',
+        path: blob?.url,
+        eventId: Number(id),
+      })
+    }
     console.log('Finish:', result);
   }
 
@@ -178,32 +184,32 @@ const EventForm = (props: IEventFormProps) => {
       <div className='font-bold m-3'>
         {title}
       </div>
-      <Form 
-      labelCol={{ span: 3 }}
+      <Form
+        labelCol={{ span: 3 }}
         layout="horizontal"
         form={form}
         onFinish={onFinish}
-        initialValues={!data ? {} : {
-          id: data.id,
-          address: data.address,
-          category: data.category,
-          doroAddress: data.doro_address,
-          eventName: data.event_name,
-          eventHall: data.event_hall,
+        initialValues={!event ? {} : {
+          id: event.id,
+          address: event.address,
+          category: event.category,
+          doroAddress: event.doro_address,
+          eventName: event.event_name,
+          eventHall: event.event_hall,
           images: {
             path: '',
             alt: '',
           },
-          isFavorite: data.isFavorite,
-          jibunAddress: data.jibun_address,
-          lat: data.lat,
-          lng: data.lng,
-          startDate: dayjs(formatYmd(new Date(data.start_date))),
-          endDate: dayjs(formatYmd(new Date(data.end_date))),
-          title: data.title,
+          isFavorite: event.isFavorite,
+          jibunAddress: event.jibun_address,
+          lat: event.lat,
+          lng: event.lng,
+          startDate: dayjs(formatYmd(new Date(event.start_date))),
+          endDate: dayjs(formatYmd(new Date(event.end_date))),
+          title: event.title,
           priceList: [
           ],
-          site: data.site,
+          site: event.site,
           // 이하 필드들 추가
         }}
       >
@@ -218,8 +224,8 @@ const EventForm = (props: IEventFormProps) => {
         </Form.Item>
         <Form.Item label="카테고리 선택" name="category">
           <Select>
-            {adminManage.categoryList.map(data => {
-              return <Select.Option value={data.name}>{data.name}</Select.Option>
+            {adminManage.categoryList.map((data,i )=> {
+              return <Select.Option key={i} value={data.name}>{data.name}</Select.Option>
             })}
           </Select>
         </Form.Item>

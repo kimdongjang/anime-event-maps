@@ -13,8 +13,8 @@ const UpdatePage = () => {
 
   return (
     <AdminLayout>
-    <div className='bg-gray-200 border-2 rounded-md m-2'>
-      <EventForm mode='update' id={id} />
+      <div className='bg-gray-200 border-2 rounded-md m-2'>
+        <EventForm mode='update' id={id} />
       </div>
     </AdminLayout>
   )

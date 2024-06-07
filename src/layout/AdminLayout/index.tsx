@@ -3,7 +3,7 @@ import { Layout, Menu, MenuProps } from 'antd';
 import Link from 'next/link';
 import { UserOutlined } from '@ant-design/icons';
 import { useState } from 'react';
-import EventCategory from '@/components/Admin/EventComponent/eventCategory';
+import EventCategory from '@/components/Admin/EventComponent/EventCategory';
 
 const { Header, Content, Footer, Sider } = Layout;
 
