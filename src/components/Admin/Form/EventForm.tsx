@@ -1,4 +1,4 @@
-import { insertEventList } from '@/services/event';
+import { insertEventList, updateEvent } from '@/services/event';
 import { IEvent } from '@/services/event/@types';
 import { adminManageStore } from '@/stores/AdminManageStore';
 import { formatYmd } from '@/utils/date';
@@ -39,7 +39,7 @@ const normFile = (e: any) => {
   return e?.fileList;
 };
 
-const fetcher = (url: string, id?: string) =>
+const fetcher = (url: string, id?: string | string[]) =>
   fetch(url, {
     method: 'POST',
     headers: {
@@ -50,7 +50,7 @@ const fetcher = (url: string, id?: string) =>
 
 interface IEventFormProps {
   mode: 'create' | 'update';
-  id?: string;
+  id?: string | string[];
 }
 const EventForm = (props: IEventFormProps) => {
   const { mode, id } = props;
@@ -60,19 +60,66 @@ const EventForm = (props: IEventFormProps) => {
   const [imageUrl, setImageUrl] = useState<string>();
   const [blob, setBlob] = useState<PutBlobResult>();
   const [adminManage, setAdminManage] = useRecoilState(adminManageStore);
+  const [title, setTitle] = useState('');
 
-  const { data, error } = useSWR(['/api/event/getEventListById', id], ([url, id]) => fetcher(url, id));
-
-  if (error) return <div>Failed to load: {error.message}</div>;
-  if (!data) return <div>Loading...</div>;
-  
   useEffect(() => {
-    console.log(event)
-  },[event])
-  
+    switch (mode) {
+      case 'create':
+        setTitle('이벤트 등록');
+        break;
+      case 'update':
+        setTitle('이벤트 수정');
+        break;
+      default:
+        break;
+    }
+  }, [mode])
 
-  const onFinish = async (values: Omit<IEvent, 'id'>) => {
+  console.log('id',id)
+  const { data, error } = useSWR<any>(['/api/event/getEventListById', id], ([url]) => fetcher(url, id));
+
+  console.log(data)
+  console.log(adminManage)
+
+  const onFinish = async (values:IEvent) => {
+    switch (mode) {
+      case 'create':
+        handleInsert(values)
+        break;
+      case 'update':
+        handleUpdate(values);
+        break;
+      default:
+        break;
+    }
+
+  };
+  const handleInsert = async (values: Omit<IEvent, 'id'>) => {
     const result = await insertEventList({
+      address: '',
+      category: values.category,
+      doroAddress: values.doroAddress,
+      eventName: values.eventName,
+      eventHall: values.eventHall,
+      jibunAddress: values.jibunAddress,
+      lat: values.lat,
+      lng: values.lng,
+      site: values.site,
+      isFavorite: values.isFavorite,
+      priceList: values.priceList,
+      startDate: dayjs(values.startDate).format('YYYY-MM-DD'),
+      endDate: dayjs(values.endDate).format('YYYY-MM-DD'),
+      title: values.title,
+      images: {
+        path: blob?.url,
+        alt: '',
+      }
+    });
+    console.log('Finish:', result);
+  }
+  const handleUpdate = async (values: IEvent) => {
+    const result = await updateEvent({
+      id: Number(id),
       address: values.address,
       category: values.category,
       doroAddress: values.doroAddress,
@@ -93,7 +140,7 @@ const EventForm = (props: IEventFormProps) => {
       }
     });
     console.log('Finish:', result);
-  };
+  }
 
   type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
   const getBase64 = (img: FileType, callback: (url: string) => void) => {
@@ -128,40 +175,70 @@ const EventForm = (props: IEventFormProps) => {
 
   return (
     <>
-      <Form
-        labelCol={{ span: 6 }}
+      <div className='font-bold m-3'>
+        {title}
+      </div>
+      <Form 
+      labelCol={{ span: 3 }}
         layout="horizontal"
         form={form}
         onFinish={onFinish}
-        initialValues={data}
+        initialValues={!data ? {} : {
+          id: data.id,
+          address: data.address,
+          category: data.category,
+          doroAddress: data.doro_address,
+          eventName: data.event_name,
+          eventHall: data.event_hall,
+          images: {
+            path: '',
+            alt: '',
+          },
+          isFavorite: data.isFavorite,
+          jibunAddress: data.jibun_address,
+          lat: data.lat,
+          lng: data.lng,
+          startDate: dayjs(formatYmd(new Date(data.start_date))),
+          endDate: dayjs(formatYmd(new Date(data.end_date))),
+          title: data.title,
+          priceList: [
+          ],
+          site: data.site,
+          // 이하 필드들 추가
+        }}
       >
-        <Form.Item label="타이틀 이름" name="title"
-          rules={[{ required: true, message: 'Please input!' }]}>
+        <Form.Item label="타이틀 이름" name="title">
           <Input />
         </Form.Item>
-        <Form.Item label="행사장" name="address"
-          rules={[{ required: true, message: 'Please input!' }]}>
+        <Form.Item label="이벤트 이름" name="eventName">
           <Input />
         </Form.Item>
-        <Form.Item label="카테고리 선택" name="category"
-          rules={[{ required: true, message: 'Please input!' }]}>
+        <Form.Item label="행사장" name="eventHall">
+          <Input />
+        </Form.Item>
+        <Form.Item label="카테고리 선택" name="category">
           <Select>
             {adminManage.categoryList.map(data => {
-              return <Select.Option value={data.id}>{data.name}</Select.Option>
+              return <Select.Option value={data.name}>{data.name}</Select.Option>
             })}
           </Select>
         </Form.Item>
         <Form.Item label="사이트 주소" name="site">
           <Input />
         </Form.Item>
-        <Form.Item label="날짜" name="date"
-          rules={[{ required: true, message: 'Please input!' }]}>
+        <Form.Item label="날짜" name="date">
           <RangePicker />
         </Form.Item>
         <Form.Item label="도로명 주소" name="doroAddress">
           <Input />
         </Form.Item>
         <Form.Item label="지번 주소" name="jibunAddress">
+          <Input />
+        </Form.Item>
+        <Form.Item label="위도" name="lat">
+          <Input />
+        </Form.Item>
+        <Form.Item label="경도" name="lng">
           <Input />
         </Form.Item>
         <Form.Item label="대표 이미지" valuePropName="fileList" getValueFromEvent={normFile}>
@@ -172,13 +249,13 @@ const EventForm = (props: IEventFormProps) => {
             {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
           </Upload>
         </Form.Item>
-        <Form.Item wrapperCol={{ offset: 4 }} shouldUpdate>
+        <Form.Item label="액션" shouldUpdate>
           {() => (
             <Button
               type="primary"
               htmlType="submit"
             >
-              추가
+              {title}
             </Button>
           )}
         </Form.Item>

@@ -4,10 +4,12 @@ import type { TableProps } from 'antd';
 import { IEvent } from '@/services/event/@types';
 import { useRouter } from 'next/router';
 
-interface IAdminTableProps{
+interface IAdminTableProps {
   list: IEvent[];
+  title: string;
 }
-const AdminTable = (props:IAdminTableProps) => {
+const AdminTable = (props: IAdminTableProps) => {
+  const {list, title} = props;
   const router = useRouter();
 
   const columns: TableProps<IEvent>['columns'] = [
@@ -29,8 +31,8 @@ const AdminTable = (props:IAdminTableProps) => {
     },
     {
       title: '이벤트 이름',
-      key: 'event',
-      dataIndex: 'event',
+      key: 'eventName',
+      dataIndex: 'eventName',
     },
     {
       title: '시작날짜',
@@ -46,11 +48,6 @@ const AdminTable = (props:IAdminTableProps) => {
       title: '행사장',
       key: 'eventHall',
       dataIndex: 'eventHall',
-    },
-    {
-      title: '상세 주소',
-      dataIndex: 'address',
-      key: 'address',
     },
     {
       title: '도로명 주소',
@@ -91,8 +88,13 @@ const AdminTable = (props:IAdminTableProps) => {
     },
   ];
 
-  
-  return  <Table columns={columns} dataSource={props.list} />;
+
+  return <>
+    <div className='font-bold m-3'>
+      {title}
+    </div>
+    <Table columns={columns} dataSource={props.list} />
+  </>
 }
 
 export default AdminTable;

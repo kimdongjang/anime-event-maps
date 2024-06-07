@@ -9,12 +9,12 @@ import AdminLayout from '@/layout/AdminLayout';
 const AddPage = () => {
   return (
     <AdminLayout>
-    <div className='grid grid-cols-3'>
+    <div className='grid '>
       <div className='bg-gray-200 border-2 rounded-md m-2'>
         <EventForm mode='create'/>
       </div>
       <div className='bg-gray-200 border-2 rounded-md m-2'>
-        <AddCategory type={'category'} />
+        <AddCategory mode={'category'} />
       </div>
     </div>
     </AdminLayout>

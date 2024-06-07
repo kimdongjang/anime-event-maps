@@ -1,6 +1,6 @@
 import { sql } from "@vercel/postgres";
 
-export async function getCategory() {
+export async function selectCategory() {
     const { rows } = await sql`SELECT * from category_code`;
     return rows;
 }

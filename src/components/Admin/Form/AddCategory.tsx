@@ -1,5 +1,4 @@
-import { deleteCategory, getCategory, insertCategory } from '@/query/Category';
-import { insertEventList } from '@/query/EventList';
+import { deleteCategory, insertCategory } from '@/services/category';
 import { ICategory, IEvent } from '@/services/event/@types';
 import { adminManageStore } from '@/stores/AdminManageStore';
 import { PlusOutlined } from '@ant-design/icons';
@@ -25,54 +24,35 @@ import dayjs from 'dayjs';
 
 import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
+import useSWR from 'swr';
 
 interface IAddCategoryProps {
-  type: string;
+  mode: string;
 }
 type TypeList = ICategory[];
-const AddCategory = ({ type }: IAddCategoryProps) => {
+
+const AddCategory = ({ mode }: IAddCategoryProps) => {
   const [form] = Form.useForm();
   const [title, setTitle] = useState<string>('');
   const [adminManage, setAdminManage] = useRecoilState(adminManageStore);
 
-  useEffect(() => {
-    switch (type) {
-      case 'category': setTitle('카테고리'); fetchList(); break;
-    }
-  }, [type])
-
   interface IAddFormProps {
     name: string;
-  }
-
-  const fetchList = async () => {
-    // 이벤트 리스트 가져오기
-    const list: QueryResultRow[] = await getCategory();
-    const convertList: ICategory[] = list.map(data => {
-      return {
-        id: data.id,
-        name: data.name,
-      };
-    });
-
-    setAdminManage({ ...adminManage, categoryList: convertList });
   }
 
   const onFinish = async (values: IAddFormProps) => {
     const result = await insertCategory({
       name: values.name,
     })
-    fetchList();
   };
 
   const deleteItem = async (id: number) => {
-    if (type === 'category') {
+    if (mode === 'category') {
       const result = await deleteCategory({
         id: id
       })
       alert(result);
     }
-    fetchList();
   }
 
   return (
@@ -84,7 +64,7 @@ const AddCategory = ({ type }: IAddCategoryProps) => {
         bordered
         dataSource={adminManage.categoryList}
         renderItem={(item) => {
-          if (type === 'category') {
+          if (mode === 'category') {
             return <List.Item actions={[<a onClick={() => deleteItem(item.id)}>삭제</a>]} key={item.id}>{item.name}</List.Item>
           }
         }}

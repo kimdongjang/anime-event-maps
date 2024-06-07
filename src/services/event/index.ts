@@ -13,6 +13,34 @@ export async function selectEventListById(id?: number) {
   return rows[0];
 }
 
+export async function updateEvent(event:IEvent){
+  const { id, title, category, eventName, startDate, endDate, eventHall, address, doroAddress, jibunAddress, lat, lng, site } = event;
+  console.log(event)
+  try {
+    const result = await sql`
+      UPDATE event_list
+      SET
+        title = ${title},
+        category = ${category},
+        event_name = ${eventName},
+        event_hall = ${eventHall},
+        start_date = ${startDate},
+        end_date = ${endDate},
+        address = ${address},
+        doro_address = ${doroAddress},
+        jibun_address = ${jibunAddress},
+        lat = ${lat},
+        lng = ${lng},
+        site = ${site}
+      WHERE id = ${id}
+    `;
+    console.log('Event updated:', result.rowCount);
+  } catch (err) {
+    console.error('Error updating event:', err);
+  }
+
+}
+
 export async function insertEventList(data: Omit<IEvent, 'id'>) {
   const { title, category, eventName: event, startDate, endDate, eventHall, address, doroAddress, jibunAddress, lat, lng, site } = data;
 

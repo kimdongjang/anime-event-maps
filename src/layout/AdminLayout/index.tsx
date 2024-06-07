@@ -2,6 +2,8 @@ import { useRouter } from 'next/router';
 import { Layout, Menu, MenuProps } from 'antd';
 import Link from 'next/link';
 import { UserOutlined } from '@ant-design/icons';
+import { useState } from 'react';
+import EventCategory from '@/components/Admin/EventComponent/eventCategory';
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -21,14 +23,20 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
             label,
         } as MenuItem;
     }
-        type MenuItem = Required<MenuProps>['items'][number];
-        const menuItems: MenuItem[] = [
-            getItem('리스트', 'sub1', <UserOutlined />, [
-                getItem('조회', '/admin/home'),
-                getItem('추가', '/admin/create'),
-            ]),
-        ];
-        
+    type MenuItem = Required<MenuProps>['items'][number];
+    const menuItems: MenuItem[] = [
+        getItem('리스트', 'sub1', <UserOutlined />, [
+            getItem('조회', '/admin/home'),
+            getItem('추가', '/admin/create'),
+        ]),
+    ];
+    const [selectedBreadcrumb, setSelectedBreadcrumb] = useState<'list' | 'form'>('list'); // 선택된 Breadcrumb 상태
+
+    const handleBreadcrumbClick = (breadcrumb: 'list' | 'form') => {
+        setSelectedBreadcrumb(breadcrumb);
+    };
+
+
 
     return (
         <Layout style={{ minHeight: '100vh' }}>
@@ -41,6 +49,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
             </Sider>
             <Layout>
                 <Content >
+                    <EventCategory/>
                     <div style={{ background: '#fff', minHeight: 360, margin: '0.5rem' }}>
                         {children}
                     </div>
