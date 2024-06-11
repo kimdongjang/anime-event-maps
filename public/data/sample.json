@@ -512,17 +512,17 @@
     "title": "178회 코믹월드 2024 SUMMER",
     "category": "애니메이션 행사",
     "event": "코믹월드",
-    "startDate": "2024-07-27",
-    "endDate": "2024-07-28",
+    "startDate": "2024-07-20",
+    "endDate": "2024-07-21",
     "eventHall": "일산 킨텍스",
-    "address": "일산 킨텍스 전시장",
+    "address": "일산 킨텍스 1전시장",
     "doroAddress": "경기 고양시 일산서구 킨텍스로 217-60",
     "jibunAddress": "경기 고양시 대화동 2600",
     "lat": 37.660937,
     "lng": 126.745904,
     "images": {
-      "path": "/images/2023seoulcomic.png",
-      "alt": "/anime-event-maps/2023seoulcomic"
+      "path": "/images/seoulcomic/116.png",
+      "alt": "/anime-event-maps/2024seoulcomic"
     },
     "site": "https://comicw.co.kr/",
     "isFavorite": false
@@ -544,6 +544,7 @@
       "path": "/images/2023seoulcomic.png",
       "alt": "/anime-event-maps/2023seoulcomic"
     },
+    "site":"https://seoulpopcon.org/2024info",
     "isFavorite": false
   },
   {
@@ -560,7 +561,7 @@
     "lat": 35.1657096,
     "lng": 129.135856,
     "images": {
-      "path": "/images/2023seoulcomic.png",
+      "path": "/images/2024popcon.png",
       "alt": "/anime-event-maps/2023seoulcomic"
     },
     "site": "https://comicw.co.kr/",
