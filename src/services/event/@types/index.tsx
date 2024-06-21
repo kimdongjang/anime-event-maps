@@ -20,6 +20,7 @@ export interface IEvent {
 
   site?: string;
   isFavorite: boolean;
+  titleImage?: string;
 }
 
 export interface ICategory {

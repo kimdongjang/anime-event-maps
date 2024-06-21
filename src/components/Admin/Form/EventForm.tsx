@@ -1,11 +1,12 @@
 
 import { useGetEventListById } from '@/hooks/event/useEventApi';
 import { useGetImageById } from '@/hooks/image/useImageApi';
-import { insertEventList, updateEvent } from '@/services/event';
+import { insertEventList, updateEvent, updateEventImage } from '@/services/event';
 import { IEvent } from '@/services/event/@types';
 import { insertImage } from '@/services/image';
 import { adminManageStore } from '@/stores/AdminManageStore';
 import { formatYmd } from '@/utils/date';
+import { parseEvent } from '@/utils/parse';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import { PutBlobResult, put } from '@vercel/blob';
 import {
@@ -57,15 +58,17 @@ const EventForm = (props: IEventFormProps) => {
   const [adminManage, setAdminManage] = useRecoilState(adminManageStore);
   const [title, setTitle] = useState('');
 
-  const image = useGetImageById(Number(id));
-  const event = useGetEventListById(Number(id));
-  console.log(event)
-
+  // const image = useGetImageById(Number(id));
+  const getEventApi = useGetEventListById({id:Number(id)});
+  const [event,setEvent] = useState<IEvent>()
+  
+  
   useEffect(() => {
-    if (!!image)
-      setImageUrl(image.path)
-  }, [image])
-
+    if (getEventApi.isLoading || getEventApi.error) return;
+    setEvent(parseEvent(getEventApi.response.content))
+    setImageUrl(parseEvent(getEventApi.response.content).titleImage)
+    form.setFieldsValue(parseEvent(getEventApi.response.content))
+  },[getEventApi.error, getEventApi.isLoading])
 
   useEffect(() => {
     switch (mode) {
@@ -93,7 +96,7 @@ const EventForm = (props: IEventFormProps) => {
     }
 
   };
-  const handleInsert = async (values: Omit<IEvent, 'id'>) => {
+  const handleInsert = async (values: any) => {
     const eventId = await insertEventList({
       address: '',
       category: values.category,
@@ -106,21 +109,20 @@ const EventForm = (props: IEventFormProps) => {
       site: values.site,
       isFavorite: values.isFavorite,
       priceList: values.priceList,
-      startDate: dayjs(values.startDate).format('YYYY-MM-DD'),
-      endDate: dayjs(values.endDate).format('YYYY-MM-DD'),
+      startDate: formatYmd(new Date(values.date[0])),
+      endDate: formatYmd(new Date(values.date[1])),
       title: values.title,
     });
 
     if (!!blob) {
-      await insertImage({
-        alt: '',
-        path: blob?.url,
-        eventId: eventId,
-      })
+      await updateEventImage(
+        Number(id),
+        blob.url
+      )
     }
     console.log('Finish:', eventId);
   }
-  const handleUpdate = async (values: IEvent) => {
+  const handleUpdate = async (values:any) => {
     const result = await updateEvent({
       id: Number(id),
       address: values.address,
@@ -134,18 +136,22 @@ const EventForm = (props: IEventFormProps) => {
       site: values.site,
       isFavorite: values.isFavorite,
       priceList: values.priceList,
-      startDate: dayjs(values.startDate).format('YYYY-MM-DD'),
-      endDate: dayjs(values.endDate).format('YYYY-MM-DD'),
+      startDate: formatYmd(new Date(values.date[0])),
+      endDate: formatYmd(new Date(values.date[1])),
       title: values.title,
     });
     if (!!blob) {
-      await insertImage({
-        alt: '',
-        path: blob?.url,
-        eventId: Number(id),
-      })
+      await updateEventImage(
+        Number(id),
+        blob.url
+      )
+      // await insertImage({
+      //   alt: '',
+      //   path: blob?.url,
+      //   eventId: Number(id),
+      // })
     }
-    console.log('Finish:', result);
+    alert('수정되었습니다!')
   }
 
   type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
@@ -189,29 +195,6 @@ const EventForm = (props: IEventFormProps) => {
         layout="horizontal"
         form={form}
         onFinish={onFinish}
-        initialValues={!event ? {} : {
-          id: event.id,
-          address: event.address,
-          category: event.category,
-          doroAddress: event.doro_address,
-          eventName: event.event_name,
-          eventHall: event.event_hall,
-          images: {
-            path: '',
-            alt: '',
-          },
-          isFavorite: event.isFavorite,
-          jibunAddress: event.jibun_address,
-          lat: event.lat,
-          lng: event.lng,
-          startDate: dayjs(formatYmd(new Date(event.start_date))),
-          endDate: dayjs(formatYmd(new Date(event.end_date))),
-          title: event.title,
-          priceList: [
-          ],
-          site: event.site,
-          // 이하 필드들 추가
-        }}
       >
         <Form.Item label="타이틀 이름" name="title">
           <Input />

@@ -9,6 +9,9 @@ const nextConfig = {
     POSTGRES_URL: process.env.POSTGRES_URL,
     BLOB_READ_WRITE_TOKEN: process.env.BLOB_READ_WRITE_TOKEN,
   },
+  images: {
+    domains: ['p9xl7rgid2ng8szl.public.blob.vercel-storage.com'],
+  },
 
   // styles 폴더와 같은 공간에 모아두고 싶은 경우에 해제
   // sassOptions: {

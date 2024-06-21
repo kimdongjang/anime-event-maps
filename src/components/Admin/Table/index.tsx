@@ -60,13 +60,13 @@ const AdminTable = (props: IAdminTableProps) => {
       dataIndex: 'jibunAddress',
     },
     {
-      title: '위도',
+      title: '위도(lat)',
       key: 'lat',
-      dataIndex: 'lng',
+      dataIndex: 'lat',
     },
     {
-      title: '경도',
-      key: 'lat',
+      title: '경도(lng)',
+      key: 'lng',
       dataIndex: 'lng',
     },
     {

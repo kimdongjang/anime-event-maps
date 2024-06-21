@@ -66,7 +66,7 @@ const LocationMarkers = (props: ILocationMarkers) => {
             if (searchEventList.isEnd) {
               return (
                 <SwiperSlide className='p-3 pb-10 ' key={i}>
-                  <Image src={event.images?.path} />
+                  <Image src={event.titleImage} />
                   <h3>{event.title}</h3>
                   <div className='m-0'>{event.address}</div>
                   <div className='flex items-center'>
@@ -80,7 +80,7 @@ const LocationMarkers = (props: ILocationMarkers) => {
               if (checkEndEvent(new Date(event.endDate))) {
                 return (
                   <SwiperSlide className='p-3 pb-10 ' key={i}>
-                    <Image src={event.images?.path} />
+                    <Image src={event.titleImage} />
                     <h3>{event.title}</h3>
                     <div className='m-0'>{event.address}</div>
                     <div className='flex items-center'>

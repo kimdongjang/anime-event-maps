@@ -25,12 +25,15 @@ import { IEvent } from '@/services/event/@types';
 import { ModalNotice } from '@/components/ModalNotice';
 import { useSearchParams } from 'next/navigation';
 import Map from '@/components/Map';
+import axios from 'axios';
+import { useGetEventList } from '@/hooks/event/useEventApi';
+import { parseEvent } from '@/utils/parse';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export default function Main(props: any) {
-  const siteTitle = '애이맵(애니메이션 행사 맵스)';
-  const { datas } = props;
+  const siteTitle = '코이맵(코믹 행사 맵스)';
+  const getEventApi = useGetEventList();
   const [eventList, setEventList] = useRecoilState(eventListStore);
   const [isMobileShow, setIsMobileShow] = useRecoilState(mobileIsOpenStore);
   const [isDesktopShow, setIsDesktopShow] = useState(true);
@@ -42,22 +45,20 @@ export default function Main(props: any) {
 
   const testRef = useRef(false);
 
-  /** 
-   * 메인 페이지 초기 로딩시 초기화 진행
-   */
   useEffect(() => {
+    if (getEventApi.isLoading || getEventApi.error) return;
     const favoriteList: IEvent[] = getLocalstorageEvent();
     
     // datas: static한 데이터
     // 모든 행사장 리스트 초기화 진행(시간 순서 별로)
     setEventList(
-      datas.map((event: IEvent) => {
+      getEventApi.response.content.map((event: IEvent) => {
         let find = favoriteList.find((str) => str.id === event.id);
         if (!!find) {
           let temp = { ...event };
           temp.isFavorite = true;
-          return temp;
-        } else return event;
+          return parseEvent(temp);
+        } else return parseEvent(event);
       }).sort((a: IEvent,b: IEvent) => {
         // 문자열로 된 날짜를 Date 객체로 변환하여 비교
         const dateA: Date = new Date(a.startDate);
@@ -66,6 +67,35 @@ export default function Main(props: any) {
         return dateA.getTime() - dateB.getTime();
       })
     );
+    
+  },[getEventApi.error, getEventApi.isLoading])
+  /** 
+   * 메인 페이지 초기 로딩시 초기화 진행
+   */
+  useEffect(() => {
+    // const favoriteList: IEvent[] = getLocalstorageEvent();
+    
+    // if(!getEventApi?.data) return;
+    // console.log(getEventApi)
+    // // datas: static한 데이터
+    // // 모든 행사장 리스트 초기화 진행(시간 순서 별로)
+    // setEventList(
+    //   getEventApi?.data.map((event: IEvent) => {
+    //     let find = favoriteList.find((str) => str.id === event.id);
+    //     if (!!find) {
+    //       let temp = { ...event };
+    //       temp.isFavorite = true;
+    //       return temp;
+    //     } else return event;
+    //   }).sort((a: IEvent,b: IEvent) => {
+    //     // 문자열로 된 날짜를 Date 객체로 변환하여 비교
+    //     const dateA: Date = new Date(a.startDate);
+    //     const dateB: Date = new Date(b.startDate);
+  
+    //     return dateA.getTime() - dateB.getTime();
+    //   })
+    // );
+    
     setMounted(true);
 
     let notice = getLocalstorageNotice();
@@ -235,10 +265,18 @@ export default function Main(props: any) {
   );
 }
 
-export async function getStaticProps() {
-  const datas = (await import('../../public/data/sample.json')).default;
-  return {
-    props: { datas },
-    revalidate: 60 * 60,
-  };
-}
+// export async function getStaticProps() {
+//   const datas = (await import('../../public/data/sample.json')).default;
+//   return {
+//     props: { datas },
+//     revalidate: 60 * 60,
+//   };
+// }
+
+// export async function getServerSideProps() {
+//   const datas = await axios.get('/api/event/getEventList');
+//   return {
+//     props: { datas },
+//     revalidate: 60 * 60,
+//   }
+// }

@@ -232,11 +232,11 @@ export const EventDisplay = (props: IEventDisplayProps) => {
         {/* 이미지 */}
         <div>
           {
-            event.images && 
+            event.titleImage && 
             <Image
               className="event_display__bg_image max-h-[180px] py-1"
-              src={event.images.path}
-              alt={event.images.alt}
+              src={event.titleImage}
+              alt={event.id.toString()}
               fill
               objectFit="cover"
             />
@@ -244,7 +244,7 @@ export const EventDisplay = (props: IEventDisplayProps) => {
         </div>
         <div className="flex justify-between items-center px-1">
           <div className="space-x-1">
-            <label className="font-medium">{event.address}</label>
+            <label className="font-medium">{event.eventHall}</label>
             <label className="text-gray-400 text-sm">{event.category}</label>
           </div>
           <div className="space-x-1 flex items-center">

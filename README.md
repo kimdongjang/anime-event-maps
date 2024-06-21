@@ -1,4 +1,4 @@
-# 애니메이션&게임 행사 맵스 웹페이지 (current v1.1.0)
+# 코믹 행사 맵스 웹페이지 (current v1.2.0)
 
 developer: gieun3644@gmail.com  
 https://anime-event-maps.vercel.app/

@@ -7,14 +7,14 @@ export async function selectEventList() {
   return rows;
 }
 
-export async function selectEventListById(id?: number) {
+export async function selectEventListById(id: number) {
   const { rows, fields  } = await sql`SELECT * from event_list where id = ${id}`;
   
   return rows[0];
 }
 
 export async function updateEvent(event:IEvent){
-  const { id, title, category, eventName, startDate, endDate, eventHall, address, doroAddress, jibunAddress, lat, lng, site } = event;
+  const { id, title, category, eventName, startDate, endDate, eventHall, address, doroAddress, jibunAddress, lat, lng, site, titleImage} = event;
   console.log(event)
   try {
     const result = await sql`
@@ -38,7 +38,20 @@ export async function updateEvent(event:IEvent){
   } catch (err) {
     console.error('Error updating event:', err);
   }
-
+}
+export async function updateEventImage(id: number, titleImage: string){
+  console.log(titleImage)
+  try {
+    const result = await sql`
+      UPDATE event_list
+      SET
+        title_image = ${titleImage}
+      WHERE id = ${id}
+    `;
+    console.log('Event updated:', result.rowCount);
+  } catch (err) {
+    console.error('Error updating event:', err);
+  }
 }
 
 export async function insertEventList(data: Omit<IEvent, 'id'>) {
