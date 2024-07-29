@@ -3,7 +3,6 @@ import { useGetEventListById } from '@/hooks/event/useEventApi';
 import { useGetImageById } from '@/hooks/image/useImageApi';
 import { insertEventList, updateEvent, updateEventImage } from '@/services/event';
 import { IEvent } from '@/services/event/@types';
-import { insertImage } from '@/services/image';
 import { adminManageStore } from '@/stores/AdminManageStore';
 import { formatYmd } from '@/utils/date';
 import { parseEvent } from '@/utils/parse';
@@ -29,6 +28,7 @@ import {
   UploadProps,
 } from 'antd';
 import dayjs from 'dayjs';
+import { useRouter } from 'next/router';
 
 import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
@@ -49,6 +49,7 @@ interface IEventFormProps {
   id?: string | string[];
 }
 const EventForm = (props: IEventFormProps) => {
+  const router = useRouter();
   const { mode, id } = props;
 
   const [form] = Form.useForm();
@@ -59,16 +60,16 @@ const EventForm = (props: IEventFormProps) => {
   const [title, setTitle] = useState('');
 
   // const image = useGetImageById(Number(id));
-  const getEventApi = useGetEventListById({id:Number(id)});
-  const [event,setEvent] = useState<IEvent>()
-  
-  
+  const getEventApi = useGetEventListById({ id: Number(id) });
+  const [event, setEvent] = useState<IEvent>()
+
+
   useEffect(() => {
     if (getEventApi.isLoading || getEventApi.error) return;
     setEvent(parseEvent(getEventApi.response.content))
     setImageUrl(parseEvent(getEventApi.response.content).titleImage)
     form.setFieldsValue(parseEvent(getEventApi.response.content))
-  },[getEventApi.error, getEventApi.isLoading])
+  }, [getEventApi.error, getEventApi.isLoading])
 
   useEffect(() => {
     switch (mode) {
@@ -97,32 +98,52 @@ const EventForm = (props: IEventFormProps) => {
 
   };
   const handleInsert = async (values: any) => {
-    const eventId = await insertEventList({
-      address: '',
-      category: values.category,
-      doroAddress: values.doroAddress,
-      eventName: values.eventName,
-      eventHall: values.eventHall,
-      jibunAddress: values.jibunAddress,
-      lat: values.lat,
-      lng: values.lng,
-      site: values.site,
-      isFavorite: values.isFavorite,
-      priceList: values.priceList,
-      startDate: formatYmd(new Date(values.date[0])),
-      endDate: formatYmd(new Date(values.date[1])),
-      title: values.title,
-    });
-
     if (!!blob) {
-      await updateEventImage(
-        Number(id),
-        blob.url
-      )
+      const eventId = await insertEventList({
+        address: '',
+        category: values.category,
+        doroAddress: values.doroAddress,
+        eventName: values.eventName,
+        eventHall: values.eventHall,
+        jibunAddress: values.jibunAddress,
+        lat: values.lat,
+        lng: values.lng,
+        site: values.site,
+        isFavorite: values.isFavorite,
+        priceList: values.priceList,
+        startDate: formatYmd(new Date(values.date[0])),
+        endDate: formatYmd(new Date(values.date[1])),
+        title: values.title,
+        titleImage: blob.url
+      });
+
     }
-    console.log('Finish:', eventId);
+    else {
+      if (confirm("이미지 없이 등록하시겠습니까?")) {
+        const eventId = await insertEventList({
+          address: '',
+          category: values.category,
+          doroAddress: values.doroAddress,
+          eventName: values.eventName,
+          eventHall: values.eventHall,
+          jibunAddress: values.jibunAddress,
+          lat: values.lat,
+          lng: values.lng,
+          site: values.site,
+          isFavorite: values.isFavorite,
+          priceList: values.priceList,
+          startDate: formatYmd(new Date(values.date[0])),
+          endDate: formatYmd(new Date(values.date[1])),
+          title: values.title,
+        });
+
+        alert('등록되었습니다!')
+        router.push("/admin/home")
+      }
+    }
+
   }
-  const handleUpdate = async (values:any) => {
+  const handleUpdate = async (values: any) => {
     const result = await updateEvent({
       id: Number(id),
       address: values.address,
@@ -145,13 +166,9 @@ const EventForm = (props: IEventFormProps) => {
         Number(id),
         blob.url
       )
-      // await insertImage({
-      //   alt: '',
-      //   path: blob?.url,
-      //   eventId: Number(id),
-      // })
     }
     alert('수정되었습니다!')
+    router.push("/admin/home")
   }
 
   type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
@@ -207,7 +224,7 @@ const EventForm = (props: IEventFormProps) => {
         </Form.Item>
         <Form.Item label="카테고리 선택" name="category">
           <Select>
-            {adminManage.categoryList.map((data,i )=> {
+            {adminManage.categoryList.map((data, i) => {
               return <Select.Option key={i} value={data.name}>{data.name}</Select.Option>
             })}
           </Select>

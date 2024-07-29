@@ -3,6 +3,7 @@ import { Button, Space, Table, Tag } from 'antd';
 import type { TableProps } from 'antd';
 import { IEvent } from '@/services/event/@types';
 import { useRouter } from 'next/router';
+import { deleteEventById } from '@/services/event';
 
 interface IAdminTableProps {
   list: IEvent[];
@@ -82,7 +83,14 @@ const AdminTable = (props: IAdminTableProps) => {
           <Button onClick={() => {
             router.push(`/admin/update?id=${record.id}`)
           }}>Update </Button>
-          <a>Delete</a>
+          <Button danger onClick={async () => {
+            if(confirm("해당 이벤트를 삭제하시겠습니까?")){
+              const response = await deleteEventById(record.id);
+              if(response){
+                router.reload();
+              }
+            }
+          }}>Delete </Button>
         </Space>
       ),
     },

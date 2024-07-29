@@ -40,7 +40,6 @@ export async function updateEvent(event:IEvent){
   }
 }
 export async function updateEventImage(id: number, titleImage: string){
-  console.log(titleImage)
   try {
     const result = await sql`
       UPDATE event_list
@@ -55,13 +54,13 @@ export async function updateEventImage(id: number, titleImage: string){
 }
 
 export async function insertEventList(data: Omit<IEvent, 'id'>) {
-  const { title, category, eventName: event, startDate, endDate, eventHall, address, doroAddress, jibunAddress, lat, lng, site } = data;
+  const { title, category, eventName: event, startDate, endDate, eventHall, address, doroAddress, jibunAddress, lat, lng, site, titleImage } = data;
 
   const result = await sql`
     INSERT INTO event_list (
-      title, category, event_name, start_date, end_date, event_hall, address, doro_address, jibun_address, lat, lng, site
+      title, category, event_name, start_date, end_date, event_hall, address, doro_address, jibun_address, lat, lng, site, title_image
     ) VALUES (  
-      ${title}, ${category}, ${event}, ${startDate}, ${endDate}, ${eventHall}, ${address}, ${doroAddress}, ${jibunAddress}, ${lat}, ${lng}, ${site}
+      ${title}, ${category}, ${event}, ${startDate}, ${endDate}, ${eventHall}, ${address}, ${doroAddress}, ${jibunAddress}, ${lat}, ${lng}, ${site}, ${titleImage}
     ) RETURNING id;
   `;
 
@@ -71,6 +70,35 @@ export async function insertEventList(data: Omit<IEvent, 'id'>) {
     return result.rows[0].id;
   } else {
     console.error('No rows returned');
+    return -1;
+  }
+}
+
+
+export async function deleteEventById(eventId: number) {
+  // eventId가 유효한지 확인
+  if (!eventId) {
+    console.error('Invalid event ID');
+    return -1;
+  }
+
+  try {
+    const result = await sql`
+      DELETE FROM event_list
+      WHERE id = ${eventId}
+      RETURNING id;
+    `;
+
+    // result.rows는 배열입니다.
+    if (result.rows.length > 0) {
+      console.log('Deleted event ID:', result.rows[0].id);
+      return result.rows[0].id;
+    } else {
+      console.error('No rows returned');
+      return -1;
+    }
+  } catch (error) {
+    console.error('Error deleting event:', error);
     return -1;
   }
 }
