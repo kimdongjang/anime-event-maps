@@ -4,7 +4,7 @@ import { IEvent } from '@/services/event/@types';
 import {
   isSummaryStore,
   markerStore,
-  searchListStore,
+  searchedListStore,
   eventListStore,
   selectCategoryStore,
   curPositionStore,
@@ -20,7 +20,7 @@ import { useMapEvents } from 'react-leaflet';
 export const EventList = () => {
   const [isMobileShow, setIsMobileShow] = useRecoilState(mobileIsOpenStore);
   const [eventList, setEventList] = useRecoilState(eventListStore);
-  const [searchEventList, setSearchEventList] = useRecoilState(searchListStore);
+  const [searchedEventList, setSearchedEventList] = useRecoilState(searchedListStore);
   const [selectCategory, setSelectCategory] =
     useRecoilState(selectCategoryStore);
   // 이벤트 리스트 요약 여부
@@ -69,13 +69,13 @@ export const EventList = () => {
   // };
 
   const renderEventList = () => {
-    const renderList = searchEventList.searchedList.length !== 0 ? searchEventList.searchedList : eventList;
+    const renderList = searchedEventList.searchedList.length !== 0 ? searchedEventList.searchedList : eventList;
 
     switch (selectCategory) {
       case MainCategory.MAIN:
         return renderList.map((event, i) => {
           // 종료된 이벤트가 체크되어 있다면
-          if (searchEventList.isEnd) {
+          if (searchedEventList.isEnd) {
             if(isSummary){
               return (
                 <EventSummary event={event} key={i} onClick={handleEventClick} />

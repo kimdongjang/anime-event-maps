@@ -3,7 +3,7 @@ import { Coordinates } from "@/types/map";
 import { useEffect, useRef, useState } from "react"
 import { Marker, Popup, useMapEvents } from "react-leaflet"
 import L from 'leaflet';
-import { curPositionStore, searchListStore } from "@/stores/MapDataStore";
+import { curPositionStore, searchedListStore } from "@/stores/MapDataStore";
 import { useRecoilState } from "recoil";
 import { IEvent } from "@/services/event/@types";
 

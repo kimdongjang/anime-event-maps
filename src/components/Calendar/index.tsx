@@ -3,13 +3,13 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { useCallback, useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
-import { searchListStore, eventListStore } from '@/stores/MapDataStore';
+import { searchedListStore, eventListStore } from '@/stores/MapDataStore';
 import { checkEndEvent } from '@/utils/date';
 import { FilterType } from '@/constants/enums';
 
 export const Calendar = () => {
   const [eventList, setEventList] = useRecoilState(eventListStore);
-  const [searchEventList, setSearchEventList] = useRecoilState(searchListStore);
+  const [searchEventList, setSearchEventList] = useRecoilState(searchedListStore);
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
     setMounted(true);

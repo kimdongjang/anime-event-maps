@@ -2,7 +2,7 @@ import { searchFilterList } from '@/constants/common';
 import { FilterType, MainCategory } from '@/constants/enums';
 import { sortMenuItems } from '@/constants/menuItems';
 import {
-  searchListStore,
+  searchedListStore,
   eventListStore,
   selectCategoryStore,
   isSummaryStore,
@@ -22,7 +22,7 @@ export const SearchForm = () => {
   const [eventList, setEventList] = useRecoilState(eventListStore);
   const [selectCategory, setSelectCategory] =
     useRecoilState(selectCategoryStore);
-  const [searchEventList, setSearchEventList] = useRecoilState(searchListStore);
+  const [searchEventList, setSearchEventList] = useRecoilState(searchedListStore);
   const [isSummary, setIsSummary] = useRecoilState(isSummaryStore);
   const [openFilter, setOpenFilter] = useState(true);
   const [displayFilterList, setDisplayFilterList] = useState<string[]>([]);

@@ -1,7 +1,7 @@
 import { IMarker } from '@/constants/common';
 import useMapHook, { INITIAL_CENTER, INITIAL_ZOOM } from '@/hooks/useMapHook';
 import { IEvent } from '@/services/event/@types';
-import { eventListStore, searchListStore, selectCategoryStore } from '@/stores/MapDataStore';
+import { eventListStore, searchedListStore, selectCategoryStore } from '@/stores/MapDataStore';
 import { useEffect, useRef, useState } from 'react';
 import { MapContainer, Marker, Popup, TileLayer, useMapEvents } from 'react-leaflet';
 import { useRecoilState } from 'recoil';

@@ -20,7 +20,7 @@ export default function Document() {
             strategy="beforeInteractive"
         />
         {/* Global Site Tag (gtag.js) - Google Analytics */}
-        {/* <Script
+        <Script
           strategy="afterInteractive"
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}
         />
@@ -37,7 +37,7 @@ export default function Document() {
                     });
                   `,
           }}
-        /> */}
+        />
       </body>
     </Html>
   );

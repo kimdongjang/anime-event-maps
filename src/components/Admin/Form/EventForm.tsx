@@ -62,6 +62,7 @@ const EventForm = (props: IEventFormProps) => {
   // const image = useGetImageById(Number(id));
   const getEventApi = useGetEventListById({ id: Number(id) });
   const [event, setEvent] = useState<IEvent>()
+  
 
 
   useEffect(() => {
@@ -69,6 +70,7 @@ const EventForm = (props: IEventFormProps) => {
     setEvent(parseEvent(getEventApi.response.content))
     setImageUrl(parseEvent(getEventApi.response.content).titleImage)
     form.setFieldsValue(parseEvent(getEventApi.response.content))
+    console.log(getEventApi)
   }, [getEventApi.error, getEventApi.isLoading])
 
   useEffect(() => {
@@ -219,9 +221,6 @@ const EventForm = (props: IEventFormProps) => {
         <Form.Item label="이벤트 이름" name="eventName">
           <Input />
         </Form.Item>
-        <Form.Item label="행사장" name="eventHall">
-          <Input />
-        </Form.Item>
         <Form.Item label="카테고리 선택" name="category">
           <Select>
             {adminManage.categoryList.map((data, i) => {
@@ -234,6 +233,9 @@ const EventForm = (props: IEventFormProps) => {
         </Form.Item>
         <Form.Item label="날짜" name="date">
           <RangePicker />
+        </Form.Item>        
+        <Form.Item label="행사장" name="eventHall">
+          <Input />
         </Form.Item>
         <Form.Item label="도로명 주소" name="doroAddress">
           <Input />

@@ -22,7 +22,7 @@ export const eventListStore = atom<IEvent[]>({
   default: [],
 });
 
-export interface ISearchList {
+export interface SearchedList {
   searchedList: IEvent[];
   addedFilter: string[],
   type: FilterType;
@@ -31,7 +31,7 @@ export interface ISearchList {
 /**
  * 선택한 필터(이벤트별, 행사별, 행사장별)
  */
-export const searchListStore = atom<ISearchList>({
+export const searchedListStore = atom<SearchedList>({
   key: `searchListStore`,
   default: {
     searchedList: [], // 선택한 필터를 기반으로 추가된 이벤트들(예: 이벤트별을 선택하고 난 뒤, A이벤트, B이벤트 등등이 이 list에 추가됨)
@@ -57,6 +57,9 @@ export const isSummaryStore = atom<boolean>({
   default: false,
 });
 
+/**
+ * 현재 위치로 옮기기
+ */
 export const curPositionStore = atom<Coordinates>({
   key: `curPositionStore`,
   default: INITIAL_CENTER,

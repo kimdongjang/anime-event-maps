@@ -1,5 +1,5 @@
 import { INITIAL_CENTER, INITIAL_ZOOM } from '@/hooks/useMapHook';
-import { eventListStore, markerStore, searchListStore, selectCategoryStore } from '@/stores/MapDataStore';
+import { eventListStore, markerStore, searchedListStore, selectCategoryStore } from '@/stores/MapDataStore';
 import { Coordinates } from '@/types/map';
 import Script from 'next/script';
 import { useEffect, useRef, useState } from 'react';
@@ -37,7 +37,7 @@ const KakaoMap = ({
     initialZoom = INITIAL_ZOOM,
 }: Props) => {
     const [eventList, setEventList] = useRecoilState(eventListStore);
-    const [searchEventList, setSearchEventList] = useRecoilState(searchListStore);
+    const [searchedEventList, setSearchedEventList] = useRecoilState(searchedListStore);
     const [selectCategory, setSelectCategory] = useRecoilState(selectCategoryStore);
 
     console.log(eventList)
@@ -50,11 +50,10 @@ const KakaoMap = ({
      */
     const renderList = () => {
         // 필터에 체크된 이벤트 리스트 혹은 전체 이벤트 리스트
-        let list = searchEventList.searchedList.length !== 0 ? searchEventList.searchedList : eventList
+        let list = searchedEventList.searchedList.length !== 0 ? searchedEventList.searchedList : eventList
 
         // 거기에 추가로 이벤트 행사장별 리스트를 생성함
         const eventHallFilter = [...new Set(list.map((data) => data.eventHall))];
-
 
         // 행사장 별로 묶어서 리스트를 초기화
         const eventHallList = eventHallFilter.map(hall => {
