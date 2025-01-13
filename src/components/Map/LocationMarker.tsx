@@ -7,29 +7,29 @@ import { curPositionStore } from "@/stores/MapDataStore";
 import { useRecoilState } from "recoil";
 
 
-const icon = L.icon({ iconUrl: "/images/markers/marker-icon.png" });
+// const icon = L.icon({ iconUrl: "/images/markers/marker-icon.png" });
 
 const LocationMarker = () => {
-  const [curPosition, setCurPosition] = useRecoilState(curPositionStore);
-  const map = useMapEvents({
-    locationfound(e) {
-      map.flyTo(curPosition, 16)
-    },
-  })
+  // const [curPosition, setCurPosition] = useRecoilState(curPositionStore);
+  // const map = useMapEvents({
+  //   locationfound(e) {
+  //     map.flyTo(curPosition, 16)
+  //   },
+  // })
 
-  useEffect(() => {
-    map.locate();    
-  }, [curPosition])
+  // useEffect(() => {
+  //   map.locate();    
+  // }, [curPosition])
 
-  return (
-    <Marker position={curPosition} icon={icon} >
-      <Popup>
-        <div>
+  // return (
+  //   <Marker position={curPosition} icon={icon} >
+  //     <Popup>
+  //       <div>
 
-        </div>
-      </Popup>
-    </Marker>
-  )
+  //       </div>
+  //     </Popup>
+  //   </Marker>
+  // )
 }
 
 export default LocationMarker;

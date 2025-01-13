@@ -29,48 +29,47 @@ import LocationMarkers from './LocationMarkers';
 
 const icon = L.icon({ iconUrl: "/images/markers/marker-icon.png" });
 
-const Map = ({ mapId = 'map' }) => {
-  const [eventList, setEventList] = useRecoilState(eventListStore);
-  const [searchEventList, setSearchEventList] = useRecoilState(searchListStore);
-  const [selectCategory, setSelectCategory] = useRecoilState(selectCategoryStore);
+const DynamicMap = ({ mapId = 'map' }) => {
+  // const [eventList, setEventList] = useRecoilState(eventListStore);
+  // const [searchEventList, setSearchEventList] = useRecoilState(searchListStore);
+  // const [selectCategory, setSelectCategory] = useRecoilState(selectCategoryStore);
   
-  /**
-   * 렌더링 하는 마커는 같은 행사장에 여러 행사가 있을 수 있기 때문에
-   * 행사장별로 묶어서 렌더링한다
-   * @returns 
-   */
-  const renderList = () => {
-    // 필터에 체크된 이벤트 리스트 혹은 전체 이벤트 리스트
-    let list = searchEventList.searchedList.length !== 0 ? searchEventList.searchedList : eventList
+  // /**
+  //  * 렌더링 하는 마커는 같은 행사장에 여러 행사가 있을 수 있기 때문에
+  //  * 행사장별로 묶어서 렌더링한다
+  //  * @returns 
+  //  */
+  // const renderList = () => {
+  //   // 필터에 체크된 이벤트 리스트 혹은 전체 이벤트 리스트
+  //   let list = searchEventList.searchedList.length !== 0 ? searchEventList.searchedList : eventList
 
-    // 거기에 추가로 이벤트 행사장별 리스트를 생성함
-    const eventHallFilter = [...new Set(list.map((data) => data.eventHall))];
+  //   // 거기에 추가로 이벤트 행사장별 리스트를 생성함
+  //   const eventHallFilter = [...new Set(list.map((data) => data.eventHall))];
 
 
-    // 행사장 별로 묶어서 리스트를 초기화
-    const eventHallList = eventHallFilter.map(hall => {
-      let temps: IEvent[] = [];
-      // 필터링된 이벤트 리스트를 이벤트 행사장별로 묶음
-      list.map(event => {
-        if (hall === event.eventHall)
-          temps.push(event)
-      });
-      return temps;
-    })
+  //   // 행사장 별로 묶어서 리스트를 초기화
+  //   const eventHallList = eventHallFilter.map(hall => {
+  //     let temps: IEvent[] = [];
+  //     // 필터링된 이벤트 리스트를 이벤트 행사장별로 묶음
+  //     list.map(event => {
+  //       if (hall === event.eventHall)
+  //         temps.push(event)
+  //     });
+  //     return temps;
+  //   })
 
-    switch (selectCategory) {
-      case MainCategory.MAIN:
-        return eventHallList.map((events, i) => {
-          return <LocationMarkers events={events} key={i}/>
-        });
-      case MainCategory.FAVORITE:
-        return eventHallList.map((events) => 
-           events.filter((filter) => filter.isFavorite === true)
-        ).map((events, i) => <LocationMarkers events={events} key={i}/>);
-      default:
-        return <></>;
-    }
-  };
+  //   switch (selectCategory) {
+  //     case MainCategory.MAIN:
+  //       return eventHallList.map((events, i) => {
+  //         return <LocationMarkers events={events} key={i}/>
+  //       });
+  //     case MainCategory.FAVORITE:
+  //       return eventHallList.map((events) => 
+  //          events.filter((filter) => filter.isFavorite === true)
+  //       ).map((events, i) => <LocationMarkers events={events} key={i}/>);
+  //     default:
+  //       return <></>;
+  //   }
 
   // const swiperRef = useRef<SwiperType>();
   // const renderMarkers = (events: IEvent[]) => {
@@ -147,5 +146,6 @@ const Map = ({ mapId = 'map' }) => {
     </div>
   );
 };
+  
 
-export default Map;
+export default DynamicMap;

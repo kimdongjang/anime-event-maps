@@ -13,7 +13,6 @@ import { BsFillMegaphoneFill } from 'react-icons/bs';
 import { BottomSheet } from '@/components/BottomSheet';
 import { useRouter } from 'next/router';
 import useMapHook from '@/hooks/useMapHook';
-import { NaverMap } from '@/types/map';
 import { mobileIsOpenStore } from '@/stores/MobileStore';
 import Head from 'next/head';
 import {
@@ -27,7 +26,7 @@ import { useSearchParams } from 'next/navigation';
 import axios from 'axios';
 import { useGetEventList } from '@/hooks/event/useEventApi';
 import { parseEvent } from '@/utils/parse';
-import Map from '@/components/Map';
+import KakaoMap from '@/components/Map';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -41,7 +40,6 @@ export default function Main(props: any) {
     const [monunted, setMounted] = useState(false);
     const router = useRouter();
     const params = useSearchParams();
-    const { openInfoWindow } = useMapHook();
 
     const testRef = useRef(false);
 
@@ -124,7 +122,7 @@ export default function Main(props: any) {
                     // morphMarker(findEvent);          
                 }, 1000);
                 setTimeout(() => {
-                    openInfoWindow(findEvent)
+                  
                 }, 2500);
 
                 // 모바일인 경우 편의성을 위해 창을 내려줌
@@ -163,11 +161,6 @@ export default function Main(props: any) {
         };
     }, [router]);
 
-    const { initializeMap } = useMapHook();
-    const onLoadMap = (map: NaverMap) => {
-        initializeMap(map);
-    };
-
     const renderBtn = () => {
         if (isDesktopShow) {
             return (
@@ -205,8 +198,8 @@ export default function Main(props: any) {
             >
                 <div className="w-full h-full">
                     {/* 맵 섹션 */}
-                    <Map onLoad={onLoadMap} />
-                    <div className="bg-gray-100 w-full h-full"></div>
+                    <KakaoMap />
+                    {/* <div className="bg-gray-100 w-full h-full"></div> */}
                 </div>
             </section>
 
