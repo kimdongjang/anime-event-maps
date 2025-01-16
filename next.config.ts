@@ -3,7 +3,7 @@ import type { NextConfig } from "next";
 import withTM from 'next-transpile-modules';
 
 const nextConfig:NextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   env:{
     POSTGRES_URL: process.env.POSTGRES_URL,
     BLOB_READ_WRITE_TOKEN: process.env.BLOB_READ_WRITE_TOKEN,

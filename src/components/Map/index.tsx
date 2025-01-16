@@ -32,7 +32,8 @@ const KakaoMap = ({
     initialCenter = INITIAL_CENTER,
     initialZoom = INITIAL_ZOOM,
 }: Props) => {
-    const [map, setMap] = useState<kakao.maps.Map | null>(null);
+    const apiKey: string | undefined = process.env.NEXT_PUBLIC_NCP_CLIENT_ID;
+    const [scriptLoad, setScriptLoad] = useState<boolean>(false);
 
     const [eventList, setEventList] = useRecoilState(eventListStore);
     const [searchedEventList, setSearchedEventList] = useRecoilState(searchedListStore);
@@ -40,21 +41,16 @@ const KakaoMap = ({
 
     console.log(eventList)
 
-    // useEffect(() => {
-    //     if (mapRef.current) {
-    //         // 카카오 맵 초기화
-    //         kakao.maps.load(() => {
-    //             const mapContainer = mapRef.current;
-    //             const mapOptions = {
-    //                 center: new kakao.maps.LatLng(37.5665, 126.800),
-    //                 level: 9,
-    //             };
-    //             const kakaoMap = new kakao.maps.Map(mapContainer, mapOptions);
-    //             setMap(kakaoMap);
-    //         });
-    //     }
-    // }, []);
+    useEffect(() => {
+        const script: HTMLScriptElement = document.createElement("script");
+        script.async = true;
+        script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${apiKey}&autoload=false`;
+        document.head.appendChild(script);
 
+        script.addEventListener("load", () => {
+            setScriptLoad(true);
+        })
+    }, [])
     /**
      * 렌더링 하는 마커는 같은 행사장에 여러 행사가 있을 수 있기 때문에
      * 행사장별로 묶어서 렌더링한다
@@ -97,27 +93,28 @@ const KakaoMap = ({
 
     return (
         <>
-            <Map
-                center={{ lat: 37.5665, lng: 126.800 }}
-                style={{ width: "100%", height: "800px" }}
-                level={9}
-            >
-                {
-                    eventList.map((event, i) => {
-                        return <MapMarker key={i} position={{ lat: event.lat, lng: event.lng }} >
+            {scriptLoad ?
+                <Map
+                    center={{ lat: 37.5665, lng: 126.700 }}
+                    style={{ width: "100%", height: "800px" }}
+                    level={9}
+                >
+                    {
+                        eventList.map((event, i) => {
+                            return <MapMarker key={i} position={{ lat: event.lat, lng: event.lng }} >
 
-                            <Swiper
-                                pagination={{
-                                    type: 'fraction',
-                                }}
-                                navigation={false}
-                                modules={[Pagination, Navigation]}
-                                className="mySwiper "
-                                onBeforeInit={(swiper) => {
-                                    swiperRef.current = swiper;
-                                }}
-                            >
-                                {/* {event.map((event, i) => {
+                                <Swiper
+                                    pagination={{
+                                        type: 'fraction',
+                                    }}
+                                    navigation={false}
+                                    modules={[Pagination, Navigation]}
+                                    className="mySwiper "
+                                    onBeforeInit={(swiper) => {
+                                        swiperRef.current = swiper;
+                                    }}
+                                >
+                                    {/* {event.map((event, i) => {
                         // 종료된 이벤트가 체크되어 있다면 전체 출력
                         if (searchEventList.isEnd) {
                             return (
@@ -148,15 +145,18 @@ const KakaoMap = ({
                             }
                         }
                     })} */}
-                            </Swiper>
-                            <div>
-                                <button onClick={() => swiperRef.current?.slidePrev()} className='fixed bottom-[5%] left-[35%] z-[1]'><AiFillCaretLeft className='text-blue-500' size={30} /></button>
-                                <button onClick={() => swiperRef.current?.slideNext()} className='fixed bottom-[5%] right-[35%] z-[1]'><AiFillCaretRight className='text-blue-500' size={30} /></button>
-                            </div>
-                        </MapMarker>
-                    })
-                }
-            </Map>
+                                </Swiper>
+                                <div>
+                                    <button onClick={() => swiperRef.current?.slidePrev()} className='fixed bottom-[5%] left-[35%] z-[1]'><AiFillCaretLeft className='text-blue-500' size={30} /></button>
+                                    <button onClick={() => swiperRef.current?.slideNext()} className='fixed bottom-[5%] right-[35%] z-[1]'><AiFillCaretRight className='text-blue-500' size={30} /></button>
+                                </div>
+                            </MapMarker>
+                        })
+                    }
+                </Map>
+                :
+                <div></div>
+            }
         </>
     );
 };
