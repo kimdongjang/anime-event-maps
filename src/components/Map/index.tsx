@@ -95,9 +95,13 @@ const KakaoMap = ({
         <>
             {scriptLoad ?
                 <Map
-                    center={{ lat: 37.5665, lng: 126.700 }}
+                    center={{ lat: 37.5665, lng: 127.100 }}
                     style={{ width: "100%", height: "800px" }}
                     level={9}
+                    onCreate={(map) => {
+                        console.log("생성됨")
+                        map.setCenter(new kakao.maps.LatLng(37.5665, 127.100))
+                    }}
                 >
                     {
                         eventList.map((event, i) => {
