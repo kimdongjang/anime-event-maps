@@ -19,7 +19,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         <meta name="keywords" content="anime,game,event,comic,maps" />
       </Head>
 
-      <header className="relative z-[3] top-0 w-full flex justify-center py-2 bg-gray-50 border ">
+      <header className="absolute z-[3] top-0 w-full flex justify-center py-2 bg-gray-50 border ">
         <div>
           <h2>코이맵(코믹 행사 맵스)</h2>
         </div>

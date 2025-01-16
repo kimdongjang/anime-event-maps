@@ -96,7 +96,7 @@ const KakaoMap = ({
             {scriptLoad ?
                 <Map
                     center={{ lat: 37.5665, lng: 127.100 }}
-                    style={{ width: "100%", height: "800px" }}
+                    style={{ width: "100%", height: "100%" }}
                     level={9}
                     onCreate={(map) => {
                         console.log("생성됨")
