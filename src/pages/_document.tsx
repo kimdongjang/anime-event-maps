@@ -7,6 +7,10 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
+        <Script            
+            src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_NCP_CLIENT_ID}&libraries=services,clusterer&autoload=false`}            
+            strategy="afterInteractive"
+        />
         <link
           href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap&family=Montserrat:wght@500;700&family=Poppins:wght@600;700&display=swap"
           rel="stylesheet"
@@ -15,10 +19,6 @@ export default function Document() {
       <body>
         <Main />
         <NextScript />        
-        <Script            
-            src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_NCP_CLIENT_ID}&libraries=services,clusterer&autoload=false`}            
-            strategy="afterInteractive"
-        />
         {/* Global Site Tag (gtag.js) - Google Analytics */}
         <Script
           strategy="afterInteractive"
