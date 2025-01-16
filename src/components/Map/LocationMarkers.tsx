@@ -1,8 +1,6 @@
 import useMapHook from "@/hooks/useMapHook";
 import { Coordinates } from "@/types/map";
 import { useEffect, useRef, useState } from "react"
-import { Marker, Popup, useMapEvents } from "react-leaflet"
-import L from 'leaflet';
 import { curPositionStore, searchedListStore } from "@/stores/MapDataStore";
 import { useRecoilState } from "recoil";
 import { IEvent } from "@/services/event/@types";
@@ -20,8 +18,6 @@ import { Image } from "antd";
 import { checkEndEvent } from "@/utils/date";
 import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 
-
-const icon = L.icon({ iconUrl: "/images/markers/marker-icon.png" });
 
 interface ILocationMarkers {
   events: IEvent[]

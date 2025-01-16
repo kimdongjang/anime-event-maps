@@ -1,8 +1,6 @@
-import { IMarker } from '@/constants/common';
 import { MainCategory } from '@/constants/enums';
 import { IEvent } from '@/services/event/@types';
 import {
-  markerStore,
   eventListStore,
   selectCategoryStore,
 } from '@/stores/MapDataStore';

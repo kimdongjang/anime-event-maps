@@ -6,7 +6,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useRecoilState, useSetRecoilState } from 'recoil';
-import { markerStore, eventListStore } from '@/stores/MapDataStore';
+import { eventListStore } from '@/stores/MapDataStore';
 import { Badge, FloatButton, Modal } from 'antd';
 import { MdSearch, MdMyLocation, MdRefresh } from 'react-icons/md';
 import { BsFillMegaphoneFill } from 'react-icons/bs';

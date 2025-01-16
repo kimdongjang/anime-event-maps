@@ -1,12 +1,8 @@
-import { IMarker } from '@/constants/common';
 import useMapHook, { INITIAL_CENTER, INITIAL_ZOOM } from '@/hooks/useMapHook';
 import { IEvent } from '@/services/event/@types';
 import { eventListStore, searchedListStore, selectCategoryStore } from '@/stores/MapDataStore';
 import { useEffect, useRef, useState } from 'react';
-import { MapContainer, Marker, Popup, TileLayer, useMapEvents } from 'react-leaflet';
 import { useRecoilState } from 'recoil';
-import 'leaflet/dist/leaflet.css';
-import L from 'leaflet';
 import { Image } from 'antd';
 import { FilterType, MainCategory } from '@/constants/enums';
 import { checkEndEvent } from '@/utils/date';
@@ -26,8 +22,6 @@ import { AiFillCaretRight } from "react-icons/ai";
 import { AiFillCaretLeft } from "react-icons/ai";
 import LocationMarker from './LocationMarker';
 import LocationMarkers from './LocationMarkers';
-
-const icon = L.icon({ iconUrl: "/images/markers/marker-icon.png" });
 
 const DynamicMap = ({ mapId = 'map' }) => {
   // const [eventList, setEventList] = useRecoilState(eventListStore);

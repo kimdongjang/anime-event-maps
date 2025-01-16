@@ -1,5 +1,5 @@
 import { INITIAL_CENTER, INITIAL_ZOOM } from '@/hooks/useMapHook';
-import { eventListStore, markerStore, searchedListStore, selectCategoryStore } from '@/stores/MapDataStore';
+import { eventListStore, searchedListStore, selectCategoryStore } from '@/stores/MapDataStore';
 import { Coordinates } from '@/types/map';
 import Script from 'next/script';
 import { useEffect, useRef, useState } from 'react';
@@ -112,8 +112,8 @@ const KakaoMap = ({
                 level={3}
             >
                 {
-                    eventList.map(event => {
-                         return <MapMarker position={{ lat: event.lat, lng: event.lng }} >
+                    eventList.map((event, i) => {
+                         return <MapMarker key={i} position={{ lat: event.lat, lng: event.lng }} >
 
                     <Swiper
                         pagination={{

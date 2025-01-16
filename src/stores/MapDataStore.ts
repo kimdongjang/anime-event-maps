@@ -1,4 +1,3 @@
-import { IMarker } from '@/constants/common';
 import { FilterType, MainCategory } from '@/constants/enums';
 import { INITIAL_CENTER } from '@/hooks/useMapHook';
 import { IEvent } from '@/services/event/@types';
@@ -9,10 +8,10 @@ import { atom } from 'recoil';
 /**
  * 현재 렌더링 되고 있는 마커 리스트
  */
-export const markerStore = atom<IMarker[]>({
-  key: `markerStore`,
-  default: [],
-});
+// export const markerStore = atom<IMarker[]>({
+//   key: `markerStore`,
+//   default: [],
+// });
 
 /**
  * 모든 행사장 리스트(시간 순서 별)

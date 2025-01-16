@@ -3,7 +3,6 @@ import useMapHook from '@/hooks/useMapHook';
 import { IEvent } from '@/services/event/@types';
 import {
   isSummaryStore,
-  markerStore,
   searchedListStore,
   eventListStore,
   selectCategoryStore,
@@ -15,7 +14,6 @@ import { useRouter } from 'next/router';
 import { useRecoilState } from 'recoil';
 import { EventDisplay } from '../Display';
 import { EventSummary } from '../Summary';
-import { useMapEvents } from 'react-leaflet';
 
 export const EventList = () => {
   const [isMobileShow, setIsMobileShow] = useRecoilState(mobileIsOpenStore);

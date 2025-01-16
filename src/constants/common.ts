@@ -13,13 +13,6 @@ export interface IImage {
   size?: number;
 }
 
-export interface IMarker {
-  checked: boolean;
-  event: IEvent;
-  marker: naver.maps.Marker;
-  infoWindow: naver.maps.InfoWindow;
-}
-
 export interface IFilter {
   type: FilterType;
 }

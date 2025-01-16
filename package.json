@@ -47,7 +47,7 @@
     "swr": "^2.2.5"
   },
   "devDependencies": {
-    "@types/gtag.js": "^0.0.17",
+    "@types/gtag.js": "^0.0.20",
     "@types/lodash": "^4.14.202",
     "@types/node": "18.16.3",
     "@types/react": "18.2.0",
