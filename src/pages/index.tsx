@@ -209,7 +209,7 @@ export default function Main(props: any) {
                 handleShow={handleShow}
                 isShow={isDesktopShow}
             />
-            <div className="fixed bottom-[3%] left-[3%] flex flex-col ">
+            <div className="fixed bottom-[3%] left-[3%] flex flex-col z-[5]">
                 <button
                     className="border border-gray-400 bg-white rounded-full p-2 my-2"
                     type="button"
@@ -230,7 +230,7 @@ export default function Main(props: any) {
             </div>
             {/* <BottomNavigation className={'md:hidden'} /> */}
             {/* 모바일용 플롯 버튼 */}
-            <div className="md:hidden fixed bottom-[3%] right-[3%] flex flex-col ">
+            <div className="md:hidden fixed bottom-[3%] right-[3%] flex flex-col z-[5]">
                 <button
                     onClick={() => router.reload()}
                     className="border border-gray-400 bg-white rounded-full p-2 my-2"
