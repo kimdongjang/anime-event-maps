@@ -1,9 +1,11 @@
 
 import { useGetEventListById } from '@/hooks/event/useEventApi';
 import { useGetImageById } from '@/hooks/image/useImageApi';
-import { insertEventList, updateEvent, updateEventImage } from '@/services/event';
+import { selectCategory } from '@/services/category';
+import { insertEventList, selectEventListById, updateEvent, updateEventImage } from '@/services/event';
 import { IEvent } from '@/services/event/@types';
-import { adminManageStore } from '@/stores/AdminManageStore';
+import { selectEventHallTemplate, selectEventTemplate } from '@/services/template';
+import { adminManageStore, templateStore } from '@/stores/AdminManageStore';
 import { formatYmd } from '@/utils/date';
 import { parseEvent } from '@/utils/parse';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
@@ -57,21 +59,52 @@ const EventForm = (props: IEventFormProps) => {
   const [imageUrl, setImageUrl] = useState<string>();
   const [blob, setBlob] = useState<PutBlobResult>();
   const [adminManage, setAdminManage] = useRecoilState(adminManageStore);
+  const [eventTemplates, setEventTemplates] = useRecoilState(templateStore);
+  const [eventHallTemplates, setEventHallTemplates] = useRecoilState(templateStore);
   const [title, setTitle] = useState('');
 
   // const image = useGetImageById(Number(id));
-  const getEventApi = useGetEventListById({ id: Number(id) });
+  // const getEventApi = useGetEventListById({ id: Number(id) });
   const [event, setEvent] = useState<IEvent>()
-  
 
 
+  /**
+   * 수정을 클릭하고 들어온 경우 아래 API 로직 수행
+   */
   useEffect(() => {
-    if (getEventApi.isLoading || getEventApi.error) return;
-    setEvent(parseEvent(getEventApi.response.content))
-    setImageUrl(parseEvent(getEventApi.response.content).titleImage)
-    form.setFieldsValue(parseEvent(getEventApi.response.content))
-    console.log(getEventApi)
-  }, [getEventApi.error, getEventApi.isLoading])
+    if(props.id){
+      const initEvent = async () => {
+        const event = await selectEventListById(id as string);
+        setEvent(parseEvent(event));
+        setImageUrl(parseEvent(event).titleImage)
+        form.setFieldsValue(parseEvent(event.content))
+
+      }
+    }
+  }, [props])
+
+  /**
+   * 템플릿, 카테고리 등 초기화
+   */
+  useEffect(() => {
+    // 이벤트 템플릿 초기화
+    const initTemplate = async  () => {
+      const events = await selectEventTemplate();
+      const eventHalls = await selectEventHallTemplate();
+      setEventTemplates({
+        eventTemplateList:events,
+        eventTemplateHallList:eventHalls
+      })
+    }
+      
+    initTemplate();
+
+    selectCategory().then((data) => {      
+      setAdminManage({
+        categoryList: data,
+      })
+    })
+  },[])
 
   useEffect(() => {
     switch (mode) {
@@ -203,6 +236,35 @@ const EventForm = (props: IEventFormProps) => {
       <div style={{ marginTop: 8 }}>Upload</div>
     </button>
   );
+  /**
+   * 
+   * @param changedValues 
+   * @param allValues 
+   */
+  const handleValuesChange = (changedValues: any, allValues: any) => {
+    console.log(changedValues)
+    // "이벤트 템플릿 선택"이 변경되었을 때 "이벤트 이름" 초기화
+    if (changedValues.eventTemplate) {
+      const finder = eventTemplates.eventTemplateList.find(data => data.id === changedValues.eventTemplate);
+
+      if(!!finder){
+        form.setFieldsValue({ eventName: finder.eventName });
+        form.setFieldsValue({ category: finder.category });
+        form.setFieldsValue({ site: finder.websiteUrl });
+      }
+    }
+    else if (changedValues.eventHallTemplate){
+      const finder = eventTemplates.eventTemplateHallList.find(data => data.id === changedValues.eventHallTemplate);
+
+      if(!!finder){
+        form.setFieldsValue({ eventHall: finder.hallName });
+        form.setFieldsValue({ doroAddress: finder.roadAddress });
+        form.setFieldsValue({ jibunAddress: finder.jibunAddress });
+        form.setFieldsValue({ lat: finder.latitude });
+        form.setFieldsValue({ lng: finder.longitude});
+      }
+    }
+  };
 
   return (
     <>
@@ -210,11 +272,26 @@ const EventForm = (props: IEventFormProps) => {
         {title}
       </div>
       <Form
+        onValuesChange={handleValuesChange}
         labelCol={{ span: 3 }}
         layout="horizontal"
         form={form}
         onFinish={onFinish}
       >
+        <Form.Item label="이벤트 템플릿 선택" name="eventTemplate">
+          <Select>
+            {eventTemplates.eventTemplateList.map((data, i) => {
+              return <Select.Option key={i} value={data.id}>{data.eventName}</Select.Option>
+            })}
+          </Select>
+        </Form.Item>
+        <Form.Item label="행사장 템플릿 선택" name="eventHallTemplate">
+          <Select>
+            {eventTemplates.eventTemplateHallList.map((data, i) => {
+              return <Select.Option key={i} value={data.id}>{data.hallName}</Select.Option>
+            })}
+          </Select>
+        </Form.Item>
         <Form.Item label="타이틀 이름" name="title">
           <Input />
         </Form.Item>
@@ -233,7 +310,7 @@ const EventForm = (props: IEventFormProps) => {
         </Form.Item>
         <Form.Item label="날짜" name="date">
           <RangePicker />
-        </Form.Item>        
+        </Form.Item>
         <Form.Item label="행사장" name="eventHall">
           <Input />
         </Form.Item>

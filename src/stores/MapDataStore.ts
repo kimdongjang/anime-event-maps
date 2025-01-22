@@ -1,17 +1,9 @@
 import { FilterType, MainCategory } from '@/constants/enums';
 import { INITIAL_CENTER } from '@/hooks/useMapHook';
-import { IEvent } from '@/services/event/@types';
+import { IEvent, SearchedList } from '@/services/event/@types';
 import { Coordinates } from '@/types/map';
 import { getLocalstorageEvent } from '@/utils/localStorages';
 import { atom } from 'recoil';
-
-/**
- * 현재 렌더링 되고 있는 마커 리스트
- */
-// export const markerStore = atom<IMarker[]>({
-//   key: `markerStore`,
-//   default: [],
-// });
 
 /**
  * 모든 행사장 리스트(시간 순서 별)
@@ -21,14 +13,9 @@ export const eventListStore = atom<IEvent[]>({
   default: [],
 });
 
-export interface SearchedList {
-  searchedList: IEvent[];
-  addedFilter: string[],
-  type: FilterType;
-  isEnd: boolean;
-}
 /**
- * 선택한 필터(이벤트별, 행사별, 행사장별)
+ * 선택한 필터로 검색된 이벤트 리스트(이벤트별, 행사별, 행사장별)
+ * 모든 렌더링 되는 이벤트 리스트는 이게 기준임
  */
 export const searchedListStore = atom<SearchedList>({
   key: `searchListStore`,
@@ -41,9 +28,9 @@ export const searchedListStore = atom<SearchedList>({
 });
 
 /**
- * 선택한 카테고리(메인, 즐겨찾기, 캘린더)
+ * 선택한 서비스(메인, 즐겨찾기, 캘린더)
  */
-export const selectCategoryStore = atom<MainCategory>({
+export const selectServiceStore = atom<MainCategory>({
   key: `selectCategoryStore`,
   default: MainCategory.MAIN,
 });
@@ -57,7 +44,7 @@ export const isSummaryStore = atom<boolean>({
 });
 
 /**
- * 현재 위치로 옮기기
+ * 현재 위치
  */
 export const curPositionStore = atom<Coordinates>({
   key: `curPositionStore`,

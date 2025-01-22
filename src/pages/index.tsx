@@ -36,6 +36,7 @@ export default function Main(props: any) {
     const [eventList, setEventList] = useRecoilState(eventListStore);
     const [isMobileShow, setIsMobileShow] = useRecoilState(mobileIsOpenStore);
     const [isDesktopShow, setIsDesktopShow] = useState(true);
+    
     const [modalOpen, setModalOpen] = useState(true);
     const [monunted, setMounted] = useState(false);
     const router = useRouter();
@@ -48,7 +49,7 @@ export default function Main(props: any) {
         const favoriteList: IEvent[] = getLocalstorageEvent();
 
         // datas: static한 데이터
-        // 모든 행사장 리스트 초기화 진행(시간 순서 별로)
+        // 모든 행사장 리스트 필터링 진행(시간 순서 별로)
         setEventList(
             getEventApi.response.content.map((event: IEvent) => {
                 let find = favoriteList.find((str) => str.id === event.id);
@@ -67,6 +68,7 @@ export default function Main(props: any) {
         );
 
     }, [getEventApi.error, getEventApi.isLoading])
+
     /** 
      * 메인 페이지 초기 로딩시 초기화 진행
      */
@@ -106,30 +108,6 @@ export default function Main(props: any) {
             }
         }
     }, []);
-
-    /**
-     * 파라미터 쿼리에 따라 해당 아이디 이벤트로 지도를 이동, 마커 팝업을 띄움
-     */
-    useEffect(() => {
-        const paramId = params.get('id');
-        if (!!paramId && !!eventList) {
-            const findEvent = eventList.find(
-                (event: IEvent) => event.id.toString() == paramId
-            );
-            if (!!findEvent) {
-                // 화면이 깨지는 이슈가 있어서 2초후에 적용
-                setTimeout(() => {
-                    // morphMarker(findEvent);          
-                }, 1000);
-                setTimeout(() => {
-                  
-                }, 2500);
-
-                // 모바일인 경우 편의성을 위해 창을 내려줌
-                setIsMobileShow(false);
-            }
-        }
-    }, [params, eventList]);
 
     const renderModal = () => {
         if (monunted) {

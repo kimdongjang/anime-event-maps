@@ -1,5 +1,7 @@
 import { deleteCategory, insertCategory } from '@/services/category';
 import { ICategory, IEvent } from '@/services/event/@types';
+import { insertEventTemplate } from '@/services/template';
+import { IEventTemplate } from '@/services/template/@types';
 import { adminManageStore } from '@/stores/AdminManageStore';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import { put, PutBlobResult } from '@vercel/blob';
@@ -29,10 +31,6 @@ import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import useSWR from 'swr';
 
-interface IAddCategoryProps {
-  mode: string;
-}
-type TypeList = ICategory[];
 
 const normFile = (e: any) => {
   if (Array.isArray(e)) {
@@ -41,7 +39,7 @@ const normFile = (e: any) => {
   return e?.fileList;
 };
 
-const AddCategory = ({ mode }: IAddCategoryProps) => {
+const AddEventTemplate = () => {
   const [form] = Form.useForm();
   const [title, setTitle] = useState<string>('');
   const [adminManage, setAdminManage] = useRecoilState(adminManageStore);
@@ -50,14 +48,31 @@ const AddCategory = ({ mode }: IAddCategoryProps) => {
   const [imageUrl, setImageUrl] = useState<string>();
   const [blob, setBlob] = useState<PutBlobResult>();
 
-  interface IAddFormProps {
-    name: string;
-  }
 
-  const onFinish = async (values: IAddFormProps) => {
-    const result = await insertCategory({
-      name: values.name,
-    })
+  const onFinish = async (values: IEventTemplate) => {
+    if (!!blob) {
+      const result = await insertEventTemplate({
+        eventName: values.eventName,
+        category: values.category,
+        websiteUrl: values.websiteUrl,
+        imageUrl: blob.url,
+      })
+      if(result){
+        alert("등록이 완료되었습니다.")
+      }
+    } else {
+      if (confirm("이미지 없이 등록하시겠습니까?")) {
+        const result = await insertEventTemplate({
+          eventName: values.eventName,
+          category: values.category,
+          websiteUrl: values.websiteUrl,
+          imageUrl: "",
+        })
+        if(result){
+          alert("등록이 완료되었습니다.")
+        }
+      }
+    }
   };
 
 
@@ -100,6 +115,7 @@ const AddCategory = ({ mode }: IAddCategoryProps) => {
     <>
       <div className='font-bold m-3'>자주 쓰는 행사 템플릿</div>
       <Form
+        labelCol={{ span: 3 }}
         className='m-3'
         layout="horizontal"
         form={form}
@@ -115,7 +131,7 @@ const AddCategory = ({ mode }: IAddCategoryProps) => {
             })}
           </Select>
         </Form.Item>
-        <Form.Item label="사이트 주소" name="site">
+        <Form.Item label="사이트 주소" name="websiteUrl">
           <Input />
         </Form.Item>
         <Form.Item label="대표 이미지" valuePropName="fileList" getValueFromEvent={normFile}>
@@ -126,9 +142,19 @@ const AddCategory = ({ mode }: IAddCategoryProps) => {
             {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
           </Upload>
         </Form.Item>
+        <Form.Item label="등록" shouldUpdate>
+          {() => (
+            <Button
+              type="primary"
+              htmlType="submit"
+            >
+              {"등록"}
+            </Button>
+          )}
+        </Form.Item>
       </Form>
     </>
   )
 }
 
-export default AddCategory;
+export default AddEventTemplate;

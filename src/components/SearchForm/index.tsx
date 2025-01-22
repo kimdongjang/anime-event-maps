@@ -4,7 +4,7 @@ import { sortMenuItems } from '@/constants/menuItems';
 import {
   searchedListStore,
   eventListStore,
-  selectCategoryStore,
+  selectServiceStore,
   isSummaryStore,
 } from '@/stores/MapDataStore';
 import { Checkbox, Dropdown, Select } from 'antd';
@@ -21,7 +21,7 @@ import { IEvent } from '@/services/event/@types';
 export const SearchForm = () => {
   const [eventList, setEventList] = useRecoilState(eventListStore);
   const [selectCategory, setSelectCategory] =
-    useRecoilState(selectCategoryStore);
+    useRecoilState(selectServiceStore);
   const [searchEventList, setSearchEventList] = useRecoilState(searchedListStore);
   const [isSummary, setIsSummary] = useRecoilState(isSummaryStore);
   const [openFilter, setOpenFilter] = useState(true);

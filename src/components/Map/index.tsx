@@ -1,18 +1,16 @@
 import { INITIAL_CENTER, INITIAL_ZOOM } from '@/hooks/useMapHook';
-import { eventListStore, searchedListStore, selectCategoryStore } from '@/stores/MapDataStore';
+import { curPositionStore, eventListStore, searchedListStore, selectServiceStore } from '@/stores/MapDataStore';
 import { Coordinates } from '@/types/map';
-import Script from 'next/script';
 import { useEffect, useRef, useState } from 'react';
 import { useRecoilState } from 'recoil';
-import dynamic from 'next/dynamic';
-import { Map, MapComponent, MapMarker } from 'react-kakao-maps-sdk';
-import { IEvent } from '@/services/event/@types';
+import { Map, MapMarker } from 'react-kakao-maps-sdk';
+import { IEvent, Marker } from '@/services/event/@types';
 import { MainCategory } from '@/constants/enums';
-import LocationMarkers from './LocationMarkers';
-import { Swiper } from 'swiper/react';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import { Swiper as SwiperType } from 'swiper';
 import { Navigation, Pagination } from 'swiper/modules';
 import { AiFillCaretLeft, AiFillCaretRight } from 'react-icons/ai';
+import { Image } from 'antd';
 
 
 declare global {
@@ -37,9 +35,9 @@ const KakaoMap = ({
 
     const [eventList, setEventList] = useRecoilState(eventListStore);
     const [searchedEventList, setSearchedEventList] = useRecoilState(searchedListStore);
-    const [selectCategory, setSelectCategory] = useRecoilState(selectCategoryStore);
-
-    console.log(eventList)
+    const [position, setPosistion] = useRecoilState(curPositionStore);
+    const [selectCategory, setSelectCategory] = useRecoilState(selectServiceStore);
+    const [renderMarkerList, setRenderMarkerList] = useState<Marker[]>();
 
     useEffect(() => {
         const script: HTMLScriptElement = document.createElement("script");
@@ -51,6 +49,7 @@ const KakaoMap = ({
             setScriptLoad(true);
         })
     }, [])
+
     /**
      * 렌더링 하는 마커는 같은 행사장에 여러 행사가 있을 수 있기 때문에
      * 행사장별로 묶어서 렌더링한다
@@ -60,65 +59,115 @@ const KakaoMap = ({
         // 필터에 체크된 이벤트 리스트 혹은 전체 이벤트 리스트
         let list = searchedEventList.searchedList.length !== 0 ? searchedEventList.searchedList : eventList
 
+        console.log(list)
         // 거기에 추가로 이벤트 행사장별 리스트를 생성함
-        const eventHallFilter = [...new Set(list.map((data) => data.eventHall))];
+        const eventHallFilter:Marker[] = list
+            .filter((data) => data.eventHall !== null)
+            .map((data) => {
+                return {
+                    eventHall: data.eventHall,
+                    lat: data.lat,
+                    lng: data.lng
+                }
+            }).reduce((acc:any, current) => {
+                // 중복 여부 확인
+                const isDuplicate = acc.some((event: { eventHall: string; })  => event.eventHall === current.eventHall);
+                if (!isDuplicate) {
+                    acc.push(current);
+                }
+                return acc;
+            },[])
 
-        // 행사장 별로 묶어서 리스트를 초기화
-        const eventHallList = eventHallFilter.map(hall => {
-            let temps: IEvent[] = [];
+
+        
+        console.log("eventHallFilter", eventHallFilter)
+
+        // 행사장 별로 묶어서 마커 리스트를 초기화
+        const eventHallList:Marker[] = eventHallFilter.map(hall => {
             // 필터링된 이벤트 리스트를 이벤트 행사장별로 묶음
-            list.map(event => {
-                if (hall === event.eventHall)
-                    temps.push(event)
-            });
-            return temps;
-        })
+            const eventList = list.filter((event) => hall.eventHall === event.eventHall);
+            
+            if (eventList.length > 0) {
+                return {
+                eventHall: hall.eventHall,
+                eventList: eventList,
+                lat: hall.lat,
+                lng: hall.lng,
+                } as Marker;
+            } else {
+                return null; // undefined 대신 null로 처리
+            }
+        }).filter((marker) => marker !== null) as Marker[]  // null 값 필터링
 
-        switch (selectCategory) {
-            case MainCategory.MAIN:
-                return eventHallList.map((events, i) => {
-                    //   return <LocationMarkers events={events} key={i}/>
-                });
-            //   case MainCategory.FAVORITE:
-            //     return eventHallList.map((events) => 
-            //        events.filter((filter) => filter.isFavorite === true)
-            //     ).map((events, i) => <LocationMarkers events={events} key={i}/>);
-            default:
-                return <></>;
-        }
+        console.log("eventHallList", eventHallList)
+        setRenderMarkerList(eventHallList)
     }
+    useEffect(() => {
+        renderList()
+    }, [eventList])
 
-    const swiperRef = useRef<SwiperType>();
+    const swiperRefs = useRef<SwiperType[]>([]);
 
 
     return (
         <>
             {scriptLoad ?
                 <Map
-                    center={{ lat: 37.5665, lng: 127.100 }}
+                    center={{ lat: position.lat, lng: position.lng}}
+                    isPanto={true}
                     style={{ width: "100%", height: "100%" }}
                     level={9}
                     onCreate={(map) => {
-                        console.log("생성됨")
-                        map.setCenter(new kakao.maps.LatLng(37.5665, 127.100))
+                        // map.setCenter(new kakao.maps.LatLng(37.5665, 127.100))
                     }}
                 >
                     {
-                        eventList.map((event, i) => {
-                            return <MapMarker key={i} position={{ lat: event.lat, lng: event.lng }} >
+                        /**
+                         * 1. 이벤트 홀(행사장 위치)에 대한 마커 리스트를 렌더링
+                         */
+                        renderMarkerList && renderMarkerList.map((marker, i) => {
+                            return (
+                                <MapMarker key={i} position={{ lat: marker.lat, lng: marker.lng }}>
+                                    <Swiper
+                                        pagination={{
+                                            type: 'fraction',
+                                        }}
+                                        slidesPerView={1} // 한 번에 하나의 슬라이드만 표시
+                                        navigation={false} //  내장 내비게이션 비활성화
+                                        modules={[Pagination, Navigation]}
+                                        className="mySwiper w-[300px]"
+                                        onBeforeInit={(swiper) => {
+                                            swiperRefs.current[i] = swiper; 
+                                        }}>
+                                        {/* <SwiperSlide>test1</SwiperSlide>
+                                        <SwiperSlide>test2</SwiperSlide>
+                                        <SwiperSlide>test3</SwiperSlide>
+                                        <SwiperSlide>test4</SwiperSlide>
+                                        <SwiperSlide>test5</SwiperSlide> */}
+                                            {
+                                                marker.eventList.map(((event,j) => (
+                                                    <SwiperSlide className='p-3' key={j}>
+                                                        <Image src={event.images?.path} />
+                                                        <h3>{event.title}</h3>
+                                                        <div className='m-0'>{event.address}</div>
+                                                        <div className='flex items-center'>
+                                                            <label className="bg-yellow-100 border-gray-100 rounded font-medium px-1">기간</label>
+                                                            <span>{event.startDate}~{event.endDate}</span>
+                                                        </div>
+                                                    </SwiperSlide>
+                                                )))}
+                                        <div className='flex justify-center'>
+                                            <button onClick={() => swiperRefs.current[i]?.slidePrev()} className='z-[1]'><AiFillCaretLeft className='text-blue-500' size={30} /></button>
+                                            <button onClick={() => swiperRefs.current[i]?.slideNext()} className='z-[1]'><AiFillCaretRight className='text-blue-500' size={30} /></button>
+                                        </div>
+                                    </Swiper>
+                                </MapMarker >
+                            )
+                        })
+                    }
 
-                                <Swiper
-                                    pagination={{
-                                        type: 'fraction',
-                                    }}
-                                    navigation={false}
-                                    modules={[Pagination, Navigation]}
-                                    className="mySwiper "
-                                    onBeforeInit={(swiper) => {
-                                        swiperRef.current = swiper;
-                                    }}
-                                >
-                                    {/* {event.map((event, i) => {
+                        
+                    {/* {event.map((event, i) => {
                         // 종료된 이벤트가 체크되어 있다면 전체 출력
                         if (searchEventList.isEnd) {
                             return (
@@ -149,15 +198,8 @@ const KakaoMap = ({
                             }
                         }
                     })} */}
-                                </Swiper>
-                                <div>
-                                    <button onClick={() => swiperRef.current?.slidePrev()} className='fixed bottom-[5%] left-[35%] z-[1]'><AiFillCaretLeft className='text-blue-500' size={30} /></button>
-                                    <button onClick={() => swiperRef.current?.slideNext()} className='fixed bottom-[5%] right-[35%] z-[1]'><AiFillCaretRight className='text-blue-500' size={30} /></button>
-                                </div>
-                            </MapMarker>
-                        })
-                    }
-                </Map>
+
+                </Map >
                 :
                 <div></div>
             }

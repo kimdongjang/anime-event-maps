@@ -4,7 +4,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { id } = req.query;
   try {
-    const data = await selectEventListById(Number(id));
+    const data = await selectEventListById(id as string);
     
     res.status(200).json(data);
   } catch (error) {

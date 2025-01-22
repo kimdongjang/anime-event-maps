@@ -1,8 +1,14 @@
 import { sql } from "@vercel/postgres";
+import { ICategory } from "../event/@types";
 
 export async function selectCategory() {
     const { rows } = await sql`SELECT * from category_code`;
-    return rows;
+
+    const retval: ICategory[] = rows.map(row => ({
+        id: row.id,
+        name: row.name,
+    }));
+    return retval;
 }
 
 interface IInsertCategory {

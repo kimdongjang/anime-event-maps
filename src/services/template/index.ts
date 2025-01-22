@@ -1,13 +1,30 @@
-import { sql } from "@vercel/postgres";
+import { QueryResultRow, sql } from "@vercel/postgres";
+import { IEventHallTemplate, IEventTemplate } from "./@types";
 
 export async function selectEventTemplate() {
     const { rows } = await sql`SELECT * FROM event_template`;
-    return rows;
+     // rows를 IEventTemplate[] 타입으로 변환
+  const templates: IEventTemplate[] = rows.map(row => ({
+    id: row.id,
+    eventName: row.event_name,
+    category: row.category,
+    websiteUrl: row.website_url,
+    imageUrl: row.image_url,
+  }));
+  return templates;
 }
 
 export async function selectEventHallTemplate() {
     const { rows } = await sql`SELECT * FROM eventhall_template`;
-    return rows;
+    const templates: IEventHallTemplate[] = rows.map(row => ({
+        id: row.id,
+        hallName: row.hall_name,
+        roadAddress: row.road_address,
+        jibunAddress: row.jibun_address,
+        latitude: row.latitude,
+        longitude: row.longitude,
+      }));
+      return templates;
 }
 
 // event_template 테이블에 데이터 삽입

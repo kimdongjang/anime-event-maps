@@ -2,7 +2,7 @@ import { MainCategory } from '@/constants/enums';
 import { IEvent } from '@/services/event/@types';
 import {
   eventListStore,
-  selectCategoryStore,
+  selectServiceStore,
 } from '@/stores/MapDataStore';
 import {
   getLocalstorageEvent,

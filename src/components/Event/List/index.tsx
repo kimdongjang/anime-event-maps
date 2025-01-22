@@ -5,7 +5,7 @@ import {
   isSummaryStore,
   searchedListStore,
   eventListStore,
-  selectCategoryStore,
+  selectServiceStore,
   curPositionStore,
 } from '@/stores/MapDataStore';
 import { mobileIsOpenStore } from '@/stores/MobileStore';
@@ -20,7 +20,7 @@ export const EventList = () => {
   const [eventList, setEventList] = useRecoilState(eventListStore);
   const [searchedEventList, setSearchedEventList] = useRecoilState(searchedListStore);
   const [selectCategory, setSelectCategory] =
-    useRecoilState(selectCategoryStore);
+    useRecoilState(selectServiceStore);
   // 이벤트 리스트 요약 여부
   const [isSummary, setIsSummary] = useRecoilState(isSummaryStore);
   const [curPosition, setCurPosition] = useRecoilState(curPositionStore);  
@@ -28,8 +28,8 @@ export const EventList = () => {
   
 
   const handleEventClick = (event: IEvent) => {
-    // morphMarker(event);
     setCurPosition({lat: event.lat, lng: event.lng});
+    setIsMobileShow(false);
     
     router.push(`?id=${event.id.toString()}`);
   };
@@ -81,7 +81,7 @@ export const EventList = () => {
             }
             else{
               return (
-                <EventDisplay event={event} key={i} onClick={handleEventClick} />
+                <EventDisplay event={event} key={i} movePosition={handleEventClick} />
               );
             }
           } else {
@@ -94,7 +94,7 @@ export const EventList = () => {
               }
               else{
                 return (
-                  <EventDisplay event={event} key={i} onClick={handleEventClick} />
+                  <EventDisplay event={event} key={i} movePosition={handleEventClick} />
                 );
               }
             }
@@ -111,7 +111,7 @@ export const EventList = () => {
             }
             else{
               return (
-                <EventDisplay event={event} key={i} onClick={handleEventClick} />
+                <EventDisplay event={event} key={i} movePosition={handleEventClick} />
               );
             }
           });

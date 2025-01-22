@@ -9,6 +9,9 @@ export enum ISort {
   DATE_DOWN = 2,
 }
 
+/**
+ * 행사별, 행사장별, 지역별 필터
+ */
 export enum FilterType {
   /** 행사별 */
   EVENT = 1,

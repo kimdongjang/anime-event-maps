@@ -7,8 +7,8 @@ import { eventListStore, curPositionStore } from '@/stores/MapDataStore';
 import { Image } from 'antd';
 
 export const INITIAL_CENTER: Coordinates = {
-  lat: 37.2663759,
-  lng: 126.99711,
+  lat: 37.5063759,
+  lng: 127.0911,
 };
 export const INITIAL_ZOOM = 11;
 

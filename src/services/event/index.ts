@@ -7,7 +7,7 @@ export async function selectEventList() {
   return rows;
 }
 
-export async function selectEventListById(id: number) {
+export async function selectEventListById(id: string) {
   const { rows, fields  } = await sql`SELECT * from event_list where id = ${id}`;
   
   return rows[0];

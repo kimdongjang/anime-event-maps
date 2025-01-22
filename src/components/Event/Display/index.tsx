@@ -20,12 +20,12 @@ import { ITableColumn } from '@/constants/common';
 interface IEventDisplayProps {
   event: IEvent;
   className?: string;
-  onClick: (event: IEvent) => void;
+  movePosition: (event: IEvent) => void;
 }
 
 export const EventDisplay = (props: IEventDisplayProps) => {
   const router = useRouter();
-  const { event, className, onClick } = props;
+  const { event, className, movePosition } = props;
   const { setFavoriteEvent } = useSearchData();
 
   const handleCopyClipBoard = async (text: string) => {
@@ -295,7 +295,7 @@ export const EventDisplay = (props: IEventDisplayProps) => {
            bg-sky-400 text-white rounded"
           type="button"
           onClick={() => {
-            onClick(event);
+            movePosition(event);
           }}
         >
           지도에서보기
