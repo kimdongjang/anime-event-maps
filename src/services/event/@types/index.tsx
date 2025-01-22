@@ -36,6 +36,7 @@ export interface IPrice {
 }
 
 export interface Marker {
+  id:number;
   eventHall: string;
   eventList: IEvent[];
   lat: number;

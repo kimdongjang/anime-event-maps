@@ -1,5 +1,5 @@
+import { INITIAL_CENTER } from '@/constants/common';
 import { FilterType, MainCategory } from '@/constants/enums';
-import { INITIAL_CENTER } from '@/hooks/useMapHook';
 import { IEvent, SearchedList } from '@/services/event/@types';
 import { Coordinates } from '@/types/map';
 import { getLocalstorageEvent } from '@/utils/localStorages';
@@ -49,4 +49,12 @@ export const isSummaryStore = atom<boolean>({
 export const curPositionStore = atom<Coordinates>({
   key: `curPositionStore`,
   default: INITIAL_CENTER,
+});
+
+/**
+ * 현재 선택된 이벤트(null 가능)
+ */
+export const selectedEventStore = atom<IEvent|null>({
+  key: `selectedEventStore`,
+  default: null,
 });

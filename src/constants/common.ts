@@ -42,3 +42,8 @@ export const searchFilterList: ISelectOption[] = [
     value: FilterType.ADDRESS,
   },
 ];
+
+export const INITIAL_CENTER: Coordinates = {
+  lat: 37.5063759,
+  lng: 127.0911,
+};

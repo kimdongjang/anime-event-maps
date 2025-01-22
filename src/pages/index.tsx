@@ -6,7 +6,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useRecoilState, useSetRecoilState } from 'recoil';
-import { eventListStore } from '@/stores/MapDataStore';
+import { curPositionStore, eventListStore, selectedEventStore } from '@/stores/MapDataStore';
 import { Badge, FloatButton, Modal } from 'antd';
 import { MdSearch, MdMyLocation, MdRefresh } from 'react-icons/md';
 import { BsFillMegaphoneFill } from 'react-icons/bs';
@@ -24,25 +24,48 @@ import { IEvent } from '@/services/event/@types';
 import { ModalNotice } from '@/components/ModalNotice';
 import { useSearchParams } from 'next/navigation';
 import axios from 'axios';
-import { useGetEventList } from '@/hooks/event/useEventApi';
+import { useGetEventList, useGetEventListById } from '@/hooks/event/useEventApi';
 import { parseEvent } from '@/utils/parse';
 import KakaoMap from '@/components/Map';
+import { GET_EVENT_LIST_BYID } from '@/constants/endpoint';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export default function Main(props: any) {
+    const router = useRouter();
+    const { id } = router.query; // URL의 ?id 파라미터 값
+
     const siteTitle = '코이맵(코믹 행사 맵스)';
     const getEventApi = useGetEventList();
     const [eventList, setEventList] = useRecoilState(eventListStore);
     const [isMobileShow, setIsMobileShow] = useRecoilState(mobileIsOpenStore);
     const [isDesktopShow, setIsDesktopShow] = useState(true);
-    
+
     const [modalOpen, setModalOpen] = useState(true);
     const [monunted, setMounted] = useState(false);
-    const router = useRouter();
-    const params = useSearchParams();
 
-    const testRef = useRef(false);
+
+    const [curPosition, setCurPosition] = useRecoilState(curPositionStore); 
+    const [selectedEvent, setSelectedEvent] = useRecoilState(selectedEventStore);  
+    /**
+     * 지도에서 보기를 클릭하거나, 해당 ID로 검색이 되었을때
+     * 해당 마커를 활성화함
+     */
+    useEffect(() => {
+        if (id) {
+            const getEvent = async () => {
+                const event = await axios.get(`${GET_EVENT_LIST_BYID}?id=${id}`);
+
+                setCurPosition({...curPosition, lat: event.data.lat, lng: event.data.lng});
+                setIsMobileShow(false);
+                setSelectedEvent(event.data);
+            }
+            getEvent();
+            console.log(`Query parameter "id" has changed: ${id}`);
+        // id 값에 대한 추가 작업 수행
+        }
+    }, [id]); // id가 변경될 때 실행
+
 
     useEffect(() => {
         if (getEventApi.isLoading || getEventApi.error) return;
@@ -114,30 +137,6 @@ export default function Main(props: any) {
             return <ModalNotice modalOpen={modalOpen} setModalOpen={setModalOpen} />;
         }
     };
-    useEffect(() => {
-        testRef.current = isMobileShow;
-    }, [isMobileShow])
-
-
-    useEffect(() => {
-        const handleBeforeunload = (event: BeforeUnloadEvent) => {
-            // 데스크탑인경우: 아무 처리도 하지 않음
-            if (!testRef.current) {
-                return;
-            }
-            else {
-                // 모바일인경우: 검색창 내리기
-                setIsMobileShow(false);
-                event.preventDefault();
-            }
-        };
-
-        window.addEventListener('beforeunload', handleBeforeunload);
-
-        return () => {
-            window.removeEventListener('beforeunload', handleBeforeunload);
-        };
-    }, [router]);
 
     const renderBtn = () => {
         if (isDesktopShow) {

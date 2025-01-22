@@ -3,13 +3,9 @@ import type { Coordinates } from '../types/map';
 import useSWR, { mutate } from 'swr';
 import { IEvent } from '@/services/event/@types';
 import { useRecoilState } from 'recoil';
-import { eventListStore, curPositionStore } from '@/stores/MapDataStore';
+import { eventListStore, selectedEventStore } from '@/stores/MapDataStore';
 import { Image } from 'antd';
 
-export const INITIAL_CENTER: Coordinates = {
-  lat: 37.5063759,
-  lng: 127.0911,
-};
 export const INITIAL_ZOOM = 11;
 
 const useMapHook = () => {

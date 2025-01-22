@@ -6,7 +6,7 @@ import {
   searchedListStore,
   eventListStore,
   selectServiceStore,
-  curPositionStore,
+  selectedEventStore,
 } from '@/stores/MapDataStore';
 import { mobileIsOpenStore } from '@/stores/MobileStore';
 import { checkEndEvent } from '@/utils/date';
@@ -16,20 +16,16 @@ import { EventDisplay } from '../Display';
 import { EventSummary } from '../Summary';
 
 export const EventList = () => {
-  const [isMobileShow, setIsMobileShow] = useRecoilState(mobileIsOpenStore);
   const [eventList, setEventList] = useRecoilState(eventListStore);
   const [searchedEventList, setSearchedEventList] = useRecoilState(searchedListStore);
   const [selectCategory, setSelectCategory] =
     useRecoilState(selectServiceStore);
   // 이벤트 리스트 요약 여부
   const [isSummary, setIsSummary] = useRecoilState(isSummaryStore);
-  const [curPosition, setCurPosition] = useRecoilState(curPositionStore);  
   const router = useRouter();
   
 
   const handleEventClick = (event: IEvent) => {
-    setCurPosition({lat: event.lat, lng: event.lng});
-    setIsMobileShow(false);
     
     router.push(`?id=${event.id.toString()}`);
   };
