@@ -1,6 +1,4 @@
 
-import { useGetEventListById } from '@/hooks/event/useEventApi';
-import { useGetImageById } from '@/hooks/image/useImageApi';
 import { selectCategory } from '@/services/category';
 import { insertEventList, selectEventListById, updateEvent, updateEventImage } from '@/services/event';
 import { IEvent } from '@/services/event/@types';
@@ -12,29 +10,19 @@ import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import { PutBlobResult, put } from '@vercel/blob';
 import {
   Button,
-  Cascader,
-  Checkbox,
-  ColorPicker,
   DatePicker,
   Form,
   GetProp,
   Input,
-  InputNumber,
-  Radio,
   Select,
-  Slider,
-  Switch,
-  TreeSelect,
   Upload,
-  UploadFile,
   UploadProps,
 } from 'antd';
-import dayjs from 'dayjs';
 import { useRouter } from 'next/router';
+import dayjs from 'dayjs'; // dayjs 사용
 
 import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
-import useSWR from 'swr';
 
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
@@ -72,17 +60,35 @@ const EventForm = (props: IEventFormProps) => {
    * 수정을 클릭하고 들어온 경우 아래 API 로직 수행
    */
   useEffect(() => {
-    if(props.id){
+    if(id){
       const initEvent = async () => {
-        const event = await selectEventListById(id as string);
-        setEvent(parseEvent(event));
-        setImageUrl(parseEvent(event).titleImage)
-        form.setFieldsValue(parseEvent(event.content))
-
-      }
+        try {
+          const event = await selectEventListById(id as string);
+          if (event) {
+            const parsedEvent = parseEvent(event);
+            setEvent(parsedEvent);
+            setImageUrl(parsedEvent.titleImage);
+            console.log(parsedEvent)
+            form.setFieldsValue({
+              title: parsedEvent.title,
+              eventName: parsedEvent.eventName,
+              category: parsedEvent.category,
+              site: parsedEvent.site,
+              date: [dayjs(parsedEvent.startDate), dayjs(parsedEvent.endDate)],
+              eventHall: parsedEvent.eventHall,
+              doroAddress: parsedEvent.doroAddress,
+              jibunAddress: parsedEvent.jibunAddress,
+              lat: parsedEvent.lat,
+              lng: parsedEvent.lng,
+            });
+          }
+        } catch (error) {
+          console.error("Error fetching event:", error);
+        }
+      };
+      initEvent();
     }
-  }, [props])
-
+  }, [id]);
   /**
    * 템플릿, 카테고리 등 초기화
    */
