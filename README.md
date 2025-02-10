@@ -1,6 +1,6 @@
 # 코믹 행사 맵스 웹페이지 (current v1.2.0)
 
-developer: gieun3644@gmail.com  
+문의: etherdesign@etherdesign.net
 https://anime-event-maps.vercel.app/
 
 ## Stack
