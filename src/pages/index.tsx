@@ -62,7 +62,6 @@ export default function Main(props: any) {
             }
             getEvent();
             console.log(`Query parameter "id" has changed: ${id}`);
-        // id 값에 대한 추가 작업 수행
         }
     }, [id]); // id가 변경될 때 실행
 

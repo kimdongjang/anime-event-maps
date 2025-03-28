@@ -23,7 +23,7 @@ export const searchedListStore = atom<SearchedList>({
     searchedList: [], // 선택한 필터를 기반으로 추가된 이벤트들(예: 이벤트별을 선택하고 난 뒤, A이벤트, B이벤트 등등이 이 list에 추가됨)
     addedFilter: [],
     type: FilterType.EVENT,
-    isEnd: false,
+    isEnd: true,
   },
 });
 

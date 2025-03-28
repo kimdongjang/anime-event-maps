@@ -231,7 +231,6 @@ const EventForm = (props: IEventFormProps) => {
         setLoading(false);
         setImageUrl(url);
         setBlob(await put(`images/${info.file.originFileObj?.name}`, info.file.originFileObj, { access: 'public' }));
-        console.log(blob);
       });
     }
 

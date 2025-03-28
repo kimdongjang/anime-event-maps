@@ -10,7 +10,8 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Swiper as SwiperType } from 'swiper';
 import { Navigation, Pagination } from 'swiper/modules';
 import { AiFillCaretLeft, AiFillCaretRight } from 'react-icons/ai';
-import { Image } from 'antd';
+import { checkEndEvent } from '@/utils/date';
+import Image from 'next/image';
 
 
 declare global {
@@ -58,6 +59,10 @@ const KakaoMap = ({
     const renderList = () => {
         // 필터에 체크된 이벤트 리스트 혹은 전체 이벤트 리스트
         let list = searchedEventList.searchedList.length !== 0 ? searchedEventList.searchedList : eventList
+
+        // 종료 날짜를 비교해서 예정된 이벤트만 출력
+        list = list.filter((event) => checkEndEvent(new Date(event.endDate)));
+        console.log(list)
 
         // 거기에 추가로 이벤트 행사장별 리스트를 생성함
         const eventHallFilter: Marker[] = list
@@ -144,7 +149,8 @@ const KakaoMap = ({
                                          * 선택된 이벤트와 마커의 아이디가 같을 경우 인포 윈도우를 보여줌
                                          */
                                         selectedEvent && (selectedEvent.id === marker.id) && (
-                                            <div className=''>
+                                            <div >
+
                                                 <Swiper
                                                     pagination={{
                                                         type: 'fraction',
@@ -152,18 +158,19 @@ const KakaoMap = ({
                                                     slidesPerView={1} // 한 번에 하나의 슬라이드만 표시
                                                     navigation={false} //  내장 내비게이션 비활성화
                                                     modules={[Pagination, Navigation]}
-                                                    className="mySwiper w-[300px]"
+                                                    className="mySwiper "
                                                     onBeforeInit={(swiper) => {
                                                         swiperRefs.current[i] = swiper;
                                                     }}>
                                                     {
                                                         marker.eventList.map(((event, j) => (
                                                             <SwiperSlide className='p-3' key={j}>
-                                                                <Image src={event.images?.path} />
+                                                                <Image src={event.titleImage || ""} alt="logo" width={300} height={150}/>
+                                                                {/* <Image src={event.titleImage} /> */}
                                                                 <h3>{event.title}</h3>
                                                                 <div className='m-0'>{event.address}</div>
-                                                                <div className='flex items-center'>
-                                                                    <label className="bg-yellow-100 border-gray-100 rounded font-medium px-1">기간</label>
+                                                                <div className='flex items-center text-sm'>
+                                                                    <label className="bg-yellow-100 border-gray-100 rounded px-1">기간</label>
                                                                     <span>{event.startDate}~{event.endDate}</span>
                                                                 </div>
                                                             </SwiperSlide>

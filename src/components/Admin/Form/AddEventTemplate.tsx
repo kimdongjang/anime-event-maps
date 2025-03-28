@@ -97,8 +97,7 @@ const AddEventTemplate = () => {
       getBase64(info.file.originFileObj as FileType, async (url) => {
         setLoading(false);
         setImageUrl(url);
-        setBlob(await put(`images/${info.file.originFileObj?.name}`, info.file.originFileObj, { access: 'public' }));
-        console.log(blob);
+        setBlob(await put(`images/${info.file.originFileObj?.name}`, info.file.originFileObj, { access: 'public' }));        
       });
     }
 
