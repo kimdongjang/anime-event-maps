@@ -52,10 +52,10 @@ export const ModalNotice = (props: IModalNotice) => {
         </ul>
         <p className="pt-3">
           건의사항은 자유롭게
-          <a href="mailto:gieunp3644@gmail.com" className="ml-1">
-            gieunp3644@gmail.com
+          <a href="mailto:etherdesign@etherdesign.net" className="ml-1">
+            etherdesign@etherdesign.net
           </a>
-          혹은 트위터 @gieunp로 연락주시면 감사하겠습니다.
+          로 연락주시면 감사하겠습니다.
         </p>
       </div>
     </Modal>
