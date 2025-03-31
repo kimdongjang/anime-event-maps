@@ -136,29 +136,20 @@ export default function Main(props: any) {
             return <ModalNotice modalOpen={modalOpen} setModalOpen={setModalOpen} />;
         }
     };
-
     const renderBtn = () => {
-        if (isDesktopShow) {
-            return (
-                <button
-                    className="bg-indigo-50 hover:bg-blue-100 h-full w-10 border"
-                    onClick={() => setIsDesktopShow(false)}
-                >
-                    <ChevronRightIcon />
-                </button>
-            );
-        } else {
-            return (
-                <button
-                    className="bg-indigo-50 hover:bg-blue-100 h-full w-10 border"
-                    onClick={() => setIsDesktopShow(true)}
-                >
-                    <ChevronLeftIcon />
-                </button>
-            );
-        }
-    };
-
+        return (
+          <button
+            className="fixed z-[1] top-1/2 right-2 transform -translate-y-1/2 
+                       bg-indigo-50 hover:bg-blue-100 text-gray-800 
+                       w-12 h-12 rounded-full shadow-md border 
+                       flex items-center justify-center transition-transform duration-200"
+            onClick={() => setIsDesktopShow(!isDesktopShow)}
+          >
+            {isDesktopShow ? <ChevronRightIcon /> : <ChevronLeftIcon  />}
+          </button>
+        );
+      };
+      
     const handleShow = (isShow: boolean) => {
         setIsDesktopShow(isShow);
     };
