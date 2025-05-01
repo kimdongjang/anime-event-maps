@@ -285,10 +285,10 @@ export const EventDisplay = (props: IEventDisplayProps) => {
           className="bg-blue-400 hover:bg-blue-500 text-white text-sm rounded px-2 py-1 "
           type="button"
           onClick={() => {
-            router.push('https://map.naver.com/p/directions/');
+            router.push(`https://map.kakao.com/link/to/${event.eventHall},${event.lat},${event.lng}/`);
           }}
         >
-          네이버 길찾기
+          카카오 길찾기
         </button>
         <button
           className="flex items-center text-sm px-2 py-1

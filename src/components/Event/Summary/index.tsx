@@ -278,7 +278,7 @@ export const EventSummary = (props: IEventSummaryProps) => {
             router.push('https://map.naver.com/p/directions/');
           }}
         >
-          네이버 길찾기
+          카카오 길찾기
         </button> */}
         {/* <button
           className="flex items-center text-sm px-2 py-1
